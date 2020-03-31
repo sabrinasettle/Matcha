@@ -1,0 +1,96 @@
+<%= form_for :profile, :html => { :multipart => true } do |form| %>
+
+            <div class="form_section">
+                <h3>Choose a photo as your avatar</h3>
+                <%#= form.label "Profile picture" %>
+                <%= form.file_field :avatar %>
+            </div>
+
+            <div class="form_section">
+                <h3>Choose up to 4 more photos</h3>
+                <%= form.label :pictures, class: "control-label" %>
+                <div class="controls">
+                  <%= file_field_tag "images[]", type: :file, multiple: true %>
+                </div>
+                <%#= form.label "Profile picture"%>
+                <%#= form.file_field :photos %>
+            </div>
+
+            <div class="form_section">
+                <h3>Whats the postcode that you live in?</h3>
+                <%= form.label "Enter your age"%>
+                <%= form.text_field :postal_code %>
+            </div>
+
+            <div class="form_section">
+                <h3>Whats your age?</h3>
+                <%= form.label "Enter your age"%>
+                <%= form.text_field :age %>
+            </div>
+            
+            <div class="form_section">
+              <h3>Finally add a bio!</h3>
+              <h4>Say a bit about your self, interests, favorite things</h4>
+              <%= form.text_area :bio, size: "100x15" %>
+            </div>
+
+            <div class="form_section">
+                <h3>Please choose your gender:</h3>
+                <%#=form.collection_radio_buttons :gender, [[true, 'Yes'] ,[false, 'No']], :first, :last %>
+                <%= form.radio_button :gender, "male" %>
+                <%= label_tag(:gender_male,   "Male") %>
+                <%= form.radio_button :gender, "female" %>
+                <%= label_tag(:gender_female, "Female") %>
+                <%= form.radio_button :gender, "other" %>
+                <%= label_tag(:gender_other,   "Other") %>
+            </div>
+
+            <div class="form_section">
+                <h3>Pick your interests!</h3>
+                <%= form.collection_check_boxes :interest_ids, Interest.all, :id, :name, required: true do |b| %>
+                  
+                    <%#= b.label { b.check_box + b.text} %>
+                    <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
+                    <%# Customizing the output
+                    You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
+                      form.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+                        b.label { b.check_box }
+                        # or
+                        b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
+                      end%>
+  
+                    <%= b.label(class: "form_interest_checks{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text } %>
+                    <br>
+                <% end %>
+                <%# Taggable https://stackoverflow.com/questions/34196574/rails-how-to-get-records-based-on-user-interests-from-my-current-associations%>
+                <%# https://apidock.com/rails/v4.0.2/ActionView/Helpers/FormOptionsHelper/collection_check_boxes%>
+                <%#= form.collection_check_boxes  do |cb| %>
+                <%#= cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+                <%# end %>
+                
+            </div>
+
+            <div class="form_section">
+                <h3>Please choose your sexuality:</h3>
+                <%= form.radio_button :sexual_preferences, "heterosexual" %>
+                <%= label_tag(:sexual_preferences_heterosexual, "Heterosexual") %>
+                <%= form.radio_button :sexual_preferences, "gay" %>
+                <%= label_tag(:sexual_preferences_gay, "Gay") %>
+                <%= form.radio_button :sexual_preferences, "bisexual" %>
+                <%= label_tag(:sexual_preferences_bisexual, "Bisexual") %>
+
+                <%# https://stackoverflow.com/questions/746387/labels-for-radio-buttons-in-rails-form %>
+                  <%#= f.label :contactmethod, 'Email', :value => 'email' %>
+                  <%#= f.radio_button :contactmethod, 'sms' %>
+                  <%#= f.label :contactmethod, 'SMS', :value => 'sms' %>
+                
+            </div>
+
+            <div class="form_section">
+              <div class="actions">
+                <%= form.hidden_field :user_name, value: current_user.user_name %>
+                <%= form.hidden_field :user_id, value: current_user.id %>
+                <%= form.submit "Finish Profile", class: "btn btn-primary" %>
+              </div>
+            </div>
+            <% end %>

@@ -1,0 +1,88 @@
+// Place all the styles related to the landing controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// body {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100%;
+// }
+
+
+
+.nav_bar{
+  // background: white;
+  width: 100%;
+  height: 5%;
+  position: absolute; 
+  margin-bottom: auto;
+}
+
+.landing_page{
+	margin: 0;
+	width: 100%;
+	height: 100vh;
+	color: #fff;
+	background: linear-gradient(-45deg, #9be963,  #9aee80, #57a85a, #368f24);
+	background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  .nav_bar_landing {
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .nav_bar_name {
+      text-transform: uppercase;
+      margin-left: 2rem;
+    }
+    .nav-links-container_l {
+      margin-right: 2rem;
+      display: flex;
+      justify-content: space-between;
+      text-transform: uppercase;
+      .nav-links_l {
+        text-decoration: none;
+        color: #333;
+        margin: 0 0.5rem;
+      }
+    }
+  }
+}
+
+@keyframes gradientBG {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.si_button{
+  border-color: black;
+  color: black;
+  border-radius: 5px;
+}
+
+.container {
+	width: 100%;
+	position: absolute;
+	top: 35%;
+	text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  text-transform: uppercase;
+}

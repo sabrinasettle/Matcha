@@ -1,0 +1,20 @@
+<div class="user_head">
+    <div class="av">
+    <%# LOGIC IS THAT WE HAVE NO PROFILE AND NO AVATAR THEN WE NEED A DUMMY ONE%>
+    <% if @user.profile_created == false %>
+        <img alt="default" src="http://localhost:3000//assets/images/no-image-icon.png">
+        <%#= image_tag @profile.avatar.url(:medium) %>
+        <!-- PUT AVATAR HERE -->
+        
+
+    <% end %>
+    </div>
+    <div class="u_n">
+    
+    <h1><%= @user.first_name %><h1>
+    <h3><%= @user.user_name %><h3>
+    </div>
+    <div class="u_l">
+    
+    </div>
+</div>

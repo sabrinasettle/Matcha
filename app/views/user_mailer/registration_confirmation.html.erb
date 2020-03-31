@@ -1,0 +1,9 @@
+<h1> Matcha <h1>
+
+Hi <%= @user.name %>,
+
+Thanks for signing up with us! To confirm your registration and start finding that special someone click the URL below.
+
+
+<%=  link_to "confirm", confirm_email_url(@user.confirm_token, host: "http://localhost:3000")%>
+<%#=  link_to "confirm", confirm_email_url(@user.confirm_token, host: "http://localhost:3000")%>

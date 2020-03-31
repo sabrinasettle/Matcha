@@ -1,0 +1,15 @@
+<div class="page_cp">
+  <div class="center_col">
+    <div class="form_box2">
+      <%= form_tag '/new_password' do %>
+      <h2> Lets find your account to Start </h2>
+      <p>Please input your email</p>
+        <div class="field">
+          <%= label_tag :email %>
+          <%= text_field_tag :email, params[:email] %>
+        </div>
+        <div class="actions"><%= submit_tag "Find my account" %></div>
+      <% end %>
+    </div>
+  </div>
+</div>

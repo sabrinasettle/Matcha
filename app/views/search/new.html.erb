@@ -1,0 +1,15 @@
+
+<body>
+    <div class="search_page">
+        <%= render "layouts/header" %>
+        <div class="s_b">
+            <%= form_tag("/search", method: "get") do %>
+
+                <%= text_field :q, class: 'form_c' %>
+                <%= button_tag(type: "submit", class: 'sq_fb') do %>
+                    <i class="material-icons">search</i>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</body>

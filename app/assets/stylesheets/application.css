@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+/* @import "bootstrap"; */
+/* @import 'bootstrap-sprockets'; */
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css?family=Lato:300");
+@import url('https://fonts.googleapis.com/css?family=Mukta&display=swap');
+
+/* @import "main.css";  */
+@import "main.scss";
+/* @import "sessions.scss"; */
+@import "users.scss";
+@import "landing.scss"
+

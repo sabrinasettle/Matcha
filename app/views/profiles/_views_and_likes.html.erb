@@ -1,0 +1,42 @@
+<div class="l_v_m">
+    <div class="matches">
+        <div class="t_s">
+            <h3>matches</h3>
+        </div>
+        <% if @matches.nil? %>
+                <p> No matches yet! </p>
+        <% else%>
+            <% @matches_names.each do |user| %>
+                <p><b><%= user.user_name %></b></p>
+                <%= image_tag(user.avatar.url(:thumb)) %>
+            <% end %>  
+        <% end %>  
+    </div> 
+    <div class="likes">
+    <div class="t_s">
+        <h3>likes</h3>
+    </div>
+    <div class="l_l"> <!-- has no css yet-->
+        <% if @likes.nil? %>
+                <p> No likes yet! </p>
+        <% else%>
+            <% @likers_names.each do |name| %>
+                <p>Liked by <b><%= name.to_s %></b></p>
+            <% end %>
+        <% end %> 
+    </div>
+    </div>
+    <div class="views">
+    <div class="t_s">
+        <h3>views</h3>
+    </div>
+    <div class="v_l">
+        <% if @views.nil? %>
+             <p> No views yet! </p>
+        <% else %>
+            <% @visitors.each do |name| %>
+                <p><b><%= name.to_s %></b> viewed your profile.</p>
+            <% end %>
+        <% end %>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<h1>Users#create</h1>
+<p>Find me in app/views/users/create.html.erb</p>
+
+<div class="create_user">
+  <div class="center_col">
+    <div class="form_box2">
+    <% if flash[:notice] %>
+        <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+    <h2>Thanks For signing up for Matcha! Make sure to look for the confirmation email!</h2>
+    <%=button_to 'Resend Confirmation email'%>
+    <p>This button does not work</p>
+    <%= link_to 'Login', login_path %>
+    </div>
+  </div>
+</div>

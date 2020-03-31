@@ -1,0 +1,24 @@
+
+
+<!-- https://mixandgo.com/learn/how-to-use-link_to-in-rails -->
+<body>
+    <div class="main_page">
+        <%= render "layouts/header" %>
+        
+
+        <%# Put main page div here%>
+        <% if current_user == @user && current_user.profile_created == false%>
+            <div class="welcome">
+                <p>Welcome <%= current_user.user_name %>! You aren't seeing any matches because you need to Create your profile first! Head to your profile, linked above to finish it and start looking for that right cup of tea!<p>
+            </div>
+        <%# Here is where I want all the profiles available and ordered, I need containers for each of them. I need them odered by rating, distance, interests %>
+        <% else%>
+            <%#= render partial: "sort", locals: { profile: @profile } %> 
+            
+            <%= render partial: "sort" %>
+            <%#= render partial: "showmatches", locals: { profile: @profile } %>
+         
+
+        <% end %>
+    </div>
+</body>

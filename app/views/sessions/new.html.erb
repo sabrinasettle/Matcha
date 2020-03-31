@@ -1,0 +1,40 @@
+<div class= "page_login">
+    <nav class="nav_bar_main">
+        <div class="nav_bar_name">
+          <h1>Matcha</h1>
+      </div>
+    </nav>
+    <div class= "center">
+      <div class="box">
+      
+        <div class="box_center">
+        <h2>Log In</h2>
+          <%= form_tag '/login' do %>
+
+            <%= label_tag 'Username'%>
+            <%= text_field_tag :user_name %>
+            <br>
+            <%= label_tag 'Password'%>
+            <%= password_field_tag :password %>
+           
+            <%= submit_tag "Log In" %>
+          
+          <% if flash[:notice] %>
+              <div class="notice"><%= flash[:notice] %></div>
+          <% end %>
+        </div>
+    </div>
+    <div class="links">
+        <!-- add when exists -->
+        <%= link_to 'Forgot Your Password?', new_password_path%> 
+        <br>
+   
+        <p class="login_extra">
+            Don't have an account?
+            <%= link_to "Sign Up", signup_path%>
+        </p>
+    </div>
+  </div>
+          <% end %>
+
+</div>

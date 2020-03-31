@@ -1,0 +1,18 @@
+<nav class="nav_bar_main">
+         <div class="nav_bar_name">
+           <h1><%= link_to 'Matcha', '/main', :class => 'nav_bar_name' %></h1>
+        </div>
+        <%# <div class="icons-container"> %>
+            
+
+        <%# </div> %>
+        <div class="nav-links-container">
+            <% if current_user %>
+                <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'nav-links'%>
+                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links' %>
+                <%= link_to '<i class="material-icons">face</i>'.html_safe, profile_path(current_user.user_name), :class => 'nav-links'%>
+                <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, edit_profile_path(current_user.user_name), :class => 'nav-links' %>
+                <%= link_to 'Logout', '/logout', :class => 'nav-links', :data => { :confirm => 'Are you sure?' }%>
+            <% end %>
+        </div>
+        </nav>

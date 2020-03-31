@@ -1,0 +1,35 @@
+<div class="form_edit">
+    <h1> Change Profile</h1>
+
+    <%# May have to change this to be nested attributes that the user gets to change the profile %>
+    <%# https://www.pluralsight.com/guides/ruby-on-rails-nested-attributes %>
+    <%# https://stackoverflow.com/questions/10003806/how-to-update-child-object-in-a-nested-form-in-rails %>
+    <%= form_for @user,  html: {class: "form_"} do |f| %>
+
+        <%= f.fields_for :profile, @user.profile do |c| %>
+          <%= c.text_field :name %>
+          
+          <!-- Avatar Photo -->
+          <div class="avatar">
+              <%= image_tag @profile.avatar.url(:medium) %>
+          </div>
+          <%= c.label "Change Avatar", class: 'l_form' %>
+              <%= c.file_field :avatar %>
+          <br>
+          <!-- Age -->
+          
+          <br>
+        <%= c.submit "Change Profile", class: 'f_s_b' %>
+       <% end %>
+    <% end %>
+
+</div>
+            <%#= b.label { b.check_box + b.text} %>
+            <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
+            <%# Customizing the output
+            You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
+              form.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+                b.label { b.check_box }
+                # or
+                b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
+              end%>

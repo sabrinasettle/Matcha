@@ -1,0 +1,67 @@
+
+<%#= https://stackoverflow.com/questions/5190090/css-styling-of-flash-message 
+
+https://stackoverflow.com/questions/25541139/css-not-getting-applied-to-the-form-elements-in-erb %>
+
+<div class="page_signup">
+   <nav class="nav_bar_main">
+        <div class="nav_bar_name">
+          <h1>Matcha</h1>
+      </div>
+     </nav>
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+    <div class="center">
+      <div class="main_box">
+        <div class="box_center">
+        <%= form_for :user, :html=>{:class => 'submit-form'} do |form| %>
+        <h2> Sign Up </h2>
+          <div class="field">
+            <%= form.label :first_name %>
+            <%= form.text_field :first_name %>
+          </div>
+
+          <div class="field">
+            <%= form.label :last_name %>
+            <%= form.text_field :last_name %>
+          </div>
+
+          <div class="field">
+            <%= form.label :user_name %>
+            <%= form.text_field :user_name %>
+          </div>
+
+          <div class="field">
+            <%= form.label :email %>
+            <%= form.text_field :email %>
+          </div>
+
+          <div class="field">
+            <%= form.label :password %>
+            <%= form.password_field :password %>
+          </div>
+
+          <div class="field">
+            <%= form.label :password_confirmation%>
+            <%= form.password_field :password_confirmation%>
+          </div>
+
+          <div class="actions">
+            <%# With sam here maybe not user.id?? %>
+            <%#= form.hidden_field :users_id, value: user.id %>
+            <%=  submit_tag("Create Account") %>
+          </div>
+        </div>
+      </div>
+      <div class="small_box">
+        <p class="login_extra">
+            Already have an account?
+            <%= link_to "Login", login_path%>
+            
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -1,0 +1,45 @@
+<div class="user_head">
+    <div class="b_back">
+        <%=link_to '<i class="material-icons">chevron_left</i>'.html_safe, :back %>
+    </div>
+    <div class="av">
+        <% if @profile.avatar.exists? %>
+            <!-- PUT AVATAR HERE -->
+            <div class="avatar">
+                <%= image_tag @profile.avatar.url(:medium) %>
+            </div>
+        <% end %>
+    </div>
+    <div class="u_n">
+    
+        <h1><%= @user.first_name %><h1>
+        <h3><%= @user.user_name %><h3><%= @profile.age %>
+       
+    </div>
+    
+    <div class="u_l">
+        <% if current_user.profile_created == true %>
+            <% if current_user != @user %>
+                <ul>
+                    <%# A block would need to checked from a table???%>
+                    <li>
+                        <div id="likes">
+                            <%= render partial: "likes/button", locals: { profile: @profile } %>
+                        </div>
+                    </li>
+                    <li>
+                        <%= button_to "Block"%>
+                        <%# <i class="material-icons">block</i> %>
+                    </li>
+                    <li>
+                        <%# https://github.com/medihack/make_flaggable %>
+                        <%= button_to "Flag"%>
+                         <%# <i class="material-icons">flag</i> %>
+                    </li>
+                </ul>
+            <% else %>
+                
+            <% end %>
+        <% end %>
+    </div>
+</div>

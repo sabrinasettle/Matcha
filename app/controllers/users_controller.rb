@@ -22,7 +22,9 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    # @profile = Profile.new(profile_params) #trying to create the profile object on creation with basic information and just update it later
     if @user.save
+      # @profile.save
       # UserMailer.registration_confirmation(user).deliver_now
       flash[:notice]="Signup successful. Confirmation email has been sent"
       # session[:user_id] = user.id #I think for when it directly signed people in, could be wrong

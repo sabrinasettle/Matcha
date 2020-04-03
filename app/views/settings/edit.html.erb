@@ -1,0 +1,54 @@
+
+<body>
+  <div class="settings_page">
+          <%= render "layouts/header" %>
+          
+          <% if current_user == @user%>
+          
+              <nav class="settings_nav">
+                <div class="wh1">
+                  <ul>
+                    <li>
+                      <%= link_to edit_user_path(flag: '1'), remote: true do %>
+                        <i class="material-icons">perm_identity</i>
+                        <span><p>Edit User Info</p></span>
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to edit_password_path(flag: '2'), remote: true do %>
+                          <i class="material-icons">lock_open</i>
+                          <span><p>Edit Password</p></span>
+                        <% end %>
+                    </li>
+                    <li>
+                        <%= link_to views_and_likes_path(flag: '3'), remote: true do %>
+                          <i class="material-icons">favorite</i>
+                          <span><p>Views and Likes</p></span>
+                        <% end %>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+            <div class="m_p">
+                <div class="form_section">
+                  <div id="user_forms">
+                          
+                    </div>              
+                  
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>
+            
+            
+
+          
+            
+            
+              
+          <% end %>
+      </div>
+  </div>
+</body>

@@ -3,11 +3,11 @@ class ProfilesController < ApplicationController
   include ProfilesHelper
 
   before_action :find_user, only: [:show, :edit, :update]
-  before_action :find_profile, only: [:show, :edit, :update]
+  before_action :find_profile, only: [:show, :edit, :update, :update_profile]
   before_action :interest_titles, only: [:show, :edit]
-  # before_action :find_likes, only: [:edit]
-  # before_action :find_visitors, only: [:edit]
-  # before_action :find_matches, only: [:edit]
+  before_action :find_likes, only: [:edit]
+  before_action :find_visitors, only: [:edit]
+  before_action :find_matches, only: [:edit]
   # before_action :profile_params, only: [:create]
   
   
@@ -43,22 +43,16 @@ class ProfilesController < ApplicationController
       format.html {}
       case
       when @flag == '1'
-        format.js { render :edituser, layout: false}
-      when @flag == '2'
-        format.js { render :editpassword, layout: false}
-      when @flag == '3'
         format.js { render :editprofile, layout: false}
-      when @flag == '4'
+      when @flag == '2'
         format.js { render :editphotos, layout: false}
-      when @flag == '5'
-        format.js { render :views_and_likes, layout: false}
       end
     end
   end
 
   
   def update
-    @user = User.find(params[:id])
+    # @user = User.find(params[:username])
     # @profile = Profile.find_by(user_name: params[:user_name])
     # puts @user.user_name
     # puts @profile.user_name
@@ -72,9 +66,9 @@ class ProfilesController < ApplicationController
     # if @profile.update(profile_params)
       # puts @profile.age
     # end
-    if @user.update(user_params)
-      puts @user.profile.age
-    end
+    # if @user.update_attributes(user_params)
+      # redirect_to '/'
+    # end
     # if @profile.update_attributes(profile_params)
       # puts @user.user_name
     # end
@@ -93,15 +87,26 @@ class ProfilesController < ApplicationController
     # end
   end
 
+  def update_profile
+    @profile = Profile.find(params[:user_name])
+    if @profile.update_attributes(profile_params)
+      redirect_to settings_path(@profile.user_name)
+    end
+  end
+
   def new
   end
 
   def create
-    @user = current_user
+    # @user = current_user
     #this worked
     # @profile = Profile.create!(profile_params)
-    @profile = Profile.new(profile_params)
-    if @profile.save
+    # @profile = Profile.new(profile_params)
+    #I hand the one below before and that worked
+    # @profile = @user.profile
+    @profile = current_user.profile
+    if @profile.update_attributes(profile_attributes)
+    # if @profile.save
       if params[:images]
         params[:images].each { |image|
           @profile.pictures.create(image: image)

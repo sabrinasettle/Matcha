@@ -4,24 +4,22 @@
     <%# May have to change this to be nested attributes that the user gets to change the profile %>
     <%# https://www.pluralsight.com/guides/ruby-on-rails-nested-attributes %>
     <%# https://stackoverflow.com/questions/10003806/how-to-update-child-object-in-a-nested-form-in-rails %>
-    <%= form_for @user,  html: {class: "form_"} do |f| %>
-
-        <%= f.fields_for :profile, @user.profile do |c| %>
-          <%= c.text_field :name %>
-          
-          <!-- Avatar Photo -->
-          <div class="avatar">
-              <%= image_tag @profile.avatar.url(:medium) %>
-          </div>
-          <%= c.label "Change Avatar", class: 'l_form' %>
-              <%= c.file_field :avatar %>
-          <br>
-          <!-- Age -->
-          
-          <br>
-        <%= c.submit "Change Profile", class: 'f_s_b' %>
-       <% end %>
-    <% end %>
+    <%= form_for :profile do |c| %>
+      
+      
+      <!-- Avatar Photo -->
+      <div class="avatar">
+          <%= image_tag @profile.avatar.url(:medium) %>
+      </div>
+      <%= c.label "Change Avatar", class: 'l_form' %>
+          <%= c.file_field :avatar %>
+      <br>
+      <!-- Age -->
+      
+      <br>
+    <%= c.submit "Change Profile", class: 'f_s_b' %>
+   <% end %>
+        
 
 </div>
             <%#= b.label { b.check_box + b.text} %>

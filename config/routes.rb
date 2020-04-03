@@ -22,15 +22,22 @@ Rails.application.routes.draw do
   #profile paths
   get '/:user_name/' => 'profiles#show', as: 'profile'
   post '/:user_name/' => 'profiles#create'
-  get '/:user_name/edit' => 'profiles#edit', as: 'edit_profile'
-  # patch '/:id/edit' => 'profiles#update', as: 'patch_profile'
-  post '/:user_name/edit' => 'profiles#update', as: 'update_profile'
+  get '/:user_name/profile/edit' => 'profiles#edit', as: 'edit'
+  post '/:user_name/profile/edit' => 'profiles#update', as: 'update_profile'
+  # post '/:user_name/edit' => 'profiles#update_profile', as: 'update_profile'
+  
   #partials for forms
-  get '/:user_name/edit_user' => 'profiles#edit', as: 'edit_user'
-  get '/:user_name/edit_password' => 'profiles#edit', as: 'edit_password'
   get '/:user_name/edit_user_profile' => 'profiles#edit', as: 'edit_user_profile'
   get '/:user_name/edit_photos' => 'profiles#edit', as: 'edit_photos'
-  get '/:user_name/views_and_likes' => 'profiles#edit', as: 'views_and_likes'
+
+
+  # Settings path
+  get ':user_name/edit' => 'settings#edit', as: 'settings'
+  post ':user_name/edit' => 'settings#update', as: 'settings_update'
+  # partials for forms
+  get '/:user_name/edit_user' => 'settings#edit', as: 'edit_user'
+  get '/:user_name/edit_password' => 'settings#edit', as: 'edit_password'
+  get '/:user_name/views_and_likes' => 'settings#edit', as: 'views_and_likes'
   
   #likes path
   post '/:profile_id/like', to: 'likes#create', as: 'like'

@@ -8,10 +8,10 @@
         <%# </div> %>
         <div class="nav-links-container">
             <% if current_user %>
-                <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'nav-links'%>
-                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links' %>
-                <%= link_to '<i class="material-icons">face</i>'.html_safe, profile_path(current_user.user_name), :class => 'nav-links'%>
-                <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, edit_profile_path(current_user.user_name), :class => 'nav-links' %>
+                <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'nav-links', title: "Search" %>
+                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
+                <%= link_to '<i class="material-icons">face</i>'.html_safe, profile_path(current_user.user_name), :class => 'nav-links', title: "Profile"%>
+                <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, settings_path(current_user.user_name), :class => 'nav-links', title: "Settings" %>
                 <%= link_to 'Logout', '/logout', :class => 'nav-links', :data => { :confirm => 'Are you sure?' }%>
             <% end %>
         </div>

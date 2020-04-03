@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2020_03_30_213645) do
   create_table "likes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.integer "profile_id"
   end
 
   create_table "messages", force: :cascade do |t|

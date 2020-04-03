@@ -2,31 +2,16 @@
 <body>
   <div class="edit_page">
           <%= render "layouts/header" %>
+          <div class="b_back">
+            <%=link_to '<i class="material-icons">chevron_left</i>'.html_safe, :back %>
+          </div>
           
           <% if current_user == @user%>
-            <!-- base for previous nav which is now in settings -->
-              <!-- <nav class="settings_nav">
-                <div class="wh1">
-                  <ul>
-                    <li>
-                        <%= link_to edit_user_profile_path(flag: '1'), remote: true do %>
-                          <i class="material-icons">emoji_people</i>
-                          <span><p>Edit Profile</p></span>
-                        <% end %>
-                    </li>
-                    <li>
-                        <%= link_to edit_photos_path(flag: '2'), remote: true do %>
-                          <i class="material-icons">camera_alt</i>
-                          <span><p>Edit Profile Photos</p></span>
-                        <% end %>
-                    </li>
-                  </ul>
-                </div>
-              </nav> -->
+            
 
             <div class="m_p">
                 <div class="form_section">
-                  <div id="user_forms">
+                  <!-- <div id="user_forms"> -->
                   <%= render "profiles/forms/editprofile"%>
                   <%= render "profiles/forms/editphotos"%>
 
@@ -41,7 +26,7 @@
                                         b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
                                       end%>
                   
-                  </div>
+                  <-- </div> -->
                   
                 </div>
               </div>

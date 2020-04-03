@@ -22,13 +22,13 @@ Rails.application.routes.draw do
   #profile paths
   get '/:user_name/' => 'profiles#show', as: 'profile'
   post '/:user_name/' => 'profiles#create'
-  get '/:user_name/profile/edit' => 'profiles#edit', as: 'edit'
+  get '/:user_name/profile/edit' => 'profiles#edit', as: 'edit_profile'
   post '/:user_name/profile/edit' => 'profiles#update', as: 'update_profile'
   # post '/:user_name/edit' => 'profiles#update_profile', as: 'update_profile'
   
   #partials for forms
-  get '/:user_name/edit_user_profile' => 'profiles#edit', as: 'edit_user_profile'
-  get '/:user_name/edit_photos' => 'profiles#edit', as: 'edit_photos'
+  # get '/:user_name/edit_user_profile' => 'profiles#edit', as: 'edit_user_profile'
+  # get '/:user_name/edit_photos' => 'profiles#edit', as: 'edit_photos'
 
 
   # Settings path

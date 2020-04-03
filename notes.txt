@@ -1,0 +1,19 @@
+<!-- base for previous nav which is now in settings -->
+              <!-- <nav class="settings_nav">
+                <div class="wh1">
+                  <ul>
+                    <li>
+                        <%= link_to edit_user_profile_path(flag: '1'), remote: true do %>
+                          <i class="material-icons">emoji_people</i>
+                          <span><p>Edit Profile</p></span>
+                        <% end %>
+                    </li>
+                    <li>
+                        <%= link_to edit_photos_path(flag: '2'), remote: true do %>
+                          <i class="material-icons">camera_alt</i>
+                          <span><p>Edit Profile Photos</p></span>
+                        <% end %>
+                    </li>
+                  </ul>
+                </div>
+              </nav> -->

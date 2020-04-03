@@ -18,11 +18,21 @@ class SettingsController < ApplicationController
   end
 
   def update
+    if @user.update_attributes(user_params)
+      redirect_to '/'
+    end
   end
 
   private
   
     def find_user
       @user = User.find_by(user_name: params[:user_name])
+    end
+
+    def user_params
+
+      # {:book_rooms => [:checked_out]}
+      # params.require(:user).permit(:first_name, :last_name, :user_name, :email, :password, {:profile => [:id, :age, :bio, :gender, :sexual_preferences, :user_name, :avatar, :postal_code]})
+      params.require(:user).permit(:first_name, :last_name, :user_name, :email, :password, profile_attributes: [:id, :age, :bio, :gender, :sexual_preferences, :user_name, :avatar, :postal_code])
     end
 end

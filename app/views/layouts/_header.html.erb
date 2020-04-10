@@ -2,17 +2,31 @@
          <div class="nav_bar_name">
            <h1><%= link_to 'Matcha', '/main', :class => 'nav_bar_name' %></h1>
         </div>
-        <%# <div class="icons-container"> %>
-            
-
-        <%# </div> %>
+        <div class="search_b">
+            <%= form_tag(search_path, :method => "get", :class => 'form-fa-se') do %>  
+                <div class="input_bar">
+                    <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'search-fa-link', title: "Search" %>
+  
+                    <%= search_field_tag :search, params[:search], placeholder: "Search Matcha", class: "form-control" %>  
+                    <!-- Not in use <div class="input-group-btn">  
+                    <%#= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
+                    </div> -->
+                </div>  
+                <% end %>
+        </div>
         <div class="nav-links-container">
             <% if current_user %>
-                <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'nav-links', title: "Search" %>
+            <%# if current_page?(product_path(@product))%>
+            <%# end %>
+    
                 <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
-                <%= link_to '<i class="material-icons">face</i>'.html_safe, profile_path(current_user.user_name), :class => 'nav-links', title: "Profile"%>
                 <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, settings_path(current_user.user_name), :class => 'nav-links', title: "Settings" %>
-                <%= link_to 'Logout', '/logout', :class => 'nav-links', :data => { :confirm => 'Are you sure?' }%>
+                <%= link_to '<i class="material-icons">notifications_none</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
+                <%= link_to profile_path(current_user.user_name), :class => 'p-b', title: "Profile" do %>
+                    <%= current_user.first_name %>
+                    <i class="material-icons">face</i>
+                <% end %>
+                <%= link_to 'Logout', '/logout', :class => 'lg-b', :data => { :confirm => 'Are you sure?' }%>
             <% end %>
         </div>
         </nav>

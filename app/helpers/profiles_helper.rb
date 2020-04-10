@@ -1,15 +1,26 @@
 module ProfilesHelper
 
-    def looking_for(profile)
+    def gender_of(profile)
         if profile.gender == "female"
-            profile.sexual_preferences == "gay" ? @partner = "female" : @partner = "male"
+            @gen = "F"
         elsif profile.gender == "male"
-            profile.sexual_preferences == "gay" ? @partner = "male" : @partner = "female"
+            @gen = "M"
         end
-        if profile.sexual_preferences == "bisexual"
-            @partner = "male and female"
+        # if profile.sexual_preferences == "bisexual"
+        #     @partner = "male and female"
+        # end
+        @gen
+    end
+
+    def het_to_straight(profile)
+        if profile.sexual_preferences == "heterosexual"
+            pref = "Straight"
+        elsif profile.sexual_preferences == "gay"
+            pref = "Gay"
+        else
+            pref = "Bi"
         end
-        @partner
+        pref
     end
 
     def profile_and_is_user(user)

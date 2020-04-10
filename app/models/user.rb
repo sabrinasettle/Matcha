@@ -68,6 +68,16 @@ class User < ApplicationRecord
     end
   end
 
+
+  #search method
+  def self.search(search)
+    if search
+      user = User.find_by(user_name: search)
+      if user
+        self.where(user_id: user)
+      end
+    end
+  end
     
   private
     def set_confirmation_token

@@ -14,8 +14,8 @@ class ProfilesController < ApplicationController
   def show
     if current_user.profile_created == true
       create_visit
-      @partner = looking_for(@profile)
-
+      @gender = gender_of(@profile)
+      @pref = het_to_straight(@profile)
       unless @profile.pictures.nil?
         @pictures = @profile.pictures 
       end
@@ -52,39 +52,13 @@ class ProfilesController < ApplicationController
 
   
   def update
-    # @user = User.find(params[:username])
-    # @profile = Profile.find_by(user_name: params[:user_name])
-    # puts @user.user_name
-    # puts @profile.user_name
-    # if @profile.update_attributes(profile_params)
-      # redirect_to edit_profile_path(@profile.user_name)
+    
+    @profile = Profile.find_by(user_name: params[:user_name])
+    if @profile.update_attributes(profile_params)
+      redirect_to profile_path(@profile.user_name)
     # elsif @user.update_attributes(user_params) 
       # redirect_to edit_profile_path(@user.user_name)
-    # end
-    # @user.update_attributes(user_params) 
-    # @user.update(user_params)
-    # if @profile.update(profile_params)
-      # puts @profile.age
-    # end
-    # if @user.update_attributes(user_params)
-      # redirect_to '/'
-    # end
-    # if @profile.update_attributes(profile_params)
-      # puts @user.user_name
-    # end
-    # if @profile.update(user_params)
-      # puts @profile.user_name
-    # end
-    # if @user.update_attributes(user_params)
-      # unless @profile.postal_code.nil?
-        # @user.change_lat_long(@profile)
-      # end
-      #  redirect_to '/login' #redirect back to the profile or rerender the page??
-    # end
-    # if @profile.update_attributes(profile_params)
-      # redirect_to '/main'
-      # redirect_to '/login' #redirect back to the profile or rerender the page??
-    # end
+    end
   end
 
   def update_profile

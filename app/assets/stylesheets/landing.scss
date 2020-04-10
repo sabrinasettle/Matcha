@@ -2,28 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// body {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 100%;
-// }
-
-
-
-.nav_bar{
-  // background: white;
-  width: 100%;
-  height: 5%;
-  position: absolute; 
-  margin-bottom: auto;
+body {
+  font-family: -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .landing_page{
 	margin: 0;
 	width: 100%;
 	height: 100vh;
-	color: #fff;
+	color: black;
 	background: linear-gradient(-45deg, #9be963,  #9aee80, #57a85a, #368f24);
 	background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
@@ -47,6 +36,26 @@
         text-decoration: none;
         color: #333;
         margin: 0 0.5rem;
+        
+      }
+      a {
+        padding: 15px;
+        height: 20px;
+      }
+      a:hover {
+        background-color: #fcfcfc8e;
+        border-radius: 10px 10px 10px 10px;
+        color: #333;
+      }
+      .si_button {
+        border: none;
+        background-color: transparent;
+        // font-size: 20px;
+        color: #333;
+      }
+      .si_button:hover {
+        background-color: #fcfcfc8e;
+        color: black;
       }
     }
   }
@@ -64,18 +73,23 @@
 	}
 }
 
-.si_button{
-  border-color: black;
-  color: black;
-  border-radius: 5px;
+.m_c {
+  width: 100%;
+  .container {
+    position: absolute;
+    text-align: center;
+    background-color: white;
+    /* margin-left: 40vw; */
+    width: 100%;
+    /* height: 30%; */
+    padding: 50px 0 50px 0;
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
 }
 
-.container {
-	width: 100%;
-	position: absolute;
-	top: 35%;
-	text-align: center;
-}
 
 h1,
 h2,

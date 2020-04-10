@@ -12,9 +12,10 @@
     </div>
     <div class="u_n">
     
-        <h1><%= @user.first_name %><h1>
-        <h3><%= @user.user_name %><h3><%= @profile.age %>
-       
+        <h1><%= @user.first_name.capitalize %><h1>
+        <%= @profile.age %>
+        <h3><%= @user.user_name.capitalize%></h3>
+        <p><%= @profile.gender.capitalize %> / <%= @pref %></p>
     </div>
     
     <div class="u_l">

@@ -2,13 +2,7 @@
 <body>
   <div class="edit_page">
           <%= render "layouts/header" %>
-          <div class="b_back">
-            <%=link_to '<i class="material-icons">chevron_left</i>'.html_safe, :back %>
-          </div>
-          
           <% if current_user == @user%>
-            
-
             <div class="m_p">
                 <div class="form_section">
                   <!-- <div id="user_forms"> -->
@@ -26,7 +20,7 @@
                                         b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
                                       end%>
                   
-                  <-- </div> -->
+                  <!-- </div> -->
                   
                 </div>
               </div>

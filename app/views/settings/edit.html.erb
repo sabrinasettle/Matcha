@@ -2,7 +2,6 @@
 <body>
   <div class="settings_page">
           <%= render "layouts/header" %>
-          
           <% if current_user == @user%>
           
               <nav class="settings_nav">
@@ -30,14 +29,16 @@
                 </div>
               </nav>
             <div class="m_p">
-                <div class="form_section">
-                  <div id="user_forms">
-                          
-                    </div>              
+                 <div class="form_section">
+                   <div id="user_forms">
+                       <%= render "settings/views_and_likes" %>
+                     </div>              
                   
-                  </div>
+                   </div>
                   
-                </div>
+               </div>
+
+
               </div>
               
             </div>

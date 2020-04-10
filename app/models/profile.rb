@@ -5,7 +5,7 @@ class Profile < ApplicationRecord
     validates :user_id, :bio, :sexual_preferences, :gender, presence: true
     validates_numericality_of :age, greater_than_or_equal_to: 18, less_than_or_equal_to: 100, message: 'Must be older than 18 years old'
     enum gender: [:female, :male]
-    enum sexual_preferences: [:heterosexual, :gay, :bisexual]
+    enum sexual_preferences: [:straight, :gay, :bisexual]
     validates :bio, length: { maximum: 500,
         too_long: "%{count} characters is the maximum allowed" }
     validates_format_of :postal_code,

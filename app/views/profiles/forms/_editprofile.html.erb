@@ -1,4 +1,5 @@
 <div class="form_edit">
+  
     <h1> Change Profile</h1>
 
     <%# May have to change this to be nested attributes that the user gets to change the profile %>
@@ -14,8 +15,66 @@
       <%= c.label "Change Avatar", class: 'l_form' %>
           <%= c.file_field :avatar %>
       <br>
-      <!-- Age -->
-      
+        <!-- Age -->
+        <%= c.label :age %>
+        <%= c.text_field :age %>
+
+        
+              <%= c.label :bio %>
+              <%= c.text_area :bio, size: "100x15" %>
+            
+
+            
+                <h3>Gender:</h3>
+                <%#=c.collection_radio_buttons :gender, [[true, 'Yes'] ,[false, 'No']], :first, :last %>
+                <%= c.radio_button :gender, "male" %>
+                <%= label_tag(:gender_male,   "Male") %>
+                <%= c.radio_button :gender, "female" %>
+                <%= label_tag(:gender_female, "Female") %>
+                <%= c.radio_button :gender, "other" %>
+                <%= label_tag(:gender_other,   "Other") %>
+            
+
+            
+                <h3>Pick your interests!</h3>
+                <%= c.collection_check_boxes :interest_ids, Interest.all, :id, :name, required: true do |b| %>
+                  
+                    <%#= b.label { b.check_box + b.text} %>
+                    <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
+                    <%# Customizing the output
+                    You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
+                      c.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+                        b.label { b.check_box }
+                        # or
+                        b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
+                      end%>
+  
+                    <%= b.label(class: "form_interest_checks{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text } %>
+                    <br>
+                <% end %>
+                <%# Taggable https://stackoverflow.com/questions/34196574/rails-how-to-get-records-based-on-user-interests-from-my-current-associations%>
+                <%# https://apidock.com/rails/v4.0.2/ActionView/Helpers/FormOptionsHelper/collection_check_boxes%>
+                <%#= c.collection_check_boxes  do |cb| %>
+                <%#= cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+                <%# end %>
+                
+            
+
+            
+                <h3>Sexuality:</h3>
+                <%= c.radio_button :sexual_preferences, "heterosexual" %>
+                <%= label_tag(:sexual_preferences_heterosexual, "Heterosexual") %>
+                <%= c.radio_button :sexual_preferences, "gay" %>
+                <%= label_tag(:sexual_preferences_gay, "Gay") %>
+                <%= c.radio_button :sexual_preferences, "bisexual" %>
+                <%= label_tag(:sexual_preferences_bisexual, "Bisexual") %>
+
+                <%# https://stackoverflow.com/questions/746387/labels-for-radio-buttons-in-rails-form %>
+                  <%#= f.label :contactmethod, 'Email', :value => 'email' %>
+                  <%#= f.radio_button :contactmethod, 'sms' %>
+                  <%#= f.label :contactmethod, 'SMS', :value => 'sms' %>
+                
+            
       <br>
     <%= c.submit "Change Profile", class: 'f_s_b' %>
    <% end %>
@@ -26,7 +85,7 @@
             <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
             <%# Customizing the output
             You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
-              form.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+              c.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
                 b.label { b.check_box }
                 # or
                 b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }

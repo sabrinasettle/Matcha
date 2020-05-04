@@ -58,7 +58,7 @@ class SettingsController < ApplicationController
 
   # Work on -- for the reset page -- yay!
   def reset_password
-
+    
   end
 
   private

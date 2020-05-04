@@ -1,0 +1,13 @@
+<% if current_user.blocks?(@profile) %>
+  <%= button_to unblock_path(profile_id: @profile.id), class:"block_butt", method: :delete, remote: true do %>
+    <div class="animated thing tada">
+        <i class="material-icons">thumb_down</i>
+        <span><p>Unblock</p></span>
+    </div>
+  <% end %>
+<% else %>
+  <%= button_to block_path(profile_id: @profile.id), class:"block_butt", method: :post, remote: true do %>
+    <i class="material-icons">block</i>
+    <span><p>Block</p></span>
+  <% end %>
+<% end %>

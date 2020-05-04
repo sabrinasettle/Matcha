@@ -1,15 +1,19 @@
 class SessionsController < ApplicationController
+  skip_before_action :require_login
+
+  before_action :find_user, only: [:destroy]
+
   def new
   end
 
   def create
-    user = User.find_by_user_name(params[:user_name])
-    # @user = User.where(user_name: params[:user_name])
-    puts user.user_name
-    if user && user.authenticate(params[:password])
-      if user.email_confirmed
-        session[:user_id] = user.id
-        user.update(online: true)
+    @user = User.find_by(user_name: params[:user_name])
+    if @user && @user.authenticate(params[:password])
+      if @user.email_confirmed
+        #had werid issue where the bool didnt get set, so scary hopefully this works 
+        @user.update_attribute(:online, true)
+        session[:user_id] = @user.id
+        cookies.signed[:user_id] = current_user.id
         # https://stackoverflow.com/questions/17480487/rails-4-session-expiry
         # session[:expires_at] = Time.current + 24.hours
         flash[:notice]="Login successful"
@@ -25,10 +29,18 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(id: current_user.id)
-    user.update(online: false)
+    # Work on -- clean this up
+    @user.update_attribute(:online, false)
+    @user.update_attribute(:last_online, DateTime.now)
     session[:user_id] = nil
+    cookies.signed[:user_id] = nil
     flash[:notice]="Logged Out"
     redirect_to '/login'
   end
+
+  private
+  
+    def find_user
+      @user = User.find_by(id: current_user.id)
+    end
 end

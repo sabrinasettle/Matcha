@@ -2,96 +2,126 @@ class ProfilesController < ApplicationController
   #this includes the Helper functions
   include ProfilesHelper
 
+  before_action :find_profile, only: [:show, :edit, :update, :update_profile, :edit_photos, :delete_photos, :flag, :has_visibility]
+  before_action only: [:show, :edit, :update, :new] do
+    has_visibility(@profile)
+  end
+  before_action only: [:edit, :update, :new] do
+    allowed(@profile)
+  end
   before_action :find_user, only: [:show, :edit, :update]
-  before_action :find_profile, only: [:show, :edit, :update, :update_profile]
   before_action :interest_titles, only: [:show, :edit]
-  before_action :find_likes, only: [:edit]
-  before_action :find_visitors, only: [:edit]
-  before_action :find_matches, only: [:edit]
-  # before_action :profile_params, only: [:create]
+  before_action :get_pictures, only: [:show, :edit]
   
   
-  def show
-    if current_user.profile_created == true
-      create_visit
-      @gender = gender_of(@profile)
-      @pref = het_to_straight(@profile)
-      unless @profile.pictures.nil?
-        @pictures = @profile.pictures 
-      end
-
-      unless @profile.postal_code.nil?
-        @location = @profile.postal_code.to_region
-        # @user.change_lat_long(@profile)
-      end
-
-      # respond_to do |format|
-        # format.html { render(:text => "not implemented") }
-        # format.js {}
-      # end
-    end
-
-  end
-
-  def edit
-    unless @profile.pictures.nil?
-      @pictures = @profile.pictures 
-    end
-  
-    @flag = params[:flag]
-    respond_to do |format|
-      format.html {}
-      case
-      when @flag == '1'
-        format.js { render :editprofile, layout: false}
-      when @flag == '2'
-        format.js { render :editphotos, layout: false}
-      end
-    end
-  end
-
-  
-  def update
-    
-    @profile = Profile.find_by(user_name: params[:user_name])
-    if @profile.update_attributes(profile_params)
-      redirect_to profile_path(@profile.user_name)
-    # elsif @user.update_attributes(user_params) 
-      # redirect_to edit_profile_path(@user.user_name)
-    end
-  end
-
-  def update_profile
-    @profile = Profile.find(params[:user_name])
-    if @profile.update_attributes(profile_params)
-      redirect_to settings_path(@profile.user_name)
-    end
-  end
-
   def new
   end
 
   def create
-    # @user = current_user
-    #this worked
-    # @profile = Profile.create!(profile_params)
-    # @profile = Profile.new(profile_params)
-    #I hand the one below before and that worked
-    # @profile = @user.profile
     @profile = current_user.profile
+    
     if @profile.update_attributes(profile_attributes)
-    # if @profile.save
       if params[:images]
         params[:images].each { |image|
           @profile.pictures.create(image: image)
         }
       end
       if @user.profile?
+        @profile.set_interest_tags
         redirect_to '/main', notice: "Profile was created!"
       end
     else
-
+      flash[:notice] = @profile.errors #unless @profile.valid?
     end
+  end
+
+  # Work on -- Isnt really very DRY
+  def show
+      if current_user.blocks.where(profile_id: @profile.user_id).any?
+         @disable = true
+      end
+      if current_user.profile_created == true
+        create_visit
+        @gender = @profile.gender_of
+        @pref = @profile.sex_pref
+        unless @profile.pictures.nil?
+          @pictures = @profile.pictures 
+        end
+        unless @profile.postal_code.nil?
+          @location = @profile.postal_code.to_region
+          convert_postal_code(@profile)
+        end
+        unless @user.last_online.nil?
+        puts @date_and_time = @user.last_online
+        end
+      end
+  end
+
+  def edit
+    unless @profile.pictures.nil?
+      @pictures = @profile.pictures
+    end
+  end
+
+  
+  def update
+    # @profile = Profile.find_by(user_name: params[:user_name])
+    if @profile.update_attributes(profile_params)
+      @profile.set_interest_tags
+      redirect_to profile_path(@profile.user_name)
+    else
+      redirect_to edit_profile_path(@profile.user_name)
+    end
+  end
+
+  def edit_photos
+      #     Deleting an Attachment
+      # Set the attribute to nil and save.
+
+      # @user.avatar = nil
+      # @user.save
+
+      # find the picture
+      # photo = Picture.find_by(id: params[:id])
+      # set the attachment to nil then replace it?
+      # photo.image = nil
+      # then update it
+      # photo.image = params[:change]
+      # then save
+      # photo.save
+    puts p = params[:images]
+    if params[:images]
+
+      puts "yay things!"
+      p.each { |image|
+          puts image
+          @profile.pictures.create(image: image)
+      }
+    end
+
+    redirect_to edit_profile_path(@profile.user_name)
+    # Work on -- could be a remote link to do a ajaxy thing of render the page again???
+  end
+
+  def delete_photo
+    photo = Picture.find_by(id: params[:id])
+    photo.destroy
+    redirect_to edit_profile_path(current_user.user_name)
+  end
+
+  # Work on -- Ummm was it even using this?
+  def update_profile
+    @profile = Profile.find(params[:user_name])
+  #   if @profile.update_attributes(profile_params)
+  #     redirect_to settings_path(@profile.user_name)
+  #   end
+  end
+
+  def flag 
+    if @profile.is_flagged == false
+      @profile.update_attribute(:is_flagged, true)
+    end
+    redirect_to profile_path(@profile.user_name)
   end
   
   private
@@ -105,9 +135,11 @@ class ProfilesController < ApplicationController
     end
 
     def create_visit
-      #added in because I think I needed it, havent tested tho
-      unless @profile.user_id == current_user.id
-        @profile.visits.where(visitor: current_user).first_or_create
+      unless @profile.user_id == current_user.id or current_user.profile.blocks.where(user_id: @profile.user_id).any?
+        if @profile.visits.where(visitor_id: current_user.id).exists? == false
+          a_visit = @profile.visits.where(visitor_id: current_user.id).create
+          a_visit.create_activity key: 'visit.visited', owner: current_user, recipient: @user
+        end
       end
     end
 
@@ -115,26 +147,10 @@ class ProfilesController < ApplicationController
       @titles = @profile.interests.collect(&:name)
     end
 
-    def find_likes
-      unless @profile.likes.nil?
-        @liker_ids = @profile.likes.pluck(:user_id)
-        @likers_names = User.where(id: @liker_ids).collect { |p| p.user_name }
+    def get_pictures
+      unless @profile.pictures.nil?
+        @pictures = @profile.pictures
       end
-    end
-
-    def find_visitors
-      unless @profile.visits.nil?
-        ids = @profile.visits.order(created_at: :desc).pluck(:visitor_id)
-        @visitors = User.where(id: ids).collect { |p| p.user_name }
-      end
-    end
-
-    def find_matches
-      unless @profile.likes.nil?
-        ids = @profile.likes.where(profile_id: [@profile.id], user_id: [@liker_ids]).pluck(:user_id)
-        @matches_names = Profile.where(user_id: ids)
-      end
-      
     end
 
     def profile_params

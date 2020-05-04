@@ -1,3 +1,14 @@
+<script type="text/javascript">
+  var checkBoxes = document.querySelectorAll(".form-check-input");
+  var form = document.querySelector('form');
+  
+  for (const check of checkBoxes) {
+  check.addEventListener( 'change', function() {
+    Rails.fire(form, 'submit');
+  });
+  }
+</script>
+
 
 
 <!-- https://mixandgo.com/learn/how-to-use-link_to-in-rails -->
@@ -6,19 +17,50 @@
         <%= render "layouts/header" %>
         
 
-        <%# Put main page div here%>
+        
         <% if current_user == @user && current_user.profile_created == false%>
+        <!-- Work on -- needs work thats for sure -->
             <div class="welcome">
                 <p>Welcome <%= current_user.user_name %>! You aren't seeing any matches because you need to Create your profile first! Head to your profile, linked above to finish it and start looking for that right cup of tea!<p>
             </div>
-        <%# Here is where I want all the profiles available and ordered, I need containers for each of them. I need them odered by rating, distance, interests %>
         <% else%>
-            <%#= render partial: "sort", locals: { profile: @profile } %> 
-            
-            <%#= render "partials/sort" %>
-            <%#= render "partials/showmatches", locals: { profile: @profile } %>
-         
-
+            <div class="m_p">
+                <%#= render "main/partials/sort"%> 
+                <%#= render "main/partials/filter"%> 
+                <!-- This shows the feed -->
+                <%#= render "main/partials/show", locals: { feed: @feed } %>
+                
+                <%#= @test.each do |i| %>
+                    <%#= i.age %>
+                <%# end %>
+                <br>
+                <% @tags.each do |c|%>
+                    <%= c %>
+                <% end %>
+                <div class="suggest"
+                <h1> Suggestions </h1>
+                <% @feed.each do |person| %>
+                    <ul>
+                        <li>
+                            <%= link_to person.user_name %>
+                        </li>
+                    </ul>
+                <% end%>
+                </div>
+                <div class='test_res'>
+                <% @all.each do |person| %>
+                    <ul>
+                        <li>
+                            <%= link_to person.user_name %>
+                            <%= person.postal_code.to_lat %>
+                            <%= person.postal_code.to_lon %>
+                            <%= person.postal_code %>
+                            <%= person.interest_list %>
+                        </li>
+                    </ul>
+                    <% end%>
+                    <%#= render "main/partials/profile_card", locals: {person: @p} %>
+                </div>
         <% end %>
     </div>
 </body>

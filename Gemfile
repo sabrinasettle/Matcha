@@ -23,7 +23,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
@@ -63,7 +63,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #bootstrap
 gem 'bootstrap'
+
+# jquery
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # for image uploading and storing
 gem 'paperclip'
@@ -74,8 +77,45 @@ gem 'geocoder'
 # Converter for postal codes
 gem 'area'
 
+# Geolocation gem as well
+gem 'geokit'
+
+gem 'geokit-rails'
+
 # Taggable gem
 gem 'acts-as-taggable-on'
 
+# gem 'rocket_tag'
+
+
+# search bar ability
+gem 'pg_search'
+
+# for forms
+gem 'simple_form'
+
+# simple css animations
+gem 'animate.css-rails'
+
+gem 'public_activity'
+
+# gem 'will_paginate', '~> 3.1.0'
+
 # Ahoy tracks visits
 # gem 'ahoy_matey'
+
+# Client side validation
+# gem 'client_side_validations'
+
+# added to get location
+gem 'httparty', :require => 'httparty', :group => :development 
+
+
+
+
+# https://medium.com/@ajmalafif/instagram-gem-with-rails-5418524833bc
+# # Instagram oauth
+# gem 'omniauth-instagram'
+
+# # Instagram feed access
+# gem 'instagram'

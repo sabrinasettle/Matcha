@@ -1,16 +1,32 @@
 
-<body>
-    <div class="search_page">
+
+
+
+<div class="main_page">
         <%= render "layouts/header" %>
-        <div class="s_b">
-            <%= form_tag(search_path, :method => "get", class: 'navbar-form navbar-left') do %>  
-                <div class="input-group">  
-                    <%= text_field_tag :search, params[:search], placeholder: "Search Matcha", class: "form-control" %>  
-                    <div class="input-group-btn">  
-                    <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
-                    </div>  
-                </div>  
+        
+
+        
+        <% if current_user == @user && current_user.profile_created == false%>
+        <!-- Work on -- needs work thats for sure -->
+            <div class="welcome">
+                <p>Welcome <%= current_user.user_name %>! You aren't seeing any matches because you need to Create your profile first! Head to your profile, linked above to finish it and start looking for that right cup of tea!<p>
+            </div>
+        <% else%>
+            <div class="m_p">
+                
+                    
+            
+                <!-- Work on -- A better return if empty -->
+                <% if @feed.empty? %>
+                    <%= render "search/error_partials/nothing_found" %>
+                <% else %>
+                    <!-- Sorting results -->
+                    <%= render "main/partials/sort"%> 
+                    <%= render "main/partials/filter"%>
+                    <!-- This shows the feed -->
+                    <%= render "main/partials/profile_card", locals: {person: @feed} %>
                 <% end %>
-        </div>
-    </div>
-</body>
+                </div>
+            
+        <% end %>

@@ -1,0 +1,44 @@
+<body>
+    <div class="con_page">
+    <%= render "layouts/header" %>
+        
+        </div>
+        <!-- mess_con is the html I need to replace on coming back from messages/show -->
+        <div class="mess_con">
+                    <div class='m_a'>
+                        </div>
+                        <div class='chat_area' data-behavior='messages' data-room-id='<%= @chat.id %>'>
+                        <div class='u_ban_er'>
+                            
+                            <%= image_tag @other_user.profile.avatar.url(:thumb), class: "us_img"%>
+                            <%= @other_user.profile.user_name %>
+                        </div>
+                        
+                        <div class="messages-list">
+                            <ul>
+                                <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
+                            </ul>
+                        </div>
+                        <div class='form'>
+                            <%= form_for [@chat, Message.new], :url => direct_message_path(@chat.id), remote: true do |f| %>
+                                <%= f.hidden_field :user_id, value: current_user.id %>
+                                <%#= f.hidden_field :conversation_id, value: @chat.id %>
+                                <%= f.text_area :body, placeholder: "Your message" %>
+                                <%= f.submit "Send", class: 'btn btn-primary chat-input' %>
+                            <% end %>
+                        </div>
+                    </div>
+        </div>
+    </div>
+
+</body>
+
+
+//messages
+<li>
+  <div class="row">
+    <div class="<%= current_user.id == message.user_id ? 'message-sent' : 'message-received' %>">
+      <%= message.body %>
+    </div>
+  </div>
+</li>

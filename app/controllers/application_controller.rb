@@ -1,28 +1,44 @@
 class ApplicationController < ActionController::Base
-  
+    before_action :require_login
+
+    include PublicActivity::StoreController
+
     def current_user
         @current_user ||= User.find(session[:user_id]) if session[:user_id]
-      end
-      helper_method :current_user
+    end
+    helper_method :current_user
     
-      # def current_user?(user)
-        # user == current_user
-      # end
-    
-      def logged_in?
-        !current_user.nil?
-        redirect_to '/signup'
+
+    def user_avatar(user)
+      if user.image.present?
+        image_tag user.image_url :thumbnail
+      else
+        # Assuming you have a default.jpg in your assets folder
+        image_tag 'default.jpg'
       end
+    end
 
-      # def after_sign_in_path_for(resource)
-      #   unless current_user.profile.nil?
-      #     main_path 
-      #   else
-      #     flash[:alert] = "Please complete your profile"
-      #     show_profile_path
-      #   end
-      # end
+    # create random ip addresses
+    # https://stackoverflow.com/questions/6115589/geocoder-how-to-test-locally-when-ip-is-127-0-0-1
+    def request_ip
+      if Rails.env.development? 
+         response = HTTParty.get('http://api.hostip.info/get_html.php')
+         ip = response.split("\n")
+         ip.last.gsub /IP:\s+/, ''      
+       else
+         request.remote_ip
+       end 
+    end
 
+    private
+
+    def require_login
+      unless current_user
+        redirect_to login_url
+      end
+    end
+
+      # Work on -- Avatar for profile needs to be set only at the start before the profile_created is true
       # https://stackoverflow.com/questions/49508846/how-can-i-set-a-default-image-for-user-in-rails
       #   def avatar_for(user)
       #     @avatar = user.avatar
@@ -35,14 +51,6 @@ class ApplicationController < ActionController::Base
       # end
 
 
-      def user_avatar(user)
-        if user.image.present?
-          image_tag user.image_url :thumbnail
-        else
-          # Assuming you have a default.jpg in your assets folder
-          image_tag 'default.jpg'
-        end
-      end
 
       # http://hankstoever.com/posts/11-Pro-Tips-for-Using-Geocoder-with-Rails
       # def location
@@ -58,4 +66,5 @@ class ApplicationController < ActionController::Base
       #     @location
       #   end
       # end
+
 end

@@ -15,22 +15,111 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      // position: fixed;
       .nav_bar_name {
         text-transform: uppercase;
         margin-left: 1rem;
         text-decoration: none;
         color: black;
-      }
+        display: flex;
+        h1 {
+          font-size: xx-large;
+        }
+      
+        .search_b {
+          position: inherit;
+          margin-left: 10px;
+          .search-fa-link {
+            display: none;
+          }
+          .form-fa-se {
+              float: right;
+              // margin: 15px 10px 10px 0;
+              // background-color: white;
+              border-radius: 20px;
+              display: flex;
+              height: 40px;
+              i {
+                margin: 8px 5px 5px 8px;
+              }
+              
+              .search_input {
+                    border: 0;
+                    padding: 15px;
+                    margin: 0;
+                    // background: rgba(255, 255, 255, 0.671);
+                    font: 13px sans-serif;
+                    // height: 30px;
+                    font-size: 15px;
+                    border-radius: 20px 0px 0px 20px;
+              }
+              .search_input:focus {
+                  outline:0 !important; 
+              }
+              .search_button {
+                border:none;
+                border-radius: 0px 20px 20px 0px;
+              }
+          }
+        }
+    }
       .nav-links-container {
         display: flex;
         justify-content: space-between;
         text-transform: uppercase;
         .nav-links {
           text-decoration: none;
+          color:black;
+          margin-right: 0.1rem;
+          // display:inline-block;
+          i {
+            padding: 10px;
+          }
+        }
+        a:hover {
+          background-color: #fcfcfc8e;
+          border-radius: 60%;
           color: #333;
-          margin: 0 0.5rem;
-          margin-right: 1rem;
+        }
+        .log_o {
+          border-left: #333 0.5px solid;
+          height: 44px;
+          display: grid;
+          .lg-b {
+            text-decoration: none;
+            color: #333;
+            margin: 0px 1rem 0px 0.4em;
+            padding: 12px 10px 10px 10px;
+            a{
+              padding: 0;
+              margin-top: 5px;
+            }
+          }
+          .lg-b:hover {
+            border-radius: 10px 10px 10px 10px;
+          }
+        }
+        .p-b {
           
+          text-decoration: none;
+          color:black;
+          margin-right: 0.3rem;         
+          padding-right: 12px;
+          i {
+            padding: 10px 5px 0 8px;
+            float: left;
+          }
+          p {
+            float: right;
+            margin-top: 12px;
+          }
+          a {
+            padding: 0;
+            margin: 0;
+          }
+        }
+        .p-b:hover {
+          border-radius: 10px 10px 10px 10px;
         }
       }
       .icons-container {
@@ -39,59 +128,54 @@
         justify-content: space-between;
       }
     }
-  
-    .settings_nav {
-      width: 0px;
-      height: 0px;
-      padding: 0;
-      margin: 0;
-      .wh1{
-        // background-color: white;
-        border-right: 1px #333 solid; 
-        width: 300px; //I may need to change this later
-        // height: 98vh; //I may need to change this later
-      }
-    }
-    ul  {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
-    li{
-      text-decoration: none;
-      margin: 15px 15%;
-      padding: 15%; //I may need to change this later
-      border-bottom: #333 1px solid;
+
+    .notice {
+      background-color: rgba(255, 255, 255, 0.753);
+      padding: 20px;
       text-align: center;
-      text-transform: uppercase;
-      a { 
-        text-decoration: none;
-        color: #333;
+    }
+    
+    .nav {
+      border-bottom: 1px solid #333;
+      // border-width:1px 0;
+      list-style:none;
+      margin:0;
+      padding:0;
+      text-align:center;
+    }
+    .nav li{
+      display:inline;
+      padding: 0 2% 0 2%;
+      // margin: ;
+      // margin: 15px 15%;
+        // padding: 15%; //I may need to change this later
+        .material-icons{
+              font-size: 40px;
+              color: black;
+              padding: 10px;
+          }
+    }
+    .nav a{
+      display:inline-block;
+      padding:10px;
+      text-decoration: none;
+      color: #333;
+      padding: 10px;
+      margin: 10px;
+      width: 100px;
         p{
           margin-top: 0;
         }
-        
-      }
-      a:active {
-        background-color: #b8f2ba;
-      }
-     
-      
-      .material-icons{
-        font-size: 50px;
-        color: black;
-      }
     }
-    ul li:hover {
+    .nav a:hover {
       background: rgba(253, 251, 251, 0.692);
-      // margin: 5px;
-    }
-    ul li:active {
-      background-color: lime;
+      border-radius: 10px 10px 10px 10px;
     }
     .m_p{
-      margin: 0 0 0 300px;
-      .form_section {
+      display: flex;
+      justify-content: center;
+      // margin: 0 0 0 300px;
+      .user_forms{
         // padding: 5%;
         // margin: 5%; 
         // margin: 4vh 0 50px 0;

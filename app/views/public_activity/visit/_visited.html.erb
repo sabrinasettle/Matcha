@@ -1,0 +1,7 @@
+<% if @user.user_name == activity.recipient.user_name %>
+    viewed your profile
+<% else %>
+    viewed <%= link_to activity.recipient.user_name, profile_path(activity.recipient.user_name) %>'s profile
+<% end %>
+
+

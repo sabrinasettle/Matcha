@@ -1,18 +1,18 @@
 <body>
 
     <div class="profile_page">
-        <% if @user.profile_created == false %>
-          <%= render partial: "profiles/partials/basicinfo", locals: { user: @user } %>
+        <% if @profile.has_activity == false %>
+          <%= render partial: "profiles/partials/basicinfo", locals: { profile: @user } %>
         <% end %>
         
-        <% if current_user == @user %>
-          <% if @user.profile_created == false %>
+        <% if current_user.id == @profile.user_id %>
+          <% if @profile.has_activity == false %>
             <%= render partial: "profiles/forms/noprofileform", locals: { profile: @profile } %>
           <% else%>
             <%= render partial: "profiles/partials/profile", locals: { profile: @profile } %>
           <% end %>
         <% else %>
-          <% if @user.profile_created == false %>
+          <% if @profile.has_activity == false %>
             <%= render partial: "profiles/partials/noshow" %>
           <% else %>
             <%= render partial: "profiles/partials/profile", locals: { profile: @profile } %>

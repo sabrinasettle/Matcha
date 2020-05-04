@@ -1,11 +1,13 @@
 <% if current_user.likes?(@profile) %>
-  <%= button_to unlike_path(profile_id: @profile.id), remote: true, method: :delete do %>
-    <i class="material-icons">thumb_down</i>
+  <%= button_to unlike_path(profile_id: @profile.user_id), class:"like_button", remote: true, method: :delete do %>
+    <div class="animated heart bounceIn">
+      <i class="material-icons">favorite</i>
+    </div>
     <span><p>Unlike</p></span>
   <% end %>
 <% else %>
-  <%= button_to like_path(profile_id: @profile.id), remote: true do %>
-    <i class="material-icons">thumb_up</i>
+  <%= button_to like_path(profile_id: @profile.user_id), class:"unlike_button", remote: true do %>
+    <i class="material-icons">favorite_border</i>
     <span><p>Like</p></span>
   <% end %>
 <% end %>

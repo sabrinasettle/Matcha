@@ -1,0 +1,17 @@
+<li>
+    <div class="row">
+        <div class="<%= current_user.id == message.user_id ? 'message_sent' : 'message_received' %>">
+            <%#= image_tag message.user.profile.avatar.url(:thumb) %>
+            <div class="m_c">
+                <div class="name">
+                    <%= message.user.profile.first_name %>
+                </div>
+
+                <div class="m_b">
+                    <%= message.body %>
+                </div>
+            </div>
+                <%#= message.user.user_name %>
+        </div>
+    </div>
+</li>

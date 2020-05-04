@@ -1,0 +1,28 @@
+<h1> Edit Photos </h1>
+
+<% if @pictures.nil? %>
+    <% render "profiles/forms/no_photos_form" %>
+<% else %>
+    <div class="ph_sec">
+        <% if @pictures.length < 5 %>
+            <h1> Max Amount to upload is 4 images </h1>
+            <%= form_for :profile, url: edit_photos_path(@profile.user_name), html: { multipart: true } do |f| %>
+                <%= f.label "Add more photos" %>
+                <%= file_field_tag "images[]", type: :file, multiple: true %> %>
+                <%= f.submit "Finish Profile", class: "btn btn-primary" %>
+            <% end %>
+        <% end %>
+        <% @pictures.each do |pic| %>
+            <%= pic.id %>
+            
+            
+            <div class="photo_edit">
+                <%= button_to delete_photo_path(@profile.user_name, pic.id), method: :delete, data: {confirm: "Delete this photo?"} do%>
+                    <i class="material-icons">cancel</i>'
+                <% end %>
+                <%= image_tag pic.image.url(:large) %>
+                
+            </div>
+        <% end %>
+    </div>
+<% end %>

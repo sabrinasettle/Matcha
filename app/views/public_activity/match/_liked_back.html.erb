@@ -1,0 +1,13 @@
+<% if activity.trackable %>
+    <% if @user.first_name == activity.recipient.first_name %>
+        liked you back you! That's a match!
+    <% else %>
+        matched with <%= link_to activity.recipient.user_name, profile_path(activity.recipient.user_name) %>!    
+    <% end %>
+<% else %>
+    <% if @user.first_name == activity.recipient.first_name %>
+         unmatched with you
+    <% else %>
+        unmatched with <%= link_to activity.recipient.user_name, profile_path(activity.recipient.user_name) %>
+    <% end %>
+<% end %>

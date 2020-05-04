@@ -10,19 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_30_213645) do
+ActiveRecord::Schema.define(version: 2020_04_30_204816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "conversations", force: :cascade do |t|
-    t.integer "recipient_id"
-    t.integer "sender_id"
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.bigint "trackable_id"
+    t.string "owner_type"
+    t.bigint "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.bigint "recipient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["recipient_id", "sender_id"], name: "index_conversations_on_recipient_id_and_sender_id", unique: true
-    t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
-    t.index ["sender_id"], name: "index_conversations_on_sender_id"
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
+  create_table "blocks", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "profile_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "interests", force: :cascade do |t|
@@ -41,6 +62,18 @@ ActiveRecord::Schema.define(version: 2020_03_30_213645) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.integer "profile_id"
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "inverse_user"
+    t.index ["conversation_id"], name: "index_matches_on_conversation_id"
+    t.index ["inverse_user"], name: "index_matches_on_inverse_user"
+    t.index ["user_id", "conversation_id"], name: "index_matches_on_user_id_and_conversation_id", unique: true
+    t.index ["user_id"], name: "index_matches_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -79,6 +112,11 @@ ActiveRecord::Schema.define(version: 2020_03_30_213645) do
     t.float "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.boolean "has_activity", default: false
+    t.string "blocked_user", default: [], array: true
+    t.decimal "user_rating", default: "5.0"
+    t.boolean "is_flagged", default: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
@@ -127,6 +165,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_213645) do
     t.float "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "last_online"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["user_id"], name: "index_users_on_user_id"
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
@@ -139,5 +178,7 @@ ActiveRecord::Schema.define(version: 2020_03_30_213645) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "matches", "conversations"
+  add_foreign_key "matches", "users"
   add_foreign_key "taggings", "tags"
 end

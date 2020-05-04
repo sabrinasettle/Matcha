@@ -12,16 +12,11 @@ class SearchController < ApplicationController
   end
 
   def new
-    if params[:search].blank?  
-      #alert doesnt work but the reroute does
-      redirect_to('/', alert: "Empty field!") and return  
-    else  
-      # @parameter = params[:search].downcase  
-      @results = User.all.where("lower(name) LIKE :search", search: @parameter)  
-      # @results = User.search(params[:seach])
-      # @results = User.search(search_term) + Profile.search(search_term) + Starter.search(search_term)
-
-    end  
+    if params[:term]
+      @feed = Profile.user_search(params[:term])
+    else
+      @feed = Profile.all
+    end
   end
 
   def search

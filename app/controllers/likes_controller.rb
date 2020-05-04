@@ -1,25 +1,41 @@
 class LikesController < ApplicationController
+  include LikesHelper
+
   before_action :find_profile
+  before_action :find_user
 
   def create
     @profile.likes.create(user_id: current_user.id)
-    respond_to do |format|
-      format.html { redirect_to '/main' }
-      format.js
+    a_like = @profile.likes.last
+    a_like.create_activity key: 'like.liked', owner: current_user, recipient: @user
+
+    if match?(@profile)
+      create_match(@profile)
     end
-    redirect_to profile_path(@profile.user_name)
+    respond_to do |format|
+      format.html 
+      format.js { redirect_to profile_path(@profile.user_name)}
+    end
+    
   end
 
   def destory
-    @profile.likes.where(user_id: current_user.id).destroy_all
-    respond_to do |format|
-      format.html { redirect_to profile_path(@profile.user_name)}
-      format.js
+    if match?(@profile)
+      destroy_match(@profile)
     end
-    redirect_to profile_path(@profile.user_name)
+    @profile.likes.where(user_id: current_user.id).destroy_all
+  
+    respond_to do |format|
+      format.html 
+      format.js { redirect_to profile_path(@profile.user_name)}
+    end
   end
 
   private
+    def find_user
+      @user = User.find_by(id: params[:profile_id])
+    end
+
     def find_profile
       @profile = Profile.find(params[:profile_id])
     end

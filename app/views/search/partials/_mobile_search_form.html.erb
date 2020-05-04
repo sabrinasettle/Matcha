@@ -1,0 +1,11 @@
+<!-- For mobile search maybe -->
+<div class="s_b">
+    <%= form_tag(search_path, :method => "get", class: 'navbar-form navbar-left') do %>  
+        <div class="input-group">  
+            <%= text_field_tag :search, params[:search], placeholder: "Search Matcha", class: "form-control" %>  
+            <div class="input-group-btn">  
+            <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
+            </div>  
+        </div>  
+    <% end %>
+</div>

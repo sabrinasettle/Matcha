@@ -1,0 +1,17 @@
+<div class="l_v_m">
+    <h1> Activity </h1>
+    <div class="act_con">
+      <% @activities.each do |activity| %>
+        <ul class="activity">
+            <li>
+                <% if activity.owner.user_name == @user.user_name %>
+                    You <%= render_activity activity %>
+                <% else %>
+                    <%= link_to activity.owner.user_name %>
+                    <%= render_activity activity, locals: {user: @user} %>
+                <% end %>
+            </li>
+        </ul>
+      <% end %>
+    </div>
+</div>

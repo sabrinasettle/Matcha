@@ -1,0 +1,30 @@
+<%# age, location, “fame rating” and common tags. %>
+<%# age range bar https://stackoverflow.com/questions/33751022/range-slider-using-ruby-on-rails %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var slider = $("#the_slider").slider({
+        range: true,
+        min: 18,
+        max: 90,
+        values: [250, 450],
+        slide: function(event, ui) {
+            $("#thing_data1").val(ui.values[0]);
+            $("#thing_data2").val(ui.values[1]);
+        }
+        });
+        $("#thing_data1").val(slider.slider("values")[0]);
+        $("#thing_data2").val(slider.slider("values")[1]);
+        });
+</script>
+<div class="sort_bar">
+    <h1> Filter </h1>
+    <!-- form here? -->
+
+    <!-- First form -->
+    <%= simple_form_for :sort, url: main_path, method: "GET" do |f| %>
+    
+    <% end %>
+
+    
+</div>

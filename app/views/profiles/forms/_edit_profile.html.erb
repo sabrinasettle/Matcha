@@ -1,0 +1,88 @@
+<div class="form_edit">
+    <h1> Change Profile</h1>
+    <%= form_for :profile do |c| %>
+      <!-- Avatar Photo -->
+      <div class="avatar">
+          <!-- Work on -- Round this -->
+          <%= image_tag @profile.avatar.url(:medium) %>
+          <p> Current Avatar </p>
+      </div>
+          <%= c.label "Change Avatar", class: 'l_form' %>
+          <%= c.file_field :avatar %>
+      <br>
+        <!-- Age -->
+        <%= c.label :age, class: "form_label"%>
+        <%= c.text_field :age, class: "form_input" %>
+
+        <%= c.label :postal_code, class: "form_label" %>
+        <%= c.text_field :postal_code, class: "form_input"  %>
+        
+        <%= c.label :bio, class: "form_label" %>
+        <%= c.text_area :bio, size: "100x15", class: "form_input" %>
+            
+
+            
+        <h3>Gender:</h3>
+        <%#=c.collection_radio_buttons :gender, [[true, 'Yes'] ,[false, 'No']], :first, :last %>
+        <%= c.radio_button :gender, "Male" %>
+        <%= label_tag(:gender_male,   "Male") %>
+        <%= c.radio_button :gender, "Female" %>
+        <%= label_tag(:gender_female, "Female") %>
+                
+            
+
+            
+                <h3>Pick your interests!</h3>
+                <%= c.collection_check_boxes :interest_ids, Interest.all, :id, :name, required: true do |b| %>
+                  
+                    <%#= b.label { b.check_box + b.text} %>
+                    <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
+                    <%# Customizing the output
+                    You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
+                      c.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+                        b.label { b.check_box }
+                        # or
+                        b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
+                      end%>
+  
+                    <%= b.label(class: "form_interest_checks{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text } %>
+                    <br>
+                <% end %>
+                <%# Taggable https://stackoverflow.com/questions/34196574/rails-how-to-get-records-based-on-user-interests-from-my-current-associations%>
+                <%# https://apidock.com/rails/v4.0.2/ActionView/Helpers/FormOptionsHelper/collection_check_boxes%>
+                <%#= c.collection_check_boxes  do |cb| %>
+                <%#= cb.label(class: "checkbox-inline input_checkbox") {cb.check_box(class: "checkbox") + cb.text} %>
+                <%# end %>
+                
+            
+
+            
+                <h3>Sexuality:</h3>
+                <%= c.radio_button :sexual_preferences, "Straight" %>
+                <%= label_tag(:sexual_preferences_heterosexual, "Straight") %>
+                <%= c.radio_button :sexual_preferences, "Gay" %>
+                <%= label_tag(:sexual_preferences_gay, "Gay") %>
+                <%= c.radio_button :sexual_preferences, "Bisexual" %>
+                <%= label_tag(:sexual_preferences_bisexual, "Bisexual") %>
+
+                <%# https://stackoverflow.com/questions/746387/labels-for-radio-buttons-in-rails-form %>
+                  <%#= f.label :contactmethod, 'Email', :value => 'email' %>
+                  <%#= f.radio_button :contactmethod, 'sms' %>
+                  <%#= f.label :contactmethod, 'SMS', :value => 'sms' %>
+                
+            
+      <br>
+    <%= c.submit "Change Profile", class: 'f_s_b' %>
+   <% end %>
+        
+
+</div>
+            <%#= b.label { b.check_box + b.text} %>
+            <%# https://makandracards.com/makandra/32147-rails-4-introduced-collection_check_boxes%>
+            <%# Customizing the output
+            You can customize the output by passing a block. The block will be called with a special builder object that has a handful of special methods. See the complex example below.
+              c.collection_check_boxes :author_ids, Author.all, :id, :name_with_initial do |b|
+                b.label { b.check_box }
+                # or
+                b.label(class: "my-#{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text }
+              end%>

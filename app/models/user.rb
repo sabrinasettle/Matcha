@@ -1,12 +1,26 @@
 class User < ApplicationRecord
 
   before_create :set_confirmation_token
+  include PgSearch::Model 
+  
 
-  validates :first_name, :last_name, presence: true
-  validates :user_name, presence: true, uniqueness: true, length: { in: 4..25 }
-  validates :email, presence: true, uniqueness: true
-  # validates :password, length: { in: 7..20 }
-  validates_presence_of :password_digest
+  attr_accessor :skip_validations
+
+
+
+  # :presence => {:message => "Title can't be blank." },
+  #         :uniqueness => {:message => "Title already exists."},
+# need to get the messages out when I can
+  validates :first_name, :last_name, presence: {:message => "Required input, please try again"}
+  validates_format_of :first_name, :last_name, :with => /[a-z]/
+  validates :user_name, presence: {:message => "Required input, please try again"}, 
+    uniqueness: {:message => "Username already taken"}, :length => { :minimum => 4, :maximum => 25, :message => "Must be more than 4 and less than 25 characters"}
+  # validates_length_of :foo, minimum: 4, maximum: 25, message: "Username must be 4 to 25 characters long"
+  validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }, presence: {:message => "Required input, please try again"}, uniqueness: true
+
+  validates :password, presence: true, length: { :minimum => 7, :maximum => 20, :message => "Password must be between 8 and 20 characters, with a special character and a number "}, unless: :skip_validations 
+  validates_confirmation_of :password
+  # validates_presence_of :password_digest
   has_secure_password
 
   #each user has one profile, which belong_to them as a assoication
@@ -15,8 +29,18 @@ class User < ApplicationRecord
   #accepts creation of another object from this one
   accepts_nested_attributes_for :profile, update_only: true, allow_destroy: true 
   has_many :likes, dependent: :destroy
+  has_many :blocks, dependent: :destroy
 
+  has_many :matches
+  has_many :conversations, through: :matches
   has_many :messages
+
+  
+  # belongs_to_and_has_many :conversations #, foreign_key: :sender_id
+  # has_many :messages, through: :conversations
+
+  # has_many :messages
+  # #commented out because it was doing something weird
   # has_many :conversations, foreign_key: :sender_id
   
   def activate?
@@ -31,6 +55,7 @@ class User < ApplicationRecord
   
   def profile?
     update_attribute('profile_created', true)
+    self.profile.update_attribute('has_activity', true)
     if self.profile_created = true
       return true
     else
@@ -51,23 +76,17 @@ class User < ApplicationRecord
     end while User.exists?(column => self[column])
   end
   
-  def change_lat_long(profile)
-    lat = profile.postal_code.to_lat
-    long = profile.postal_code.to_lon
-    self.update_attributes(latitude: lat, longitude: long)
-  end
-  
   # returns true or false if a profile is liked by another profile
   def likes?(profile)
-    self.likes.where(["profile_id = :p", {p: profile.id}]).any?
+    self.likes.where(["profile_id = :p", {p: profile.user_id}]).any?
   end
 
-  def find_location(user)
-    if current_user == user
-        
-    end
+  def blocks?(profile)
+  #   puts "hey"
+    self.blocks.where(["profile_id = :p", {p: profile.user_id}]).any?
+      # puts "hey hey"
+    # end
   end
-
 
   #search method
   def self.search(search)
@@ -78,6 +97,15 @@ class User < ApplicationRecord
       end
     end
   end
+
+  # Delete activites before destroying the user
+  before_destroy :delete_activities
+
+  def delete_activities
+      acts = PublicActivity::Activity.where(owner_id: self.id, owner_type: "User")
+      acts.delete_all
+  end
+
     
   private
     def set_confirmation_token

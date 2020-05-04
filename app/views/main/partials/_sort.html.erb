@@ -1,0 +1,8 @@
+
+<%# age, location, “fame rating” and common tags. %>
+<%# drop down options for sorting the list and then rerendering the results %>
+
+<h1> sort </h1>
+
+
+<%= select_tag "people", options_from_collection_for_select(@feed, "id", "first_name") %>

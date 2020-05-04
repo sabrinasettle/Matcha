@@ -1,0 +1,9 @@
+
+<div class='c_p'>
+    <% @feed.each do |person| %>
+        <% @p = person %>
+        <%= render "main/partials/profile_card", locals: {person: @p} %>
+        
+
+    <% end%>
+</div>

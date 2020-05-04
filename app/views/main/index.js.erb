@@ -1,0 +1,5 @@
+function replaceResults (innerHTML) {
+  const res = document.getElementById('users');
+  cocktails.innerHTML = innerHTML;
+}
+replaceResults("<%= j render 'cocktail', cocktails: @cocktails %>");

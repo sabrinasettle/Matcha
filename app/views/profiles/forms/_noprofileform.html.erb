@@ -2,18 +2,16 @@
 
             <div class="form_section">
                 <h3>Choose a photo as your avatar</h3>
-                <%#= form.label "Profile picture" %>
                 <%= form.file_field :avatar %>
             </div>
 
             <div class="form_section">
-                <h3>Choose up to 4 more photos</h3>
+                <h3>Choose up to 4 photos</h3>
                 <%= form.label :pictures, class: "control-label" %>
                 <div class="controls">
                   <%= file_field_tag "images[]", type: :file, multiple: true %>
                 </div>
-                <%#= form.label "Profile picture"%>
-                <%#= form.file_field :photos %>
+                
             </div>
 
             <div class="form_section">
@@ -41,8 +39,7 @@
                 <%= label_tag(:gender_male,   "Male") %>
                 <%= form.radio_button :gender, "female" %>
                 <%= label_tag(:gender_female, "Female") %>
-                <%= form.radio_button :gender, "other" %>
-                <%= label_tag(:gender_other,   "Other") %>
+                
             </div>
 
             <div class="form_section">
@@ -89,7 +86,8 @@
             <div class="form_section">
               <div class="actions">
                 <%= form.hidden_field :user_name, value: current_user.user_name %>
-                <%= form.hidden_field :user_id, value: current_user.id %>
+                <%= form.hidden_field :first_name, value: current_user.first_name %>
+                <%#= form.hidden_field :user_id, value: current_user.id %>
                 <%= form.submit "Finish Profile", class: "btn btn-primary" %>
               </div>
             </div>

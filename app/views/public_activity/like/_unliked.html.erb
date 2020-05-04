@@ -1,0 +1,10 @@
+<% if activity.trackable %>
+  <% if @user.first_name == activity.recipient.first_name %>
+      unliked you
+  <% else %>
+      unliked <%= link_to activity.recipient.user_name, profile_path(activity.recipient.user_name) %>
+  <% end %>
+<% else %>
+  which has since been removed
+<% end %>
+

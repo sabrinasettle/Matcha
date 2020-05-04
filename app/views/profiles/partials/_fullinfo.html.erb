@@ -12,9 +12,9 @@
     </div>
     <div class="u_n">
     
-        <h1><%= @user.first_name.capitalize %><h1>
+        <h1><%= @profile.first_name.capitalize %><h1>
         <%= @profile.age %>
-        <h3><%= @user.user_name.capitalize%></h3>
+        <h3><%= @profile.user_name.capitalize%></h3>
         <p><%= @profile.gender.capitalize %> / <%= @pref %></p>
     </div>
     
@@ -24,18 +24,23 @@
                 <ul>
                     <%# A "block" feature would need to checked from a table???%>
                     <li>
-                        <div id="likes">
-                            <%= render partial: "likes/button", locals: { profile: @profile } %>
+                        <% if @disable == true %>
+
+                        <% else %>
+                            <div class="likes">
+                                <%= render partial: "likes/button", locals: { profile: @profile } %>
+                            </div>
+                        <% end %>
+                    </li>
+                    <li>
+                        <div class="blocks">
+                            <%= render partial: "blocks/block_button", locals: { profile: @profile } %>
                         </div>
                     </li>
                     <li>
-                        <%= button_to "Block"%>
-                        <%# <i class="material-icons">block</i> %>
-                    </li>
-                    <li>
-                        <%# https://github.com/medihack/make_flaggable %>
-                        <%= button_to "Flag"%>
-                         <%# <i class="material-icons">flag</i> %>
+                        <div class="flag">
+                            <%= render partial: "profiles/partials/flag_profile", locals: { profile: @profile } %>
+                        </div>
                     </li>
                 </ul>
             <% else %>

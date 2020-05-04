@@ -1,50 +1,69 @@
 Rails.application.routes.draw do
   
-  #landing paths
+  # Landing paths
   get '/' => 'landing#index'
   get '/main' => 'main#index'
+  # Work on -- Hmm I think this was for the new page in mobile
   # get '/search' => 'main#search'
   
-  #user paths
+  # User paths
   get '/signup' => 'users#new'
   post '/signup' => 'users#create'
-
-  #session paths
+  get '/:token/confirm_email/', :to => "users#confirm_email", as: 'confirm_email'
+  
+  # Session paths
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
   
+  mount ActionCable.server => '/cable'
+  # Work on -- searches not done
   #searching
   get '/search/' => 'search#new', as: 'search'
   
-  get '/messages' => 'conversations#index', as: 'messages'
+  # Conversations Paths
+  get ':user_name/messages' => 'conversations#index', as: 'messages'
+  get ':user_name/messages' => 'conversations#create', as: 'create_room'
+
+  get '/messages/r/:id' => 'conversations#show', as: 'room'
+
+  # Messages Paths
+  post '/messages/r/:id' => 'messages#create', as: 'direct_message'
+
+  # resources :messages
   
-  #profile paths
+  
+  # Profile paths
   get '/:user_name/' => 'profiles#show', as: 'profile'
   post '/:user_name/' => 'profiles#create'
   get '/:user_name/profile/edit' => 'profiles#edit', as: 'edit_profile'
   post '/:user_name/profile/edit' => 'profiles#update', as: 'update_profile'
-  # post '/:user_name/edit' => 'profiles#update_profile', as: 'update_profile'
-  
-  #partials for forms
-  # get '/:user_name/edit_user_profile' => 'profiles#edit', as: 'edit_user_profile'
-  # get '/:user_name/edit_photos' => 'profiles#edit', as: 'edit_photos'
-
+  post '/:user_name/profile/edit_photos/' => 'profiles#edit_photos', as: 'edit_photos'
+  delete '/:user_name/profile/photo_delete/:id' => 'profiles#delete_photo', as: 'delete_photo'
+  post '/:user_name/profile_flagged' => 'profiles#flag', as: 'flag_profile'
 
   # Settings path
   get ':user_name/edit' => 'settings#edit', as: 'settings'
   post ':user_name/edit' => 'settings#update', as: 'settings_update'
-  # partials for forms
-  get '/:user_name/edit_user' => 'settings#edit', as: 'edit_user'
-  get '/:user_name/edit_password' => 'settings#edit', as: 'edit_password'
-  get '/:user_name/views_and_likes' => 'settings#edit', as: 'views_and_likes'
+  # post ':user_name/edit' => 'settings#update_password', as: 'settings_pass_update'
+
+  # partials for forms --> Settings
+  get '/:user_name/edit_user' => 'settings#edit_user', as: 'edit_user'
+  post '/:user_name/edit_user' => 'settings#update'
+  get '/:user_name/edit_password' => 'settings#edit_password', as: 'edit_password'
+  patch '/:user_name/edit_password' => 'settings#update_password', as: 'update_password'
+  get '/:user_name/views_and_likes' => 'settings#activity', as: 'views_and_likes'
   
-  #likes path
+  # Likes path
   post '/:profile_id/like', to: 'likes#create', as: 'like'
   delete '/:profile_id/unlike', to: 'likes#destory', as: 'unlike'
+
+  # Work on -- Havent finished the blocking feature, literally at all
+  # Blocks path
+  post '/:profile_id/block', to: 'blocks#create', as: 'block'
+  delete '/:profile_id/unblock', to: 'blocks#destroy', as: 'unblock'
   
-  match 'unheart', to: 'hearts#unheart', via: :delete
-  
+  # Work on -- Hmm may not need these if going through the settings controller?
   get '/new_password_form' => 'passwords#edit'
   get 'passwords/update'
   post 'passwords/update'

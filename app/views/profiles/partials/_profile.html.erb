@@ -7,50 +7,60 @@
                 <div class="int_det">
                     <div class="e_t1">
                         <i class="material-icons">person_pin</i>
-                        <p><%= @location %><p>
+                        <p><%= @location %></p>
                     </div>
                     <div class="e_t2">
                         <% if @user.online %>
                             <i class="material-icons">wifi</i>
-                            <p> online </p>
+                            <div class="status">
+                                <p> online </p>
+                            </div>
                         <% else %>
                             <i class="material-icons">wifi_off</i>
-                            <p> offline </p>
-                            <%# <i class="material-icons md-dark md-inactive">face</i> %>
+                            <div class="status">
+                                <% if @date_and_time %>
+                                    <%= @date_and_time.strftime("Last seen at %m/%d/%Y %I:%M%p") %>
+                                <% else %>
+                                    <p> offline </p>
+                                <% end %> 
+                            </div>
                         <% end%>
                         
                     </div>
                 </div>
                 
             </div>
-            <div class="section_title">
-                <h1> About <h1>
-            </div>
-            <div class="bio">
-                <div class="b">
-                    <h2>My Bio:</h2>
-                    <div class="text">
-                        <%= @profile.bio %>
+            <div class="container_p">
+                <div class="section_title">
+                    <h1> About <h1>
+                </div>
+                <div class="bio">
+                    <div class="b">
+                        <h2>My Bio:</h2>
+                        <div class="text">
+                            <%= @profile.bio %>
+                        </div>
+                    </div>
+                    <div class="interests">
+                        <h2>My interests include:</h2>
+                        <% @titles.each do |t| %>
+                            <p><%= t %></p>
+                        <% end %>
                     </div>
                 </div>
-                <div class="interests">
-                    <h2>My interests include:</h2>
-                    <% @titles.each do |t| %>
-                        <p><%= t %></p>
-                    <% end %>
-                </div>
             </div>
-            <div class="section_title">
-                <h1> Photos </h1>
-            </div>
-            <% unless @pictures.empty? %>
-                <div class="ph_sec">
-                    <% @pictures.each do |pic| %>
-                        <%= image_tag pic.image.url %>
-                    <% end %>
-            <% end %>
+            <div class="container_p">
+                <div class="section_title">
+                    <h1> Photos </h1>
                 </div>
-            
+                <% unless @pictures.empty? %>
+                    <div class="ph_sec">
+                        <% @pictures.each do |pic| %>
+                            <%= image_tag pic.image.url %>
+                        <% end %>
+                <% end %>
+                    </div>
+            </div>
         </div>
     </body>
 </html>

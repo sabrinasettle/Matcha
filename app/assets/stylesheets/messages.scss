@@ -1,0 +1,10 @@
+// Place all the styles related to the Messages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.mess_area {
+    border: 0.5px black solid;
+    overflow-x: hidden;
+    overflow-y: auto;
+}

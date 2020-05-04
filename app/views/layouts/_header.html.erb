@@ -1,32 +1,34 @@
 <nav class="nav_bar_main">
          <div class="nav_bar_name">
            <h1><%= link_to 'Matcha', '/main', :class => 'nav_bar_name' %></h1>
-        </div>
-        <div class="search_b">
-            <%= form_tag(search_path, :method => "get", :class => 'form-fa-se') do %>  
-                <div class="input_bar">
+           <% if current_user.profile_created == true %>
+                <div class="search_b">
+                    <!-- Work on -- Mobile design -- may not use this link?? -->
                     <%= link_to '<i class="material-icons">search</i>'.html_safe, search_path, :class => 'search-fa-link', title: "Search" %>
-  
-                    <%= search_field_tag :search, params[:search], placeholder: "Search Matcha", class: "form-control" %>  
-                    <!-- Not in use <div class="input-group-btn">  
-                    <%#= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
-                    </div> -->
-                </div>  
-                <% end %>
+                    <%= form_tag(search_path, method: :get, :class => 'form-fa-se') do %>                                  
+                                
+                        <%= text_field_tag 'term', params[:term], placeholder: "Search Matcha", class: "search_input"%>
+                        <%= button_tag '<i class="material-icons">search</i>'.html_safe, class: "search_button" %>
+                                                            
+                    <% end %>
+                </div>
+            <% end %>
         </div>
         <div class="nav-links-container">
             <% if current_user %>
             <%# if current_page?(product_path(@product))%>
             <%# end %>
     
-                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
+                <%= link_to '<i class="material-icons">notifications_none</i>'.html_safe,  :class => 'nav-links', title: "Messaging" %>
+                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path(current_user.user_name), :class => 'nav-links', title: "Messaging" %>
                 <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, settings_path(current_user.user_name), :class => 'nav-links', title: "Settings" %>
-                <%= link_to '<i class="material-icons">notifications_none</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
                 <%= link_to profile_path(current_user.user_name), :class => 'p-b', title: "Profile" do %>
-                    <%= current_user.first_name %>
+                    <p><%= current_user.first_name %></p>
                     <i class="material-icons">face</i>
                 <% end %>
-                <%= link_to 'Logout', '/logout', :class => 'lg-b', :data => { :confirm => 'Are you sure?' }%>
+                <div class="log_o">
+                    <%= link_to 'Logout', '/logout', :class => 'lg-b', :data => { :confirm => 'Are you sure?' }%>
+                </div>
             <% end %>
         </div>
         </nav>

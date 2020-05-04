@@ -15,41 +15,42 @@ https://stackoverflow.com/questions/25541139/css-not-getting-applied-to-the-form
     <div class="center">
       <div class="main_box">
         <div class="box_center">
-        <%= form_for :user, :html=>{:class => 'submit-form'} do |form| %>
+        <%= form_for @user, url: signup_path, :html=>{:class => 'submit-form'}, validate: true do |form| %>
         <h2> Sign Up </h2>
-          <div class="field">
+        
+          
+          
             <%= form.label :first_name %>
-            <%= form.text_field :first_name %>
-          </div>
+            <%= form.text_field :first_name, :placeholder=>'First Name', required: true %>
+          
 
           <div class="field">
             <%= form.label :last_name %>
-            <%= form.text_field :last_name %>
+            <%= form.text_field :last_name, :placeholder=>'Last Name', required: true %>
           </div>
 
           <div class="field">
             <%= form.label :user_name %>
-            <%= form.text_field :user_name %>
+            <%= form.text_field :user_name, :placeholder=>'Username', required: true %>
           </div>
 
           <div class="field">
             <%= form.label :email %>
-            <%= form.text_field :email %>
+            <%= form.text_field :email, :placeholder=>'Email', required: true%>
           </div>
 
           <div class="field">
             <%= form.label :password %>
-            <%= form.password_field :password %>
+            <%= form.password_field :password, :placeholder=>'Password', required: true%>
           </div>
 
           <div class="field">
             <%= form.label :password_confirmation%>
-            <%= form.password_field :password_confirmation%>
+            <%= form.password_field :password_confirmation, :placeholder=>'Password Confirmation', required: true%>
           </div>
 
           <div class="actions">
-            <%# With sam here maybe not user.id?? %>
-            <%#= form.hidden_field :users_id, value: user.id %>
+            
             <%=  submit_tag("Create Account") %>
           </div>
         </div>

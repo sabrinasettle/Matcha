@@ -20,9 +20,7 @@
         
         <% if current_user == @user && current_user.profile_created == false%>
         <!-- Work on -- needs work thats for sure -->
-            <div class="welcome">
-                <p>Welcome <%= current_user.user_name %>! You aren't seeing any matches because you need to Create your profile first! Head to your profile, linked above to finish it and start looking for that right cup of tea!<p>
-            </div>
+            <%= render "partials/no_access" %>
         <% else%>
             <div class="m_p">
                 <%#= render "main/partials/sort"%> 
@@ -33,31 +31,70 @@
                 <%#= @test.each do |i| %>
                     <%#= i.age %>
                 <%# end %>
+                <ul class="feed_nav">
+                    <li>
+                        <%= link_to  "Suggestions" %>
+                    </li>
+                    <li>
+                        <%= link_to "All Users" %>
+                    </li>
+                </ul>
+
+
                 <br>
-                <% @tags.each do |c|%>
-                    <%= c %>
-                <% end %>
-                <div class="suggest"
-                <h1> Suggestions </h1>
-                <% @feed.each do |person| %>
-                    <ul>
-                        <li>
-                            <%= link_to person.user_name %>
-                        </li>
-                    </ul>
-                <% end%>
+                
+                <div class="sort_con">
+                    
+                    <!-- <select>
+                        <option value="default">
+                            Age
+                        </option>
+                        <option value="ratings">
+                            Ratings - High to Low
+                        </option>
+                    </select> -->
+
+                    <select name="to_vote" id="to_vote">
+                        <option value="1">eligible</option>
+                        <option value="0">ineligible</option>
+                    </select>
+                    <%= form_tag( :sort_users, url: sort_users_path) do  %>
+                        <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Age"),
+                            {onchange: "this.form.submit();"}  %>
+                        <%#onchange: 'Rails.fire(this.form, "submit")'
+                       <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
+                    <% end %>
+
+                    <%= @data %>
+                    <%= submit_tag "Submit"%>
+                    <%= form_for @profile, url: sort_users_path do |f| %>
+                        <%# { prompt: 'Select Option' }) I mean this isnt really needed %>
+                        <%# options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"]])%>
+                        <%= f.label "Sort:" %>
+                        <%= f.select(:id, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), {}, {onchange: "this.form.submit();" })%>
+                        <%#= f.label "Age:" %>
+                        <%#= f.collection_select :id, Profile.order('age DESC'), :id, "age" %>
+                        <%#= f.select(:id, Profile.all.pluck(:first_name, :id)) %>
+                        <%#= f.select :month, options_for_select(Profile.age)  %>
+                        <%#= select_tag (:profile, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), { :class => 'my_style_class' } ) %>
+                        
+                        <%#= f.collection_select(:user_name, Profile.all, :id, "age" ) %>
+
+                        <%#= f.select "Age", options_for_select("Desc", 'Rating') %>
+                    <% end %>
                 </div>
                 <div class='test_res'>
-                <% @all.each do |person| %>
-                    <ul>
-                        <li>
-                            <%= link_to person.user_name %>
-                            <%= person.postal_code.to_lat %>
-                            <%= person.postal_code.to_lon %>
-                            <%= person.postal_code %>
-                            <%= person.interest_list %>
-                        </li>
-                    </ul>
+                    <h1> All Users </h1>
+                    <% @all.each do |person| %>
+                        <ul>
+                            <li>
+                                <%= link_to person.user_name %>
+                                <%= person.postal_code.to_lat %>
+                                <%= person.postal_code.to_lon %>
+                                <%= person.postal_code %>
+                                <%= person.interest_list %>
+                            </li>
+                        </ul>
                     <% end%>
                     <%#= render "main/partials/profile_card", locals: {person: @p} %>
                 </div>

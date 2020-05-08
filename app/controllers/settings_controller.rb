@@ -45,7 +45,6 @@ class SettingsController < ApplicationController
     # https://stackoverflow.com/questions/32674502/ruby-on-rails-change-update-password-with-modal-on-profile-page-validate-old-pas
     new_password = params[:user][:new_password]
     if @user.authenticate(params[:user][:current_password])
-      puts "yay it authenicated"
       if @user.update_attribute(:password, new_password)
         flash[:notice] = "Password changed successfully!"
       end

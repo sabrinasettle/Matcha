@@ -24,12 +24,13 @@ module MainHelper
         suggestions
     end
 
-    def users_with_common_interests(profile, array)
-        # len = profile.interest_list.length
-        # order
-        # len.each do |interest|
-            
-        # end
+    def user_rating_decrease
+        created_at = profile.created_at
+        today = Time.now
+        #for each day since the the profile.created we decrease from the 5 at start
+        if profile.user_rating > 0
+            user.decrement!(:user_rating, 0.1)
+        end
     end
 
 end

@@ -1,8 +1,10 @@
 class ConversationsChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
-    current_user.conversations.each do |chat|
-      stream_from "conversation: #{chat.id}"
+    unless current_user.conversations.nil?
+      current_user.conversations.each do |chat|
+        stream_from "conversation: #{chat.id}"
+      end
     end
   end
 

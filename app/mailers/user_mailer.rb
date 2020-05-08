@@ -14,11 +14,11 @@ class UserMailer < ApplicationMailer
 
     def password_reset(user)
         @user = user
-        mail(to: "#{@user.name} <#{@user.email}>", subject: "Password Reset for Matcha")
+        mail(to: "#{@user.first_name} <#{@user.email}>", subject: "Password Reset for Matcha")
     end
 
     def password_reset_finalized(user)
         @user = user
-        mail(to: "#{@user.name} <#{@user.email}>", subject: "Password Changed for Matcha")
+        mail(to: "#{@user.first_name} <#{@user.email}>", subject: "Password Changed for Matcha")
     end
 end

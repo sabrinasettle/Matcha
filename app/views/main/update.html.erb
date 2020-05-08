@@ -1,0 +1,17 @@
+
+<%= @data %>
+<div class='test_res'>
+<h1> All Users </h1>
+<% @all.each do |person| %>
+    <ul>
+        <li>
+            <%= link_to person.user_name %>
+            <%= person.age %>
+            <%= person.user_rating %>
+            <%= person.postal_code %>
+            <%= person.interest_list %>
+        </li>
+    </ul>
+<% end%>
+<%#= render "main/partials/profile_card", locals: {person: @p} %>
+</div>

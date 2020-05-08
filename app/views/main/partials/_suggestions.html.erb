@@ -1,0 +1,10 @@
+<div class="suggest">
+    <h1> Suggestions </h1>
+    <% @feed.each do |person| %>
+        <ul>
+            <li>
+                <%= link_to person.user_name %>
+            </li>
+        </ul>
+    <% end%>
+</div>

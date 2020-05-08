@@ -15,3 +15,45 @@ https://coderwall.com/p/t5ghhw/animated-page-transitions-in-rails-4-apps
 
 Filter bar
 http://www.uxforthemasses.com/filter-bars/
+
+
+S3 paperclip
+
+https://devcenter.heroku.com/articles/paperclip-s3
+https://github.com/thoughtbot/paperclip/wiki/Paperclip-with-Amazon-S3
+
+
+# FROM README.md
+
+https://stackoverflow.com/questions/808547/fully-custom-validation-error-message-with-rails
+https://dev.to/spidergears/rails-active-record-validation-messages-4dcf
+
+Last resort?
+https://qiita.com/alokrawat050/items/dc7f4a7ee1acdc6a449a
+
+
+Email from Gmail
+https://launchschool.com/blog/handling-emails-in-rails
+https://launchschool.com/blog/managing-environment-configuration-variables-in-rails
+https://devanswers.co/create-application-specific-password-gmail/
+
+
+Reset DB and seed
+https://stackoverflow.com/questions/4003978/reset-the-database-purge-all-then-seed-a-database
+
+Send styled emails
+https://www.imaginarycloud.com/blog/rails-send-emails-with-style/
+
+Hamburger menus:
+https://jonsuh.com/hamburgers/
+Spinner
+https://codediode.io/lessons/8736-loading-spinners-in-rails
+
+
+
+
+# https://apidock.com/rails/ActiveRecord/Base/decrement_counter/class
+# ex: 
+irb(main):018:0> Profile.third.decrement(:user_rating, 0.1).save
+
+for each day from the created day

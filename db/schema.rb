@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_204816) do
+ActiveRecord::Schema.define(version: 2020_05_06_195601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_204816) do
     t.string "blocked_user", default: [], array: true
     t.decimal "user_rating", default: "5.0"
     t.boolean "is_flagged", default: false
+    t.string "address"
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 

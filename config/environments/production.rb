@@ -95,10 +95,11 @@ Rails.application.configure do
   # added for gmail
   # https://dev.to/morinoko/sending-emails-in-rails-with-action-mailer-and-gmail-35g4
   config.action_mailer.delivery_method = :smtp
-  host = 'example.com' #replace with your own url
+  host = 'https://matchaaa.herokuapp.com/'
   config.action_mailer.default_url_options = { host: host }
 
   # SMTP settings for gmail
+  # Work on -- set the gmail stuff in deploy
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
@@ -108,13 +109,15 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
 
-  config.paperclip_defaults = {
-    storage: :s3,
-    s3_credentials: {
-      bucket: ENV.fetch('S3_BUCKET_NAME'),
-      access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
-      secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
-      s3_region: ENV.fetch('AWS_REGION'),
-    }
-  }
+  # storage for deploy
+  # Work on -- Set this up with Amazon
+  # config.paperclip_defaults = {
+  #   storage: :s3,
+  #   s3_credentials: {
+  #     bucket: ENV.fetch('S3_BUCKET_NAME'),
+  #     access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
+  #     secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
+  #     s3_region: ENV.fetch('AWS_REGION'),
+  #   }
+  # }
 end

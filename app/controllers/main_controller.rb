@@ -1,9 +1,11 @@
 class MainController < ApplicationController
   include MainHelper
   
-  before_action :get_user, only: [:get_location, :index]
-  before_action :get_location, only: [:index]
 
+  
+  before_action :get_user, only: [:get_location, :index, :update]
+  # before_action :get_location, only: [:index]
+  # actions for if the user has a profile 
 
 
   def index
@@ -13,41 +15,54 @@ class MainController < ApplicationController
     # @city = request.location.city
 
     #test locations
-    ip = request_ip
-    response = Geocoder.search(ip)
+    # ip = request_ip
+    # response = Geocoder.search(ip)
     
+    puts current_user.id
 
-    @profile = current_user.profile
-    @tags = @profile.interest_list
+    if @user.profile_created == true
+      #moved this here instead of being a before action due to the users who dont have a profile
+      get_location
 
-    @blocked_by_user = @user.blocks.pluck(:profile_id)
-    puts a = Profile.second.find_related_interests.to_a.pluck(:id)
-    @all = Profile.all_except(@user).ordered_by_rating.order_by_interests_in_common(@profile)
-  
+      @profile = current_user.profile
+      @tags = @profile.interest_list
 
-    Profile.all_except(@user).ordered_by_rating.where(id: @profile.find_related_interests.to_a.pluck(:id)) 
-    # @all.where(id: a).order('id DESC')
+      @blocked_by_user = @user.blocks.pluck(:profile_id)
+      # puts a = Profile.second.find_related_interests.to_a.pluck(:id)
+      # @all = Profile.all_except(@user).ordered_by_rating.order_by_interests_in_common(@profile).order_by_distance(@profile)
+      
+      @all_unordered = Profile.all_except(@user)
+      @all = @all_unordered.order_by_rating.order_by_interests_in_common(@profile).order_by_distance(@profile)
 
-    @results = Geocoder.search(@location)
-    # if @profile.str?
-      # if @profile.female? and @profile.str?
-        #  @feed = @all.male.straight
+      # Profile.all_except(@user).ordered_by_rating.where(id: @profile.find_related_interests.to_a.pluck(:id)) 
+      # @all.where(id: a).order('id DESC')
+
+      # @results = Geocoder.search(@location)
+      @feed = suggestions(@all, @profile)
+      
+      # @data = params[:reorder_by] if params[:reorder_by]
+      # puts @data
+      # if params[:reorder_by]
+      #   option = "rating ASC" if params[:reorder_by] == 'rating'
+      #   option = "age ASC" if params[:reorder_by] == 'age'
+      #   # @all = @all_unordered(:order => option)
+      #   if params[:reorder_by] == 'age'
+      #     @all = @all_unordered.order_by_age
+      #   end
       # end
-    # end
-    @feed = suggestions(@all, @profile)
-    # @feed = @all.male.straight
-    puts @feed
+      # @people = Person.all(:order => option)
+      # users_with_common_interests(@profile, @feed)
+      
+      # @activites = Profile.joins(:interests)
+      # .group("interest.id")
+      # .having("count(votes.id) > ?", params[:vote_count])
+      # .order("created_at desc")
+      
 
-    users_with_common_interests(@profile, @feed)
-    
-    # @activites = Profile.joins(:interests)
-    # .group("interest.id")
-    # .having("count(votes.id) > ?", params[:vote_count])
-    # .order("created_at desc")
-    
-
-    @test = Profile.for_age_range(18, 90).order_by_age
-
+      @test = Profile.for_age_range(18, 90).order_by_age
+    else
+      # redirect_to profile_path(@user.user_name)
+    end
     
 
 
@@ -100,6 +115,30 @@ class MainController < ApplicationController
   def search #may not need
   end
 
+  def update
+    @all_unordered = Profile.all_except(@user)
+    
+    @data = params[:reorder_by]
+    # @data = params[:reorder_by] if params[:reorder_by]
+      puts @data
+      if params[:reorder_by]
+        # option = "user_rating DESC" if params[:reorder_by] == 'rating'
+        # option = "age ASC" if params[:reorder_by] == 'age'
+
+        # if params[:reorder_by] == 'age'
+        #   @all = @all_unordered.order_by_age
+        # end
+        if params[:reorder_by] == 'rating'
+          @all = @all_unordered.order_by_rating
+        else 
+          @all = @all_unordered
+        end
+        # @all = @all_unordered.order(option)
+      end
+
+    puts @data
+  end
+
   
 
 
@@ -113,6 +152,14 @@ class MainController < ApplicationController
     end
 
     def get_location
+
+      # https://stackoverflow.com/questions/20827675/get-address-from-geocode-latitude-and-longitude
+      # latitude = 40.0397
+      # longitude = -76.30144
+      # geo_localization = "#{latitude},#{longitude}"
+      # query = Geocoder.search(geo_localization).first
+      # query.address
+
       current_lat = @user.profile.postal_code.to_lat
       current_lon = @user.profile.postal_code.to_lon
       @origin = [current_lat, current_lon]

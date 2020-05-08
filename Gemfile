@@ -71,6 +71,11 @@ gem 'jquery-ui-rails'
 # for image uploading and storing
 gem 'paperclip'
 
+# storage for production
+# Work on
+# https://devcenter.heroku.com/articles/paperclip-s3
+gem 'aws-sdk'
+
 # Geolocation gem
 gem 'geocoder'
 
@@ -110,7 +115,7 @@ gem 'public_activity'
 # added to get location
 gem 'httparty', :require => 'httparty', :group => :development 
 
-
+gem 'ransack'
 
 
 # https://medium.com/@ajmalafif/instagram-gem-with-rails-5418524833bc

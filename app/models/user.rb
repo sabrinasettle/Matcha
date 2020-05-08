@@ -1,7 +1,6 @@
 class User < ApplicationRecord
 
   before_create :set_confirmation_token
-  include PgSearch::Model 
   
 
   attr_accessor :skip_validations
@@ -18,7 +17,7 @@ class User < ApplicationRecord
   # validates_length_of :foo, minimum: 4, maximum: 25, message: "Username must be 4 to 25 characters long"
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/ }, presence: {:message => "Required input, please try again"}, uniqueness: true
 
-  validates :password, presence: true, length: { :minimum => 7, :maximum => 20, :message => "Password must be between 8 and 20 characters, with a special character and a number "}, unless: :skip_validations 
+  validates :password, presence: true, length: { :minimum => 7, :maximum => 20, :message => "Password must be between 8 and 20 characters, with a special character and a number "}, :if => :password, unless: :skip_validations 
   validates_confirmation_of :password
   # validates_presence_of :password_digest
   has_secure_password
@@ -35,27 +34,27 @@ class User < ApplicationRecord
   has_many :conversations, through: :matches
   has_many :messages
 
-  
-  # belongs_to_and_has_many :conversations #, foreign_key: :sender_id
-  # has_many :messages, through: :conversations
 
-  # has_many :messages
-  # #commented out because it was doing something weird
-  # has_many :conversations, foreign_key: :sender_id
+
+  after_create :setup_profile
+
+  def setup_profile
+    profile = self.create_profile # or Profile.create(user_id: self.id)
+  end
   
   def activate?
-    update_attribute('email_confirmed', true)
-    update_attribute('confirm_token', nil)
+    self.update_attribute(:email_confirmed, true)
+    self.update_attribute(:confirm_token, nil)
     if self.email_confirmed = true
       return true
     else
       return false
     end
   end
+
   
   def profile?
-    update_attribute('profile_created', true)
-    self.profile.update_attribute('has_activity', true)
+    # self.update_attribute('profile_created', true)
     if self.profile_created = true
       return true
     else
@@ -82,21 +81,18 @@ class User < ApplicationRecord
   end
 
   def blocks?(profile)
-  #   puts "hey"
     self.blocks.where(["profile_id = :p", {p: profile.user_id}]).any?
-      # puts "hey hey"
-    # end
   end
 
   #search method
-  def self.search(search)
-    if search
-      user = User.find_by(user_name: search)
-      if user
-        self.where(user_id: user)
-      end
-    end
-  end
+  # def self.search(search)
+  #   if search
+  #     user = User.find_by(user_name: search)
+  #     if user
+  #       self.where(user_id: user)
+  #     end
+  #   end
+  # end
 
   # Delete activites before destroying the user
   before_destroy :delete_activities

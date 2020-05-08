@@ -7,10 +7,10 @@ class UsersController < ApplicationController
 
   def confirm_email
     if request.get?
-      user = User.find_by_confirm_token(params[:token])
+      user = User.find_by(confirm_token: params[:token])
       if user.activate?
         flash[:notice] = "You have been activated and can now log in"
-        redirect_to :controller => 'sessions', :action => 'new'
+        redirect_to '/login'
       else
         flash[:warning] = "We could not activate you."
         redirect_to '/login'
@@ -24,10 +24,12 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    # @user.setup_profile # Work on --to add profile when signing up TEST
     # @profile = Profile.new(profile_params) #trying to create the profile object on creation with basic information and just update it later
     if @user.save
       # puts "yay"
       # @profile.save
+      
       UserMailer.registration_confirmation(@user).deliver_now
       flash[:notice]="Signup successful. Confirmation email has been sent"
       # session[:user_id] = user.id #I think for when it directly signed people in, could be wrong

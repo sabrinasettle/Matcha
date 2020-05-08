@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   # Landing paths
   get '/' => 'landing#index'
   get '/main' => 'main#index'
+  post 'main/sort' => 'main#update', as: 'sort_users'
   # Work on -- Hmm I think this was for the new page in mobile
   # get '/search' => 'main#search'
   
@@ -16,7 +17,16 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
   
-  mount ActionCable.server => '/cable'
+  # Work on -- Hmm may not need these if going through the settings controller?
+  get '/login/password_reset' => 'passwords#new', as: 'request_new_password'
+  post '/new_password' => 'passwords#create'
+  get '/:token/new_password/' => 'passwords#edit', as: 'new_password_form'
+  post '/update/:id' => 'passwords#update'
+  patch '/update/:id' => 'passwords#update', as: 'passwords_update'
+
+
+
+  # mount ActionCable.server => '/cable'
   # Work on -- searches not done
   #searching
   get '/search/' => 'search#new', as: 'search'
@@ -35,7 +45,8 @@ Rails.application.routes.draw do
   
   # Profile paths
   get '/:user_name/' => 'profiles#show', as: 'profile'
-  post '/:user_name/' => 'profiles#create'
+  get '/:user_name/create_profile' => 'profiles#create'
+  post '/:user_name/create_profile' => 'profiles#create'
   get '/:user_name/profile/edit' => 'profiles#edit', as: 'edit_profile'
   post '/:user_name/profile/edit' => 'profiles#update', as: 'update_profile'
   post '/:user_name/profile/edit_photos/' => 'profiles#edit_photos', as: 'edit_photos'
@@ -63,12 +74,8 @@ Rails.application.routes.draw do
   post '/:profile_id/block', to: 'blocks#create', as: 'block'
   delete '/:profile_id/unblock', to: 'blocks#destroy', as: 'unblock'
   
-  # Work on -- Hmm may not need these if going through the settings controller?
-  get '/new_password_form' => 'passwords#edit'
-  get 'passwords/update'
-  post 'passwords/update'
-  get '/new_password' => 'passwords#new'
-  post '/new_password' => 'passwords#create'
+  
+
   
   
   # match 'like', to: 'likes#create', via: :post

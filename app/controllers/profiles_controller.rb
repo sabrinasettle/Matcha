@@ -28,6 +28,7 @@ class ProfilesController < ApplicationController
       end
       if @user.profile?
         @profile.set_interest_tags
+        @profile.set_lat_and_lon
         redirect_to '/main', notice: "Profile was created!"
       end
     else
@@ -68,6 +69,7 @@ class ProfilesController < ApplicationController
     # @profile = Profile.find_by(user_name: params[:user_name])
     if @profile.update_attributes(profile_params)
       @profile.set_interest_tags
+      @profile.set_lat_and_lon
       redirect_to profile_path(@profile.user_name)
     else
       redirect_to edit_profile_path(@profile.user_name)
@@ -75,24 +77,9 @@ class ProfilesController < ApplicationController
   end
 
   def edit_photos
-      #     Deleting an Attachment
-      # Set the attribute to nil and save.
-
-      # @user.avatar = nil
-      # @user.save
-
-      # find the picture
-      # photo = Picture.find_by(id: params[:id])
-      # set the attachment to nil then replace it?
-      # photo.image = nil
-      # then update it
-      # photo.image = params[:change]
-      # then save
-      # photo.save
-    puts p = params[:images]
+     
+    p = params[:images]
     if params[:images]
-
-      puts "yay things!"
       p.each { |image|
           puts image
           @profile.pictures.create(image: image)

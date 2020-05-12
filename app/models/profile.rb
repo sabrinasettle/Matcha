@@ -163,6 +163,8 @@ class Profile < ApplicationRecord
             }
 
             
+
+            
             # Suggestions and Feed
             scope :male, -> { where gender: 'Male' }
             scope :female, -> { where gender: 'Female' }
@@ -176,7 +178,9 @@ class Profile < ApplicationRecord
             scope :order_by_age, -> { order(age: :asc) }
             # scope :order_by_, -> { order(age: :asc) }
             # Filtering
-            scope :for_age_range, ->(min_age, max_age) {where(age: min_age..max_age).order(age: :asc)}
+            scope :by_age_range, ->(min_age, max_age) {where(age: min_age..max_age).order(age: :asc)}
+            scope :by_rating_range, ->(low, high) {where(user_rating: low..high).order(user_rating: :desc)}
+            scope :by_distance_range, ->(near, far) {where(user_rating: near..far).order(user_rating: :asc)}
 
             # added for filtering
 

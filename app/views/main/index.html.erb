@@ -54,24 +54,74 @@
                         </option>
                     </select> -->
 
-                    <select name="to_vote" id="to_vote">
-                        <option value="1">eligible</option>
-                        <option value="0">ineligible</option>
-                    </select>
-                    <%= form_tag( :sort_users, url: sort_users_path) do  %>
-                        <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Age"),
+
+                    <%= form_tag(:sort_users, url: sort_users_path) do  %>
+                        <%= label_tag "Sort:" %>
+                        <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "rating"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Sort Users"),
                             {onchange: "this.form.submit();"}  %>
                         <%#onchange: 'Rails.fire(this.form, "submit")'
                        <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
                     <% end %>
 
-                    <%= @data %>
-                    <%= submit_tag "Submit"%>
-                    <%= form_for @profile, url: sort_users_path do |f| %>
+
+                    <%= form_tag(:filter_users, url: filter_users_path) do %>
+                        <%= label_tag "Filter" %>
+                        <%= label_tag "Interests"%>
+                        <%= collection_check_boxes :interest, :interest_name, Interest.all, :name, :name do |b| %>
+                            <li>
+                                <%= b.label(class: "form_interest_checks{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text } %>
+                            </li>
+                        <% end %>
+
+                        <%#onchange: 'Rails.fire(this.form, "submit")'
+                       <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
+                       
+                    <% end %>
+
+                    
+
+                    <div id="distance_slider">
+                    </div>
+                    <%= form_for :filter, :html => { id: "filter"}, url: filter_users_path do |thing_form| %>
+                        <%= thing_form.text_field :nearest %>
+                        <%= thing_form.hidden_field :near %>
+                        <%= thing_form.text_field :farthest %>
+                        <%= thing_form.hidden_field :far %>
+                        <br>
+                        <div id="test"></div>
+                        <%= thing_form.submit "Submit" %>
+                    <% end %>
+                    
+                    <%# <div id="slider"></div> %>
+                    <%= form_for :filter, :html => { id: "filter"}, url: filter_users_path do |thing_form| %>
+                        <div id="slider"></div>
+                        <%= thing_form.text_field :youngest %>
+                        <%= thing_form.hidden_field :data1 %>
+                        <%= thing_form.text_field :oldest %>
+                        <%= thing_form.hidden_field :data2 %>
+                        <br>
+
+                        <%= thing_form.submit "Submit" %>
+                    <% end %>
+
+                    
+                    <%= form_for :filter, :html => { id: "filter"}, url: filter_users_path do |thing_form| %>
+                        <div id="rating_slider"></div>
+                        <%= thing_form.text_field :lowest %>
+                        <%= thing_form.hidden_field :low %>
+                        <%= thing_form.text_field :highest %>
+                        <%= thing_form.hidden_field :high %>
+                        <br>
+                        
+                        <%= thing_form.submit "Submit" %>
+                    <% end %>
+                    
+
+                    <%# <%= form_for @profile, url: sort_users_path do |f| %> %>
                         <%# { prompt: 'Select Option' }) I mean this isnt really needed %>
                         <%# options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"]])%>
-                        <%= f.label "Sort:" %>
-                        <%= f.select(:id, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), {}, {onchange: "this.form.submit();" })%>
+                        <%# <%= f.label "Sort:" %>
+                        <%# <%= f.select(:id, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), {}, {onchange: "this.form.submit();" })%> %>
                         <%#= f.label "Age:" %>
                         <%#= f.collection_select :id, Profile.order('age DESC'), :id, "age" %>
                         <%#= f.select(:id, Profile.all.pluck(:first_name, :id)) %>
@@ -81,7 +131,7 @@
                         <%#= f.collection_select(:user_name, Profile.all, :id, "age" ) %>
 
                         <%#= f.select "Age", options_for_select("Desc", 'Rating') %>
-                    <% end %>
+                    <%# <% end %> 
                 </div>
                 <div class='test_res'>
                     <h1> All Users </h1>

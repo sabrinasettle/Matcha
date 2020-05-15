@@ -3,10 +3,12 @@ Rails.application.routes.draw do
   # Landing paths
   get '/' => 'landing#index'
   get '/main' => 'main#index'
-  get 'main/sort' => 'main#update'
-
-  post 'main/sort' => 'main#update', as: 'sort_users'
-  post 'main/filter' => 'main#filter', as: 'filter_users'
+  post '/main' => 'main#index'
+  get '/main/:sort' => 'main#index', as: 'sort'
+  get '/main/:filter' => 'main#index', as: 'filter'
+  # get 'main/sort' => 'main#update'
+  # post 'main/sort' => 'main#update', as: 'sort_users'
+  # post 'main/filter' => 'main#filter', as: 'filter_users'
 
   # Work on -- Hmm I think this was for the new page in mobile
   # get '/search' => 'main#search'

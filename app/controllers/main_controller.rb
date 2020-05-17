@@ -57,50 +57,63 @@ class MainController < ApplicationController
       # .group("interest.id")
       # .having("count(votes.id) > ?", params[:vote_count])
       # .order("created_at desc")
-      
 
+      # request.params.merge()
+        if params[:gender]
+          @gender = params[:gender]
+        end
+        if params[:interest] 
+          @interest = params[:interest]
+        end
+
+              if params[:filter]
+                list = params[:filter][:interest_tags]
+                list.reject!(&:blank?)
+                @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
+                  params[:filter][:old]).by_rating_range(params[:filter][:low],
+                    params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
+                if list.length > 0 
+                  @all = @all.tagged_with(list, :any => true)
+                end
+                if params[:sort]
+                  puts "I am filtered and I tried sorting"
+                  puts "MAYBE THIS WILL WORK"
+                  puts params[:by]
+                end
+              end
+
+              if params[:filter] and params[:sort]
+
+                puts params[:filter]
+                puts params[:sort]
+                puts "heeeeeeeeeeeeeyyyyyyyyyyyyyy"
+              end
+
+              if params[:by]
+                if params[:filter]
+                  puts "I was filtered but then I ingnored it"
+                end
+                # puts @data = params[:sort][:by]
+                if params[:by] == 'rating'
+                  @all = @all.order_by_rating
+                elsif params[:by] == 'age'
+                  @all = Profile.all_except(current_user).order_by_age
+                elsif params[:by] == 'most'
+                  @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
+                elsif params[:by] == 'least'
+                  # test the reverse bit for sure
+                  @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
+                elsif params[:by] == 'closest'
+                  #test
+                  @all = Profile.all_except(current_user).order_by_distance(@user.profile)
+                elsif params[:by] == 'further'
+                  #test
+                  @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
+                end
+              end
     else
       # redirect_to profile_path(@user.user_name)
     end
-      if params["filter"]
-        list = params[:filter][:interest_tags]
-        # p list.reject!(&:blank?)
-        @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
-          params[:filter][:old]).by_rating_range(params[:filter][:low],
-             params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
-        if list.length > 0 
-          @all = @all.tagged_with(list, :any => true)
-        end
-      end
-
-      if params[:filter] and params[:sort]
-        puts "heeeeeeeeeeeeeyyyyyyyyyyyyyy"
-      end
-
-      if params[:sort]
-        if params[:filter]
-          puts "I was filtered but then I ingnored it"
-        end
-        puts @data = params[:sort][:by]
-        if params[:sort][:by] == 'rating'
-          @all = @all.order_by_rating
-        elsif params[:sort][:by] == 'age'
-          #test
-          @all = Profile.all_except(current_user).order_by_age
-        elsif params[:by] == 'most'
-          #test
-          @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
-        elsif params[:by] == 'least'
-          # test the reverse bit for sure
-          @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
-        elsif params[:by] == 'closest'
-          #test
-          @all = Profile.all_except(current_user).order_by_distance(@user.profile)
-        elsif params[:by] == 'further'
-          #test
-          @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
-        end
-      end
 
 
       
@@ -121,30 +134,30 @@ class MainController < ApplicationController
     # when 'least'
     # end
     
-    if params[:sort]
-      if params[:filter]
-        puts "I was filtered but then I ingnored it"
-      end
-      puts @data = params[:sort][:by]
-      if params[:sort][:by] == 'rating'
-        @all = @all.order_by_rating
-      elsif params[:sort][:by] == 'age'
-        #test
-        @all = Profile.all_except(current_user).order_by_age
-      elsif params[:by] == 'most'
-        #test
-        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
-      elsif params[:by] == 'least'
-        # test the reverse bit for sure
-        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
-      elsif params[:by] == 'closest'
-        #test
-        @all = Profile.all_except(current_user).order_by_distance(@user.profile)
-      elsif params[:by] == 'further'
-        #test
-        @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
-      end
-    end
+    # if params[:by]
+    #   if params[:filter]
+    #     puts "I was filtered but then I ingnored it"
+    #   end
+    #   puts @data = params[:by]
+    #   if params[:by] == 'rating'
+    #     @all = @all.order_by_rating
+    #   elsif params[:sort][:by] == 'age'
+    #     #test
+    #     @all = Profile.all_except(current_user).order_by_age
+    #   elsif params[:by] == 'most'
+    #     #test
+    #     @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
+    #   elsif params[:by] == 'least'
+    #     # test the reverse bit for sure
+    #     @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
+    #   elsif params[:by] == 'closest'
+    #     #test
+    #     @all = Profile.all_except(current_user).order_by_distance(@user.profile)
+    #   elsif params[:by] == 'further'
+    #     #test
+    #     @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
+    #   end
+    # end
 
     # closest
     # further
@@ -178,26 +191,9 @@ class MainController < ApplicationController
 
   # the hope would be to dymnaically update the results while choosing the options
 
-  def filter
-    #test for a age range between a..b, should be given the params from the form
-    # @test = Profile.for_age_range(18, 90).order_by_age
     
-    if params["filter"]
-      list = params[:filter][:interest_tags]
-      p list.reject!(&:blank?)
-      
-      
-      @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
-        params[:filter][:old]).by_rating_range(params[:filter][:low],
-           params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
-      if list.length > 0 
-        @all = @all.tagged_with( list, :any => true)
-      end
-
-      # Ok so all I need to do now is get the interests working
-    end
     
-  end
+  
   
   # def index
   #   if params["search"]

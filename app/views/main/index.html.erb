@@ -62,56 +62,44 @@
                         <%#onchange: 'Rails.fire(this.form, "submit")'
                        <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
                     <% end %> -->
+                    
+                    <%# https://stackoverflow.com/questions/48638747/remove-rails-authenticity-token-from-view %>
+                    <%# ?color=black,white %>
+                    <%= link_to "Male", request.params.merge(gender: "Male") %>
+                    <%= link_to "Female", request.params.merge(gender: "Female") %>
+                    <%= link_to "Other", request.params %>
+                    <%= button_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
+                    <%= button_to "Test1", request.params.except(:authenticity_token).merge(test: "true1") %>
 
-                    <%= form_for :sort, url: main_path, method: :get do |f| %>
-                        <%= f.label "Sort:" %>
-                        <%= f.select(:by, options_for_select([
+                    <% Interest.all.each do |interest| %>
+                        <li>
+                            <%= button_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
+                            <%= request.params.merge({:interest => interest.name}) %>
+                        </li>
+                    <% end %>
+
+
+                    <% if @gender %>
+                        <%= @gender%>
+                    <% end %>
+                    <% if @interest %>
+                        <%= @interest%>
+                    <% end %>
+                    <%= form_tag url: sort_users_path, method: :get do |f| %>
+                        <%= label_tag "Sort:" %>
+                        <%= select_tag :by, options_for_select([
+                            ["Featured", "default"],
                             ["Age", "age"],
                             ["Ratings - High to Low", "rating"],
                             ["Nearest", "closest"],
                             ["Farthest", "further"], 
                             ["Most in Common", "most"], 
-                            ["Least in Common", "least"]]), 
-                            {include_blank: true, class: 'form-control'}, :onchange => "this.form.submit()") %>
+                            ["Least in Common", "least"]],
+                            params[:by]), 
+                            {class: 'form-control', :onchange => "this.form.submit()"} %>
 
-                        <%#= f.select :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "rating"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Sort Users"),
-                            {onchange: "alert('Hello' + $(this).val());"}  %>
-                            <!-- This worked before -->
-                            <!-- onchange: "$(this).parent('sort').submit();" -->
-                        
-                        
-                        <%#onchange: 'Rails.fire(this.form, "submit")'
-                    
-                        <%#= f.submit "Apply"%>
+                    <% end %> 
 
-                    <% end %>
-
-                    ----------------------------------------
-                    <!-- <%= form_tag(:filter_users, url: filter_users_path) do %>
-                        <%= label_tag "Filter" %>
-                        <%= label_tag "Interests"%>
-                        <%= collection_check_boxes :interest, :interest_name, Interest.all, :name, :name do |b| %>
-                            <li>
-                                <%= b.label(class: "form_interest_checks{ b.object.class.name.parameterize }", 'data-value': b.value) { b.check_box + b.text } %>
-                            </li>
-                        <% end %>
-
-                        <%#onchange: 'Rails.fire(this.form, "submit")'
-                       <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
-                       
-                    <% end %> -->
-                    </br>
-                    ----------------------------------------
-                    <!-- <%= form_for :interests, url: filter_users_path do |thing_form| %>
-                        <%= thing_form.label "Interests"%>
-                        <%= thing_form.collection_check_boxes :interest_tags, Interest.all, :name, :name do |b| %>
-                            <li>
-                                <%= b.check_box(class: "box") %>
-                                <%= b.label(class: "text") %>
-                            </li>
-                        <% end %>
-                         <%= thing_form.submit "Apply"%>
-                    <% end %> -->
                     </br>
                     ----------------------------------------
                     
@@ -161,35 +149,7 @@
                     
 
                     ----------------------------------------
-                    <br>
-                    <%= form_for :filter, :html => { id: "filter"}, url: filter_users_path do |thing_form| %>
-                        <%= thing_form.label "Rating:" %>
-
-                        <div id="rating_slider"></div>
-                        
-                        <%= thing_form.text_field :lowest %>
-                        <%= thing_form.hidden_field :low %>
-                        <%= thing_form.text_field :highest %>
-                        <%= thing_form.hidden_field :high %>
-                        <br>
-                        
-
-                        <%= thing_form.submit "Submit" %>
-                    <% end %>
-                    <br>
-                    <div id="distance_slider">
-                    </div>
-                    <%= form_for :filter, :html => { id: "filter"}, url: filter_users_path do |thing_form| %>
-                        
-                        <%= thing_form.label "Distance:" %>
-                        <div id="test"></div>
-                        <%= thing_form.label "0" %>
-                        <%# <%= thing_form.hidden_field :near %> 
-                        <%= thing_form.text_field :farthest %>
-                        <%= thing_form.hidden_field :far %>
-                        <br>
-                        <%= thing_form.submit "Submit" %>
-                    <% end %>
+                   
                     
                     <%= link_to "Reset options", main_path %>
                     <%# <%= form_for @profile, url: sort_users_path do |f| %> %>
@@ -215,10 +175,6 @@
                         <ul>
                             <li>
                                 <%= link_to person.user_name %>
-                                <%= person.postal_code.to_lat %>
-                                <%= person.postal_code.to_lon %>
-                                <%= person.postal_code %>
-                                <%= person.interest_list %>
                             </li>
                         </ul>
                     <% end%>

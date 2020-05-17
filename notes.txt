@@ -57,3 +57,21 @@ https://codediode.io/lessons/8736-loading-spinners-in-rails
 irb(main):018:0> Profile.third.decrement(:user_rating, 0.1).save
 
 for each day from the created day
+
+
+
+
+ <%= form_for :sort, url: main_path, method: :get do |f| %>
+                        <%= f.label "Sort:" %>
+                        <%= f.select(:by, options_for_select([
+                            params[:by],
+                            ["Featured", "default"],
+                            ["Age", "age"],
+                            ["Ratings - High to Low", "rating"],
+                            ["Nearest", "closest"],
+                            ["Farthest", "further"], 
+                            ["Most in Common", "most"], 
+                            ["Least in Common", "least"]]), 
+                            {class: 'form-control'}, :onchange => "this.form.submit()") %>
+
+                    <% end %>

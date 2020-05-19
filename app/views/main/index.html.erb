@@ -54,7 +54,7 @@
                         </option>
                     </select> -->
 
-
+                    <!-- This need to merge with the url request.params.merge(sort: "NAME") -->
                     <!-- <%= form_tag(:sort_users, url: sort_users_path) do  %>
                         <%= label_tag "Sort:" %>
                         <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "rating"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Sort Users"),
@@ -62,19 +62,60 @@
                         <%#onchange: 'Rails.fire(this.form, "submit")'
                        <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
                     <% end %> -->
+
+
                     
                     <%# https://stackoverflow.com/questions/48638747/remove-rails-authenticity-token-from-view %>
                     <%# ?color=black,white %>
                     <%= link_to "Male", request.params.merge(gender: "Male") %>
                     <%= link_to "Female", request.params.merge(gender: "Female") %>
                     <%= link_to "Other", request.params %>
-                    <%= button_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
-                    <%= button_to "Test1", request.params.except(:authenticity_token).merge(test: "true1") %>
+                    <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
+                    <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
+                    <!-- This works but errors when there is no params in uri -->
+                    <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
+                    <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %>
+
+                    <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
+
+                    <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
+
+                     <% if @interests %>
+                        <% @interests.each do |i|%>
+                            <%= link_to i %>
+                        <% end %>
+                        <%#= button_to "Clear all", main_path(params.delete{}) %>
+                    <% end %>
+                   
+                    <%= link_to "Remove", request.params.except(:gender, :interests) %>
+
 
                     <% Interest.all.each do |interest| %>
                         <li>
-                            <%= button_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
-                            <%= request.params.merge({:interest => interest.name}) %>
+
+                        <%# https://stackoverflow.com/questions/21833039/rails-how-do-i-merge-or-append-a-value-to-an-array-within-the-url %>
+                            <%# <%= link_to genre[0].title, pins_path( params.merge({ :genre_ids => (params[:genre_ids] + [genre[0].id]) }) )  %>
+                               
+                            <%# <%= link_to "Testing Code", request.params.merge(interests: "Testing Code") %>
+                            
+                            <%# <%= link_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
+                            <%# unless @interests.nil %>
+                                <%# <%= button_to interest.name, request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] + ",#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %> 
+                                <%#= button_to "#{interest.name} X", request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] - "#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                            <% if @interests and @interests.include? interest.name  %>
+                                    <% if @interests.length != 1 %>
+                                        <!-- this does not work properly -->
+                                        <%= button_to request.params.except(:authenticity_token).merge({interests: (params[:interests].delete("#{interest.name}")) }), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                            <%= interest.name %> <p>x</p>
+                                        <% end %>
+                                    <% else %>
+                                        <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                             <%= interest.name %> <p>y</p> 
+                                        <% end %> 
+                                     <% end %>
+                            <% else %>
+                                <%= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                            <% end %>
                         </li>
                     <% end %>
 
@@ -82,10 +123,12 @@
                     <% if @gender %>
                         <%= @gender%>
                     <% end %>
-                    <% if @interest %>
-                        <%= @interest%>
+
+                    <% if @interests %>
+                        <%= @test %>
                     <% end %>
-                    <%= form_tag url: sort_users_path, method: :get do |f| %>
+                   
+                    <!-- <%= form_tag url: sort_users_path, method: :get do |f| %>
                         <%= label_tag "Sort:" %>
                         <%= select_tag :by, options_for_select([
                             ["Featured", "default"],
@@ -144,7 +187,7 @@
 
                         <%= thing_form.submit "Apply", class: "sub_fil_button" %>
 
-                    <% end %>
+                    <% end %> -->
 
                     
 

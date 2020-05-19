@@ -62,9 +62,24 @@ class MainController < ApplicationController
         if params[:gender]
           @gender = params[:gender]
         end
-        if params[:interest] 
-          @interest = params[:interest]
+        if params[:test] 
+          @test = params[:test]
         end
+        if params[:interests]
+          p params[:interests]
+          @interests = params[:interests].split("/")
+          @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
+        end
+
+        if params[:gender]
+          @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
+        end
+
+        # params[:one].present?
+        if params.empty?
+            puts "YYYYYAAAAAAAAYYYYY"
+        end
+
 
               if params[:filter]
                 list = params[:filter][:interest_tags]

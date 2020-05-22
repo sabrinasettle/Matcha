@@ -67,66 +67,123 @@
                     
                     <%# https://stackoverflow.com/questions/48638747/remove-rails-authenticity-token-from-view %>
                     <%# ?color=black,white %>
-                    <%= link_to "Male", request.params.merge(gender: "Male") %>
-                    <%= link_to "Female", request.params.merge(gender: "Female") %>
-                    <%= link_to "Other", request.params %>
-                    <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
-                    <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
-                    <!-- This works but errors when there is no params in uri -->
-                    <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
-                    <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %>
+                    <div class ="testing">
+                        <%= link_to "Male", request.params.merge(gender: "Male") %>
+                        <%= link_to "Female", request.params.merge(gender: "Female") %>
+                        <%= link_to "Other", request.params %>
+                        <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
+                        <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
+                        <!-- This works but errors when there is no params in uri -->
+                        <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
+                        <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %>
 
-                    <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
+                        <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
 
-                    <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
+                        <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
 
-                     <% if @interests %>
-                        <% @interests.each do |i|%>
-                            <%= link_to i %>
-                        <% end %>
-                        <%#= button_to "Clear all", main_path(params.delete{}) %>
-                    <% end %>
-                   
-                    <%= link_to "Remove", request.params.except(:gender, :interests) %>
-
-
-                    <% Interest.all.each do |interest| %>
-                        <li>
-
-                        <%# https://stackoverflow.com/questions/21833039/rails-how-do-i-merge-or-append-a-value-to-an-array-within-the-url %>
-                            <%# <%= link_to genre[0].title, pins_path( params.merge({ :genre_ids => (params[:genre_ids] + [genre[0].id]) }) )  %>
-                               
-                            <%# <%= link_to "Testing Code", request.params.merge(interests: "Testing Code") %>
-                            
-                            <%# <%= link_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
-                            <%# unless @interests.nil %>
-                                <%# <%= button_to interest.name, request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] + ",#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %> 
-                                <%#= button_to "#{interest.name} X", request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] - "#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
-                            <% if @interests and @interests.include? interest.name  %>
-                                    <% if @interests.length != 1 %>
-                                        <!-- this does not work properly -->
-                                        <%= button_to request.params.except(:authenticity_token).merge({interests: (params[:interests].delete("#{interest.name}")) }), {form_class: 'data_fil_button', class: 'input_data'} do %>
-                                            <%= interest.name %> <p>x</p>
-                                        <% end %>
-                                    <% else %>
-                                        <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
-                                             <%= interest.name %> <p>y</p> 
-                                        <% end %> 
-                                     <% end %>
-                            <% else %>
-                                <%= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                        <% if @interests %>
+                            <% @interests.each do |i|%>
+                                <%= link_to i %>
                             <% end %>
-                        </li>
-                    <% end %>
+                            <%#= button_to "Clear all", main_path(params.delete{}) %>
+                        <% end %>
+                    
+                        <%= link_to "Remove", request.params.except(:gender, :interests) %>
+
+                    </div>
+
+                    <h3> Filter by: </h3>
+                    <span class="material-icons">keyboard_arrow_up</span>
+                    <div class="fil_con">
+                        <%= button_tag "Rating", type: 'choice', id: "choice_collection" do %>
+                            <%= "Interests" %>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        <% end %>
+                        <div class="filter_collection_panel">
+                            <% Interest.all.each do |interest| %>
+                                <li>
+
+                                <%# https://stackoverflow.com/questions/21833039/rails-how-do-i-merge-or-append-a-value-to-an-array-within-the-url %>
+                                    <%# <%= link_to genre[0].title, pins_path( params.merge({ :genre_ids => (params[:genre_ids] + [genre[0].id]) }) )  %>
+                                    
+                                    <%# <%= link_to "Testing Code", request.params.merge(interests: "Testing Code") %>
+                                    
+                                    <%# <%= link_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
+                                    <%# unless @interests.nil %>
+                                        <%# <%= button_to interest.name, request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] + ",#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %> 
+                                        <%#= button_to "#{interest.name} X", request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] - "#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <% if @interests and @interests.include? interest.name  %>
+                                            <% if @interests.length != 1 %>
+                                                <!-- this does not work properly -->
+                                                <%= button_to request.params.except(:authenticity_token).merge({interests: @interests.delete("#{interest.name}") }), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                                    <%= interest.name %> <p>x</p>
+                                                <% end %>
+                                            <% else %>
+                                                <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                                    <span><%= interest.name %> <p>y</p> </span>
+                                                <% end %> 
+                                            <% end %>
+                                    <% else %>
+                                        <%#= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                        <!-- Make both p and i inline block with float right on i -->
+                                        <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                            <span><p><%= interest.name %></p> <i class="material-icons">check</i> </span>
+                                        <% end %>
+                                    <% end %>
+                                </li>
+                            <% end %>
+                        </div>
+                    </div>
 
 
-                    <% if @gender %>
-                        <%= @gender%>
-                    <% end %>
+                   <div class="fil_con">
+                        <%= button_to "Gender" %>
+                        <div class="filter_collection_panel">
+                            <li>
+                                <%= button_to "Male", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'}%>
+                            </li>
+                            <li>
+                                <%= button_to "Female", request.params.except(:authenticity_token).merge(gender: "Female"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                            </li>
+                        </div>
+                    </div>
 
-                    <% if @interests %>
-                        <%= @test %>
-                    <% end %>
+                    <div class="fil_con">
+                        <%= button_to "Distance" %>
+                        <div class="filter_collection_panel">
+                            10 miles
+                            20 miles
+                            30 miles
+                            40 miles
+                            50 miles
+                        </div>
+                    </div>
+
+                    <div class="fil_con">
+                        <%= button_tag "Rating" do %>
+                            <%= "Rating" %>
+                            <i class="material-icons">keyboard_arrow_down</i>
+                        <% end %>
+                        <div class="filter_collection_panel">
+                            0 to 2
+                            3 to 5
+                            5 to 7
+                            7 to 9
+                            9 to 10
+                        </div>
+                    </div>
+
+                    <div class="fil_con">
+                        <%= button_to "Age" %>
+                        <div class="filter_collection_panel">
+                            18 to 25
+                            26 to 35
+                            36 to 45
+                            46 to 55
+                            56 to 65
+                            66 to 90
+                        </div>
+                    </div>
                    
                     <!-- <%= form_tag url: sort_users_path, method: :get do |f| %>
                         <%= label_tag "Sort:" %>

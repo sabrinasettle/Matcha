@@ -98,7 +98,7 @@
 .main_page{
     width: 100vw;
     height: 100vh;
-    background-color: transparent;
+    background-color:  rgb(166, 209, 145); /* For browsers that do not support gradients */
 
     .nav_bar_main {
       width: 100%;
@@ -268,30 +268,58 @@
       background-color: rgba(255, 255, 255, 0.726);
     }
   }
-  .sort_bar {
-    width: 250px;
-    height: 5%;
-    margin: 2em 20px 10px 10vw;
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px 10px 10px 10px;
+  .sort_con {
+    padding: 20px;
+    min-width: 200px;
+    max-width: 300px;
+    width: 20%;
     // background-color: red;
-    // .s_bs {
-    //   border-bottom: 1px solid #333;
-    //     // border-width:1px 0;
-    //     list-style:none;
-    //     margin:0;
-    //     padding:0;
-    //     text-align:center;
-    // }
-    // .s_bs li {
-    //   display:inline;
-    //   padding: 0 2% 0 2%;
-    // }
-    form {
-      background-color: red;
-      label {
-        color: green;
+    height: 100%;
+    .test {
+      display: none;
+    }
+    .fil_con {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-top: 1px dotted black;
+      border-bottom: 1px dotted black;
+
+      .filter_collection_panel {
+        overflow-y: scroll;
+        max-height: 400px;
+        // background-color: royalblue;
+        li {
+          list-style: none;
+          padding: 5px 20px 5px 5px;
+          .data_fil_button {
+            .input_data {
+              padding: 10px;
+              width: 100%;
+              background-color: transparent;
+              border: 1px gray solid;
+              border-radius: 5px ;
+              // make this large in mobile
+              font-size: 13px;
+              span {
+                p {
+                  margin: 5px 0 0 0;
+                  display: inline-block;
+              
+                }
+                i {
+                  display: block;
+                  float: right;
+                }
+              }
+            }
+            .input_data:hover {
+              border: black 1px solid;
+              color: black;
+              background-color: #fcfcfc8e;
+
+            }
+          }
+        }
       }
     }
   }

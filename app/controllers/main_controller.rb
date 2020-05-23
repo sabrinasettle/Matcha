@@ -70,6 +70,9 @@ class MainController < ApplicationController
           @interests = params[:interests].split("/")
           @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
         end
+
+#https://stackoverflow.com/questions/11265093/rails-dropdown-menu
+
         # https://makandracards.com/makandra/65468-rails-how-to-get-url-params-without-routing-parameters-or-vice-versa
         # https://stackoverflow.com/questions/34607721/merge-actioncontrollerparameters-with-rails-5
         # https://stackoverflow.com/questions/6916485/rails-appending-url-parameters-removing-url-parameters

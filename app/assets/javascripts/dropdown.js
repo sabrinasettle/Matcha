@@ -19,7 +19,9 @@ $(document).ready(function() {
             //This Works
             // $('ul').slideToggle(280);
 
-            $('.filter_collection_panel').slideToggle('2000');
+           
+                $('.filter_collection_panel').slideToggle('2000');
+           
             // $("i", this).toggleClass("");
             // $(this).html('<p>Interests</p><i class="material-icons">keyboard_arrow_up</i>');
 

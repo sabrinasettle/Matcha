@@ -287,6 +287,8 @@
       .filter_collection_panel {
         overflow-y: scroll;
         max-height: 400px;
+        // height: 0;
+        display: none;
         // background-color: royalblue;
         li {
           list-style: none;

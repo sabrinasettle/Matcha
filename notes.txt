@@ -75,3 +75,41 @@ for each day from the created day
                             {class: 'form-control'}, :onchange => "this.form.submit()") %>
 
                     <% end %>
+
+
+
+
+
+
+
+
+
+
+
+<% request.query_parameters.each do |key,value| %>
+                                    <%= hidden_field_tag key, value %>
+                                <% end %>
+
+
+
+<%= form_tag main_path, :method => "get", enforce_utf8: false do %>
+                        <%= label_tag "Sort:" %>
+                        <%# <%= hidden_field_tag :search, params[:search] %> %>
+                        <%#= select_tag :per_page, options_for_select([["A"],["B"],["C"]], params[:per_page]), :onchange => "this.form.submit()" %>
+
+                         <%= select_tag :sort, options_for_select([ ["Age", "age"],
+                            ["Ratings - High to Low", "rating"],
+                            ["Nearest", "closest"],
+                            ["Farthest", "further"],
+                                ["Most in Common", "most"],
+                                ["Least in Common", "least"]],
+                                params[:sort]),
+                                    {onchange: "this.form.submit();"}  %>
+                        <%#= select_tag :sort, options_for_select([["Creation Date", "created_at"],
+                        ["File Name", "name"],
+                        ["Rating", "rating_average"],
+                        ["Downloads", "downloads"]],
+                            params[:sort]),
+                             {onchange: "this.form.submit();"} %>
+                       
+                    <% end %>

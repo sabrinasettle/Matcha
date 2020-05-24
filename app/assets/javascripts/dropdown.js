@@ -1,9 +1,9 @@
 $(document).ready(function() { 
 
-    var b = $('#choice_collection');
+    var b = $('.choice_collection');
     var choices = $('.filter_collection_panel')
 
-    $("#choice_collection").click(function(event) {
+    $(".choice_collection").click(function(event) {
         event.preventDefault();
         // if ($('.filter_collection_panel').css("display", "none");
 
@@ -20,13 +20,19 @@ $(document).ready(function() {
             // $('ul').slideToggle(280);
 
            
-                $('.filter_collection_panel').slideToggle('2000');
-           
+            // $(this).closest(".Box")$('.filter_collection_panel').slideToggle('2000');
+            $(this).closest('.fil_con').find('.filter_collection_panel').slideToggle();
+
             // $("i", this).toggleClass("");
-            // $(this).html('<p>Interests</p><i class="material-icons">keyboard_arrow_up</i>');
+            if ($(this).find('i').text() == 'keyboard_arrow_down'){
+                $(this).find('i').text('keyboard_arrow_up');
+            } else {
+                $(this).find('i').text('keyboard_arrow_down');
+            }
+            $('.filter_collection_panel').toggleClass("active");
 
-
-            alert("Clicked!");
+            // for testing 
+            // alert("Clicked!");
     });
    
 }); 

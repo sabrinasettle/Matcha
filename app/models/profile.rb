@@ -187,4 +187,23 @@ class Profile < ApplicationRecord
             # scope :for_age_range, -> min, max {
             #     where("date_part('year', age(birthdate)) >= ? AND date_part('year', age(birthdate)) <= ?", min, max)
             # }
+
+            scope :filter_profiles, ->(param={}) {
+            #     all
+            #     + relation.sort_by(param[:sort_by],param[:sort_type]) if param[:sort_by].present?
+            #     + relation.author(param[:author]) if param[:author].present?
+            #     + relation.assignee(param[:assignee]) if param[:assignee].present?
+            #     + relation.milestone(param[:milestone]) if param[:milestone].present?
+            }
+
+            #OR 
+            # scope :search, ->(param={}) {
+            #     relation = all
+            #     relation = relation.sort_by(param[:sort_by],param[:sort_type]) if param[:sort_by].present?
+            #     relation = relation.author(param[:author]) if param[:author].present?
+            #     relation = relation.assignee(param[:assignee]) if param[:assignee].present?
+            #     relation = relation.milestone(param[:milestone]) if param[:milestone].present?
+            #     relation
+            # }
+            # https://stackoverflow.com/questions/39091525/reuse-multiple-scopes-in-another-scope-to-create-search-multiple-fields-in-rails
 end

@@ -113,3 +113,35 @@ for each day from the created day
                              {onchange: "this.form.submit();"} %>
                        
                     <% end %>
+
+
+
+
+
+
+
+
+<%= form_tag main_path, :method => "get", enforce_utf8: false  do %>
+                        <%= label_tag "Test:" %>
+                        <%# if params.nil? %>
+                        <%= select_tag :per_page, options_for_select([10,20,30], params[:per_page].to_i), :onchange => "this.form.submit()" %>
+                        <% unless params.nil? %>
+                                <% request.query_parameters.except(:per_page).each do |key,value| %>
+                                    <%= hidden_field_tag key, value %>
+                                <% end %>
+                        <% end %>
+                    <% end %>
+
+
+
+
+<%= form_tag main_path, :method => "get", enforce_utf8: false  do %>
+                            <%= label_tag "Test:" %>
+                            <%# if params.nil? %>
+                            <%= select_tag :sort_by, options_for_select(["Age", "Ratings", "Nearest", "Farthest"], params[:sort_by]), :onchange => "this.form.submit()" %>
+                            <% unless params.nil? %>
+                                    <% request.query_parameters.except(:sort_by).each do |key,value| %>
+                                        <%= hidden_field_tag key, value %>
+                                    <% end %>
+                                <% end %>
+                        <% end %>

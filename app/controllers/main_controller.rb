@@ -59,25 +59,68 @@ class MainController < ApplicationController
       # .order("created_at desc")
 
       # request.params.merge()
-        if params[:gender]
-          @gender = params[:gender]
-        end
-        if params[:test] 
-          @test = params[:test]
-        end
-        if params[:interests]
-          p params[:interests]
-          @interests = params[:interests].split("/")
-          @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
-        end
+        
+        
 
-#https://stackoverflow.com/questions/11265093/rails-dropdown-menu
+        #https://stackoverflow.com/questions/11265093/rails-dropdown-menu
 
         # https://makandracards.com/makandra/65468-rails-how-to-get-url-params-without-routing-parameters-or-vice-versa
         # https://stackoverflow.com/questions/34607721/merge-actioncontrollerparameters-with-rails-5
         # https://stackoverflow.com/questions/6916485/rails-appending-url-parameters-removing-url-parameters
-        if params[:gender]
-          @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
+       
+
+        # This checks to see if there is any query parameters
+        if request.query_parameters.any?
+          @choices = request.query_parameters
+
+
+          if params[:sort_by].present?
+            # choice = params[:sort_by].split.first.downcase
+            choice = params[:sort_by]
+            @all = Profile.all_except(current_user).order_by_age
+
+            case choice
+              when 'age'
+                puts " I am sorting by age"
+              when 'rating'
+                puts " I am sorting by rating"
+              when 'most'
+                puts choice
+
+              when 'least'
+                puts choice
+
+
+              when 'nearest'
+                puts choice
+
+              when 'farthest'
+                puts choice
+              end
+            #This checks to see if there is a sort, then it needs to determine the type of sort
+
+
+            # Send to another method???
+          end
+          # Then in here we apply logic and queries to the Profiles, based on the params 
+          if params[:gender]
+            @all = Profile.all_except(current_user).where(gender: params[:gender])
+          end
+          if params[:interests]
+            # p params[:interests]
+            @interests = params[:interests].split("/")
+            @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
+          end
+          if params[:distance]
+           
+          end
+          if params[:rating]
+           
+          end
+          if params[:age]
+
+          end
+          puts "Yes there are queries"
         end
 
         # params[:one].present?
@@ -85,52 +128,6 @@ class MainController < ApplicationController
             puts "YYYYYAAAAAAAAYYYYY"
         end
 
-
-              if params[:filter]
-                list = params[:filter][:interest_tags]
-                list.reject!(&:blank?)
-                @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
-                  params[:filter][:old]).by_rating_range(params[:filter][:low],
-                    params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
-                if list.length > 0 
-                  @all = @all.tagged_with(list, :any => true)
-                end
-                if params[:sort]
-                  puts "I am filtered and I tried sorting"
-                  puts "MAYBE THIS WILL WORK"
-                  puts params[:by]
-                end
-              end
-
-              if params[:filter] and params[:sort]
-
-                puts params[:filter]
-                puts params[:sort]
-                puts "heeeeeeeeeeeeeyyyyyyyyyyyyyy"
-              end
-
-              if params[:by]
-                if params[:filter]
-                  puts "I was filtered but then I ingnored it"
-                end
-                # puts @data = params[:sort][:by]
-                if params[:by] == 'rating'
-                  @all = @all.order_by_rating
-                elsif params[:by] == 'age'
-                  @all = Profile.all_except(current_user).order_by_age
-                elsif params[:by] == 'most'
-                  @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
-                elsif params[:by] == 'least'
-                  # test the reverse bit for sure
-                  @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
-                elsif params[:by] == 'closest'
-                  #test
-                  @all = Profile.all_except(current_user).order_by_distance(@user.profile)
-                elsif params[:by] == 'further'
-                  #test
-                  @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
-                end
-              end
     else
       # redirect_to profile_path(@user.user_name)
     end
@@ -204,6 +201,54 @@ class MainController < ApplicationController
 
     # puts @data
 
+
+
+    if params[:filter]
+      list = params[:filter][:interest_tags]
+      list.reject!(&:blank?)
+      @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
+        params[:filter][:old]).by_rating_range(params[:filter][:low],
+          params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
+      if list.length > 0 
+        @all = @all.tagged_with(list, :any => true)
+      end
+      if params[:sort]
+        puts "I am filtered and I tried sorting"
+        puts "MAYBE THIS WILL WORK"
+        puts params[:by]
+      end
+    end
+
+    if params[:filter] and params[:sort]
+
+      puts params[:filter]
+      puts params[:sort]
+      puts "heeeeeeeeeeeeeyyyyyyyyyyyyyy"
+    end
+
+    if params[:by]
+      if params[:filter]
+        puts "I was filtered but then I ingnored it"
+      end
+      # puts @data = params[:sort][:by]
+      if params[:by] == 'rating'
+        @all = @all.order_by_rating
+      elsif params[:by] == 'age'
+        @all = Profile.all_except(current_user).order_by_age
+      elsif params[:by] == 'most'
+        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
+      elsif params[:by] == 'least'
+        # test the reverse bit for sure
+        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
+      elsif params[:by] == 'closest'
+        #test
+        @all = Profile.all_except(current_user).order_by_distance(@user.profile)
+      elsif params[:by] == 'further'
+        #test
+        @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
+      end
+    end
+
     respond_to do |format|
       format.js {}
     end
@@ -211,9 +256,16 @@ class MainController < ApplicationController
 
   # the hope would be to dymnaically update the results while choosing the options
 
+  def create_multiple_params
+    #https://stackoverflow.com/questions/30616529/how-to-accept-multiple-url-parameters-in-rails-with-the-same-key
+
+  end
     
     
-  
+  def destroy_param
+    # https://stackoverflow.com/questions/30616529/how-to-accept-multiple-url-parameters-in-rails-with-the-same-key
+
+  end
   
   # def index
   #   if params["search"]

@@ -44,188 +44,155 @@
                 <br>
                 
                 <div class="sort_con">
-                    
-                    <!-- <select>
-                        <option value="default">
-                            Age
-                        </option>
-                        <option value="ratings">
-                            Ratings - High to Low
-                        </option>
-                    </select> -->
+                        
+                        <!-- <select>
+                            <option value="default">
+                                Age
+                            </option>
+                            <option value="ratings">
+                                Ratings - High to Low
+                            </option>
+                        </select> -->
 
-                    <!-- This need to merge with the url request.params.merge(sort: "NAME") -->
-                    <!-- <%= form_tag(:sort_users, url: sort_users_path) do  %>
-                        <%= label_tag "Sort:" %>
-                        <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "rating"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Sort Users"),
-                            {onchange: "this.form.submit();"}  %>
-                        <%#onchange: 'Rails.fire(this.form, "submit")'
-                       <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
-                    <% end %> -->
-
-
-                    
-                    <%# https://stackoverflow.com/questions/48638747/remove-rails-authenticity-token-from-view %>
-                    <%# ?color=black,white %>
+                        <!-- This need to merge with the url request.params.merge(sort: "NAME") -->
+                        <!-- <%= form_tag(:sort_users, url: sort_users_path) do  %>
+                            <%= label_tag "Sort:" %>
+                            <%= select_tag :reorder_by, options_for_select([ ["Age", "age"], ["Ratings - High to Low", "rating"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"] ], "Sort Users"),
+                                {onchange: "this.form.submit();"}  %>
+                            <%#onchange: 'Rails.fire(this.form, "submit")'
+                        <%# {:onchange=> "alert('Hello' + $(this).val());"}  %>
+                        <% end %> -->
 
 
-                    
+                        
+                        <%# https://stackoverflow.com/questions/48638747/remove-rails-authenticity-token-from-view %>
+                        <%# ?color=black,white %>
 
-                    <%= form_tag main_path, :method => "get", enforce_utf8: false  do %>
-                        <%= label_tag "Sort:" %>
-                        <%= select_tag :sort, options_for_select([ ["Age", "age"],
-                            ["Ratings - High to Low", "rating"],
-                            ["Nearest", "closest"],
-                            ["Farthest", "further"],
-                            ["Most in Common", "most"],
-                            ["Least in Common", "least"]],
-                            params[:sort]),
-                            {onchange: "this.form.submit();"} %>
-                        <% unless params.nil? %>
-                                <% request.query_parameters.except(:sort).each do |key,value| %>
-                                    <%= hidden_field_tag key, value %>
-                                <% end %>
-                        <% end %>
-                    <% end %>
-
-                    <!-- Worked before -->
-                    <%= form_tag main_path, :method => "get", enforce_utf8: false  do %>
-                        <%= label_tag "Test:" %>
-                        <%# if params.nil? %>
-                        <%= select_tag :per_page, options_for_select([10,20,30], params[:per_page].to_i), :onchange => "this.form.submit()" %>
-                        <% unless params.nil? %>
-                                <% request.query_parameters.except(:per_page).each do |key,value| %>
-                                    <%= hidden_field_tag key, value %>
-                                <% end %>
-                        <% end %>
-                    <% end %>          
-
-
-                    <div class ="testing">
-                        <%= button_to request.params.except(:authenticity_token).merge(gender: "Male") do %>
-                                <p>"Male"</p>
-                                <%= hidden_field_tag :per_page, "Yay" %>
-
-                        <% end %>
-                        <%= link_to "Female", request.params.merge(gender: "Female") %>
-                        <%= link_to "Other", request.params %>
-                        <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
-                        <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
-                        <!-- This works but errors when there is no params in uri -->
-                        <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
-                        <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? ([params[:test], "test2"]) : "test2" )}) %>
-
-                        <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
-
-                        <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
-
-                        <% if @interests %>
-                            <%= params[:interests] %>
-                            <% @interests.each do |i|%>
-                                <%= link_to i %>
-                            <% end %>
-                            <%#= button_to "Clear all", main_path(params.delete{}) %>
-                        <% end %>
-                    
-                        <%= link_to "Remove", request.params.except(:gender, :interests) %>
-
-                    </div>
-
-                    <h3> Filter by: </h3>
-                    <span class="material-icons">keyboard_arrow_up</span>
-                    <div class="fil_con">
-                        <%= button_tag "Rating", type: 'choice', id: "choice_collection" do %>
-                            <%= "Interests" %>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        <% end %>
-                        <div class="filter_collection_panel">
-                            <% Interest.all.each do |interest| %>
-                                <li>
-
-                                <%# https://stackoverflow.com/questions/21833039/rails-how-do-i-merge-or-append-a-value-to-an-array-within-the-url %>
-                                    <%# <%= link_to genre[0].title, pins_path( params.merge({ :genre_ids => (params[:genre_ids] + [genre[0].id]) }) )  %>
-                                    
-                                    <%# <%= link_to "Testing Code", request.params.merge(interests: "Testing Code") %>
-                                    
-                                    <%# <%= link_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
-                                    <%# unless @interests.nil %>
-                                        <%# <%= button_to interest.name, request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] + ",#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %> 
-                                        <%#= button_to "#{interest.name} X", request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] - "#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
-                                    <% if @interests and @interests.include? interest.name  %>
-                                            <% if @interests.length != 1 %>
-                                                <!-- this does not work properly -->
-                                                <%= button_to request.params.except(:authenticity_token).merge({interests: @interests.delete("#{interest.name}") }), {form_class: 'data_fil_button', class: 'input_data'} do %>
-                                                    <span><p><%= interest.name %></p> <i class="material-icons">close</i> </span>
-                                                <% end %>
-                                            <% else %>
-                                                <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
-                                                    <span><p><%= interest.name %></p> <i class="material-icons">close</i> </span>
-                                                <% end %> 
-                                            <% end %>
-                                    <% else %>
-                                        <%#= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
-                                        <!-- Make both p and i inline block with float right on i -->
-                                        <%= button_to request.params.except(:authenticity_token, :interests).merge(interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )), {form_class: 'data_fil_button', class: 'input_data'} do %>
-                                            <%= interest.name %>
-                                        <% end %>
+                        <%= form_tag main_path, :method => "get", enforce_utf8: false  do %>
+                            <%= label_tag "Sort by:" %>
+                            <%# if params.nil? %>
+                            <%= select_tag :sort_by, options_for_select([
+                                ["Suggested", "default"],
+                                ["Age","age"], 
+                                ["Ratings - High to Low","rating"], 
+                                ["Nearest", "closest"],
+                                ["Farthest", "farthest"],
+                                ["Most in Common", "most"], 
+                                ["Least in Common", "least"]],
+                                params[:sort_by]),
+                                :onchange => "this.form.submit()" %>
+                            <% unless params.nil? %>
+                                    <% request.query_parameters.except(:sort_by).each do |key,value| %>
+                                        <%= hidden_field_tag key, value %>
                                     <% end %>
-                                </li>
+                                <% end %>
+                        <% end %>
+
+                       
+
+                            
+
+                    <div id="filter_section">
+                        <h3> Filter by: </h3>
+                        <div class="fil_con">
+                            <%= button_tag "Interests", type: 'choice', class: "choice_collection" do %>
+                                <p>Interests</p>
+                                <i class="material-icons">keyboard_arrow_down</i>
                             <% end %>
-                        </div>
-                    </div>
+                            <div class="filter_collection_panel">
+                                <% Interest.all.each do |interest| %>
+                                    <li>
 
-
-                   <div class="fil_con">
-                        <%= button_tag "Gender", type: 'choice', id: "choice_collection" do %>
-                            <%= "Gender" %>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        <% end %>
-                        <div class="filter_collection_panel">
-                            <li>
-                                <%= button_to "Male", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'}%>
-                            </li>
-                            <li>
-                                <%= button_to "Female", request.params.except(:authenticity_token).merge(gender: "Female"), {form_class: 'data_fil_button', class: 'input_data'} %>
-                            </li>
+                                    <%# https://stackoverflow.com/questions/21833039/rails-how-do-i-merge-or-append-a-value-to-an-array-within-the-url %>
+                                        <%# <%= link_to genre[0].title, pins_path( params.merge({ :genre_ids => (params[:genre_ids] + [genre[0].id]) }) )  %>
+                                        
+                                        <%# <%= link_to "Testing Code", request.params.merge(interests: "Testing Code") %>
+                                        
+                                        <%# <%= link_to interest.name, request.params.except(:authenticity_token).merge(interests: interest.name), {name: "interests[]"} %>
+                                        <%# unless @interests.nil %>
+                                            <%# <%= button_to interest.name, request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] + ",#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %> 
+                                            <%#= button_to "#{interest.name} X", request.params.except(:authenticity_token, ).merge({interests: (params[:interests] ? (params[:interests] - "#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                        <% if @interests and @interests.include? interest.name  %>
+                                                <% if @interests.length != 1 %>
+                                                    <!-- this does not work properly -->
+                                                    <%= button_to request.params.except(:authenticity_token).merge({interests: @interests.delete("#{interest.name}") }), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                                        <span><p><%= interest.name %></p> <i class="material-icons">close</i> </span>
+                                                    <% end %>
+                                                <% else %>
+                                                    <%= button_to request.params.except(:authenticity_token, :interests), {form_class: 'data_fil_button', class: 'input_data'} do %>
+                                                        <span><p><%= interest.name %></p> <i class="material-icons">close</i> </span>
+                                                    <% end %> 
+                                                <% end %>
+                                        <% else %>
+                                            <%#= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                            <!-- Make both p and i inline block with float right on i -->
+                                            <%= button_to request.params.except(:authenticity_token, :interests).merge(interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )), {form_class: 'data_fil_button', class: 'input_data'}, :method => :get do %>
+                                                <%= interest.name %>
+                                            <% end %>
+                                        <% end %>
+                                    </li>
+                                <% end %>
+                            </div>
                         </div>
-                    </div>
+
 
                     <div class="fil_con">
-                        <%= button_to "Distance" %>
-                        <div class="filter_collection_panel">
-                            10 miles
-                            20 miles
-                            30 miles
-                            40 miles
-                            50 miles
+                            <%= button_tag "Gender", type: 'choice', class: "choice_collection" do %>
+                                <p>Gender</p>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            <% end %>
+                            <div class="filter_collection_panel">
+                                <li>
+                                    <%= button_to "Male", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'}%>
+                                </li>
+                                <li>
+                                    <%= button_to "Female", request.params.except(:authenticity_token).merge(gender: "Female"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="fil_con">
-                        <%= button_tag "Rating" do %>
-                            <%= "Rating" %>
-                            <i class="material-icons">keyboard_arrow_down</i>
-                        <% end %>
-                        <div class="filter_collection_panel">
-                            0 to 2
-                            3 to 5
-                            5 to 7
-                            7 to 9
-                            9 to 10
+                        <div class="fil_con">
+                            <%= button_tag "Distance", type: 'choice', class: "choice_collection" do %>
+                                <p>Distance</p>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            <% end %>
+                            <div class="filter_collection_panel">
+                                10 miles
+                                20 miles
+                                30 miles
+                                40 miles
+                                50 miles
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="fil_con">
-                        <%= button_to "Age" %>
-                        <div class="filter_collection_panel">
-                            18 to 25
-                            26 to 35
-                            36 to 45
-                            46 to 55
-                            56 to 65
-                            66 to 90
+                        <div class="fil_con">
+                            <%= button_tag "Rating", type: 'choice', class: "choice_collection" do %>
+                                <p>Rating</p>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            <% end %>
+                            <div class="filter_collection_panel">
+                                0 to 2
+                                3 to 5
+                                5 to 7
+                                7 to 9
+                                9 to 10
+                            </div>
                         </div>
-                    </div>
+
+                        <div class="fil_con">
+                            <%= button_tag "Age", type: 'choice', class: "choice_collection" do %>
+                                <p>Age</p>
+                                <i class="material-icons">keyboard_arrow_down</i>
+                            <% end %>
+                            <div class="filter_collection_panel">
+                                18 to 25
+                                26 to 35
+                                36 to 45
+                                46 to 55
+                                56 to 65
+                                66 to 90
+                            </div>
+                        </div>
                    
                     <!-- <%= form_tag url: sort_users_path, method: :get do |f| %>
                         <%= label_tag "Sort:" %>
@@ -290,15 +257,17 @@
 
                     
 
-                    ----------------------------------------
                    
                     
-                    <%= link_to "Reset options", main_path %>
-                    <%# <%= form_for @profile, url: sort_users_path do |f| %> %>
+                    </div>
+                    <div id="filter_clear_row">
+                        <%= link_to "Reset options", main_path, {id: "reset_filter"} %>
+                    </div>
+                    <%# <%= form_for @profile, url: sort_users_path do |f| %> 
                         <%# { prompt: 'Select Option' }) I mean this isnt really needed %>
                         <%# options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"]])%>
                         <%# <%= f.label "Sort:" %>
-                        <%# <%= f.select(:id, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), {}, {onchange: "this.form.submit();" })%> %>
+                        <%# <%= f.select(:id, options_for_select([["Age", "default"], ["Ratings - High to Low", "ratings"], ["Nearest", "closest"], ["Farthest", "further"], ["Most in Common", "most"], ["Least in Common", "least"]]), {}, {onchange: "this.form.submit();" })%> 
                         <%#= f.label "Age:" %>
                         <%#= f.collection_select :id, Profile.order('age DESC'), :id, "age" %>
                         <%#= f.select(:id, Profile.all.pluck(:first_name, :id)) %>
@@ -309,19 +278,70 @@
 
                         <%#= f.select "Age", options_for_select("Desc", 'Rating') %>
                     <%# <% end %> 
+
+                    <br>
+                    <br>
+                    <div class ="testing">
+                        <%= button_to request.params.except(:authenticity_token).merge(gender: "Male"), method: :get do %>
+                                <p>"Male"</p>
+                                <%= hidden_field_tag :per_page, "Yay" %>
+
+                        <% end %>
+                        <%= link_to "Female", request.params.merge(gender: "Female") %>
+                        <%= link_to "Other", request.params %>
+                        <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
+                        <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
+                        <!-- This works but errors when there is no params in uri -->
+                        <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
+                        <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %>
+
+                        <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
+
+                        <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
+
+                        <% if @interests %>
+                            <%= params[:interest]%>
+                            <% @interests.each do |i|%>
+                                <%= link_to i %>
+                            <% end %>
+                            <%#= button_to "Clear all", main_path(params.delete{}) %>
+                        <% end %>
+                    
+                        <%= link_to "Remove", request.params.except(:gender, :interests) %>
+
+                    </div>
+
                 </div>
-                <div class='test_res'>
-                    <h1> All Users </h1>
-                    <%= @all.length %>
-                    <% @all.each do |person| %>
-                        <ul>
-                            <li>
-                                <%= link_to person.user_name %>
-                            </li>
-                        </ul>
-                    <% end%>
-                    <%#= render "main/partials/profile_card", locals: {person: @p} %>
+
+                <div class="main_container">
+                    <div class="main_info_bar">
+                        <div class="title_section">
+                            <h1> All Users </h1>
+                        </div>
+                        <div class="info_con">
+                            <p>Count: <%= @all.length %></p>
+                        </div>
+                        <% unless @choices.nil? %>
+                            <div class="choices_con">
+                                Things are going to be here
+                                <% @choices.each do |opt| %>
+                                    <%= opt %>
+                                <% end %>
+                            </div>
+                        <% end %>
+                    </div>
+                    <div class="profile_res_con">
+                        <% @all.each do |person| %>
+                            <ul>
+                                <li>
+                                    <%= link_to person.user_name %>
+                                </li>
+                            </ul>
+                        <% end%>
+                        <%#= render "main/partials/profile_card", locals: {person: @p} %>
+                    </div>
                 </div>
+                
         <% end %>
     </div>
 </body>

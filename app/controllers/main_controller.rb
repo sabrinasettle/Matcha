@@ -81,6 +81,7 @@ class MainController < ApplicationController
 
 
           # @all = Profile.all_except(current_user).filter_profiles(@choices)
+        else
 
             
         end

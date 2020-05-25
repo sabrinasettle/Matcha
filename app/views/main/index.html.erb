@@ -126,7 +126,7 @@
                                         <% else %>
                                             <%#= button_to interest.name, request.params.except(:authenticity_token).merge({interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                             <!-- Make both p and i inline block with float right on i -->
-                                            <%= button_to request.params.except(:authenticity_token, :interests).merge(interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )), {form_class: 'data_fil_button', class: 'input_data'}, :method => :get do %>
+                                            <%= button_to request.params.except(:authenticity_token, :interests).merge(interests: (params[:interests] ? (params[:interests] + "/#{interest.name}") : "#{interest.name}" )), {form_class: 'data_fil_button', class: 'input_data'} do %>
                                                 <%= interest.name %>
                                             <% end %>
                                         <% end %>
@@ -143,7 +143,7 @@
                             <% end %>
                             <div class="filter_collection_panel">
                                 <li>
-                                    <%= button_to "Male", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'}%>
+                                    <%= button_to "Male", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
                                     <%= button_to "Female", request.params.except(:authenticity_token).merge(gender: "Female"), {form_class: 'data_fil_button', class: 'input_data'} %>

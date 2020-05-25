@@ -72,56 +72,30 @@ class MainController < ApplicationController
         # This checks to see if there is any query parameters
         if request.query_parameters.any?
           @choices = request.query_parameters
-
-
-          if params[:sort_by].present?
-            # choice = params[:sort_by].split.first.downcase
-            choice = params[:sort_by]
-            @all = Profile.all_except(current_user).order_by_age
-
-            case choice
-              when 'age'
-                puts " I am sorting by age"
-              when 'rating'
-                puts " I am sorting by rating"
-              when 'most'
-                puts choice
-
-              when 'least'
-                puts choice
-
-
-              when 'nearest'
-                puts choice
-
-              when 'farthest'
-                puts choice
-              end
-            #This checks to see if there is a sort, then it needs to determine the type of sort
-
-
-            # Send to another method???
-          end
-          # Then in here we apply logic and queries to the Profiles, based on the params 
-          if params[:gender]
-            @all = Profile.all_except(current_user).where(gender: params[:gender])
-          end
           if params[:interests]
             # p params[:interests]
             @interests = params[:interests].split("/")
             @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
           end
-          if params[:distance]
-           
-          end
-          if params[:rating]
-           
-          end
-          if params[:age]
+          @all = Profile.filter_profiles(current_user, request.query_parameters)
 
-          end
-          puts "Yes there are queries"
+
+          # @all = Profile.all_except(current_user).filter_profiles(@choices)
+
+            
         end
+
+
+          
+
+            
+            #This checks to see if there is a sort, then it needs to determine the type of sort
+
+
+            # Send to another method???
+          
+          # Then in here we apply logic and queries to the Profiles, based on the params 
+         
 
         # params[:one].present?
         if params.empty?

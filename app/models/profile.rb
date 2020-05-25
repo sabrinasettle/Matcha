@@ -176,8 +176,20 @@ class Profile < ApplicationRecord
             # m = Profile.near(Profile.second.address, 50, units: :mi).order("distance")
             # Sorting
             scope :order_by_age, -> { order(age: :asc) }
+
+            scope :reorder_by_age, -> { reorder(age: :asc) }
+            scope :reorder_by_rating, -> { reorder(user_rating: :desc) }
+            scope :reorder_by_distance, -> (user){near(user.address, 100).reorder("distance") }
+            scope :reorder_by_distance_rev, -> (user){near(user.address, 100).reorder("distance").reverse_order }
+
+            scope :reorder_by_interests_in_common, -> (user){ where id: user.find_related_interests.to_a.pluck(:id)}
+            # scope :reorder_by_interests_in_common, -> (user){ where id: user.find_related_interests.to_a.pluck(:id)}
+
+
+
             # scope :order_by_, -> { order(age: :asc) }
             # Filtering
+            
             scope :by_age_range, ->(min_age, max_age) {where(age: min_age..max_age)}
             scope :by_rating_range, ->(low, high) {where(user_rating: low..high)}#.order(user_rating: :desc)}
             scope :by_distance_range, ->(far, user) {near(user.address, far)}
@@ -188,13 +200,46 @@ class Profile < ApplicationRecord
             #     where("date_part('year', age(birthdate)) >= ? AND date_part('year', age(birthdate)) <= ?", min, max)
             # }
 
-            scope :filter_profiles, ->(param={}) {
+            # Nested scope
+            scope :filter_profiles, ->(user, param={}) {
+                    a = user.profile
+                    # puts a.user_name
+                    p = all.all_except(user)
+                    p = p.where(gender: param[:gender]) if param[:gender].present?
+                    # p = p.tagged_with(@interests, :any => true)
+               
+                    p = sort_profiles(param[:sort_by], p, a) if param[:sort_by].present?
+            }
+
+            scope :sort_profiles, ->(choice, profiles, user) {
+                
+                p = profiles.order_by_rating.order_by_interests_in_common(user).order_by_distance(user) if choice == 'default'
+
+                p = profiles.reorder(age: :asc) if choice == 'age'
+                p = profiles.reorder(user_rating: :desc) if choice == 'rating'
+                p = profiles.reorder_by_distance(user) if choice == 'closest'
+                p = profiles.reorder_by_distance_rev(user) if choice == 'farthest'
+                p = profiles.reorder_by_interests_in_common(user) if choice == 'most'
+                p = profiles.reorder_by_interests_in_common(user).reverse if choice == 'least'
+                
+            
+                # profiles.order_by_rating.order_by_interests_in_common(user).order_by_distance(user) if choice == 'default'
+                p
+            }
             #     all
             #     + relation.sort_by(param[:sort_by],param[:sort_type]) if param[:sort_by].present?
             #     + relation.author(param[:author]) if param[:author].present?
             #     + relation.assignee(param[:assignee]) if param[:assignee].present?
             #     + relation.milestone(param[:milestone]) if param[:milestone].present?
-            }
+            
+
+            # scope :filter_profiles, ->(param={}) {
+            #     all
+            #     + relation.sort_by(param[:sort_by],param[:sort_type]) if param[:sort_by].present?
+            #     + relation.author(param[:author]) if param[:author].present?
+            #     + relation.assignee(param[:assignee]) if param[:assignee].present?
+            #     + relation.milestone(param[:milestone]) if param[:milestone].present?
+            # }
 
             #OR 
             # scope :search, ->(param={}) {

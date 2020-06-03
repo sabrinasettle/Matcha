@@ -26,6 +26,48 @@ Was removed because of the functionalty of sorting the results of a search/filte
 
 The code taken out:
 
+Ruby:
+```ruby
+<%= form_for :filter, :html => { id: "filter"}, url: main_path, method: :get do |thing_form| %>
+
+    <%= thing_form.label "Rating:" %>
+
+    <div id="rating_slider"></div>
+    
+    <%= thing_form.text_field :low, class: "left_inf" %>
+    <%= thing_form.hidden_field :low %>
+    <%= thing_form.text_field :high, class: "right_inf"%>
+    <%= thing_form.hidden_field :high %>
+    <br>
+
+    <%= thing_form.submit "Apply", class: "sub_fil_button" %>
+<% end %> 
+```
+Jquery in slider.js:
+```jquery
+$(document).ready(function(){
+    var slider = $('#rating_slider').slider({
+
+        range: true,
+        min: 0,
+        max: 10,
+        values: [0, 10],
+        animate: "slow",
+        orientation: "horizontal",
+
+        slide: function(event, ui) {
+            $("#filter_low").val(ui.values[0]);
+            $("#filter_high").val(ui.values[1]);
+        }
+    });
+
+        $("#filter_low").val(slider.slider("values")[0]);
+        $("#filter_high").val(slider.slider("values")[1]);
+
+});
+
+```
+
 
 
 I found some great reading on understanding the standards and systems for query_strings here:
@@ -39,7 +81,7 @@ https://docs.microsoft.com/en-us/previous-versions/iis/6.0-sdk/ms524784(v=vs.90)
 
 ## UI
 
-* I am by not by any means a UI designer but I do have a inexhaustiable curiouty about UI for applications and its design
+* I am by not by any means a UI designer but I do have a inexhaustiable curiousty about UI for applications and design
 
 * I used the gems 'animate.css-rails' and 'jquery-ui-rails' for UI elements along with creating my own layouts
 

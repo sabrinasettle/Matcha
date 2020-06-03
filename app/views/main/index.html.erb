@@ -157,11 +157,21 @@
                                 <i class="material-icons">keyboard_arrow_down</i>
                             <% end %>
                             <div class="filter_collection_panel">
-                                10 miles
-                                20 miles
-                                30 miles
-                                40 miles
-                                50 miles
+                                <li>
+                                    <%= button_to "10 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "20 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "30 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "40 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "50 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
                             </div>
                         </div>
 
@@ -171,11 +181,21 @@
                                 <i class="material-icons">keyboard_arrow_down</i>
                             <% end %>
                             <div class="filter_collection_panel">
-                                0 to 2
-                                3 to 5
-                                5 to 7
-                                7 to 9
-                                9 to 10
+                                <li>
+                                    <%= button_to "0 - 2", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "2 - 4", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "4 - 6", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "6 - 8", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "8 - 10", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
                             </div>
                         </div>
 
@@ -185,30 +205,28 @@
                                 <i class="material-icons">keyboard_arrow_down</i>
                             <% end %>
                             <div class="filter_collection_panel">
-                                18 to 25
-                                26 to 35
-                                36 to 45
-                                46 to 55
-                                56 to 65
-                                66 to 90
+                                <li>
+                                    <%= button_to "18 - 25", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "26 - 35", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "36 - 45", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "46 - 55", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "56 - 65", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                                <li>
+                                    <%= button_to "66 - 90", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                </li>
+                               
                             </div>
                         </div>
                    
-                    <!-- <%= form_tag url: sort_users_path, method: :get do |f| %>
-                        <%= label_tag "Sort:" %>
-                        <%= select_tag :by, options_for_select([
-                            ["Featured", "default"],
-                            ["Age", "age"],
-                            ["Ratings - High to Low", "rating"],
-                            ["Nearest", "closest"],
-                            ["Farthest", "further"], 
-                            ["Most in Common", "most"], 
-                            ["Least in Common", "least"]],
-                            params[:by]), 
-                            {class: 'form-control', :onchange => "this.form.submit()"} %>
-
-                    <% end %> 
-
                     </br>
                     ----------------------------------------
                     
@@ -253,11 +271,11 @@
 
                         <%= thing_form.submit "Apply", class: "sub_fil_button" %>
 
-                    <% end %> -->
+                    <% end %>
 
                     
 
-                   
+                
                     
                     </div>
                     <div id="filter_clear_row">

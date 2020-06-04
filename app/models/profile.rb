@@ -205,8 +205,27 @@ class Profile < ApplicationRecord
                     a = user.profile
                     # puts a.user_name
                     p = all.all_except(user)
+                    if param[:interests].present?
+                        interests = param[:interests].split("/")
+                        p = p.tagged_with(interests, any: true)
+                    end 
+                    
+                        p = p.near(a, param[:distance]) if param[:distance].present?
+                    
+                    if param[:age].present?
+                        range = param[:age].split("-")
+                        low = range.first.to_i
+                        high = range.second.to_i
+                        p = p.by_age_range(low, high)
+                    end 
+                    if param[:rating].present?
+                        # range = param[:rating].split("-")
+                        p low = param[:rating][:low].to_i
+                        p high = param[:rating][:high].to_i
+                        p = p.by_rating_range(low, high)
+                    end
+                    
                     p = p.where(gender: param[:gender]) if param[:gender].present?
-                    # p = p.tagged_with(@interests, :any => true)
                
                     p = sort_profiles(param[:sort_by], p, a) if param[:sort_by].present?
                     p

@@ -158,19 +158,19 @@
                             <% end %>
                             <div class="filter_collection_panel">
                                 <li>
-                                    <%= button_to "10 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "10 miles", request.params.except(:authenticity_token).merge(distance: 10), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "20 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "20 miles", request.params.except(:authenticity_token).merge(distance: 20), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "30 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "30 miles", request.params.except(:authenticity_token).merge(distance: 30), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "40 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "40 miles", request.params.except(:authenticity_token).merge(distance: 40), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "50 miles", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "50 miles", request.params.except(:authenticity_token).merge(distance: 50), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                             </div>
                         </div>
@@ -182,19 +182,19 @@
                             <% end %>
                             <div class="filter_collection_panel">
                                 <li>
-                                    <%= button_to "0 - 2", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "0 - 2", request.params.except(:authenticity_token).merge(rating: {low: 0, high: 2}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "2 - 4", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "2 - 4", request.params.except(:authenticity_token).merge(rating: {low: 2, high: 4}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "4 - 6", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "4 - 6", request.params.except(:authenticity_token).merge(rating: {low: 4, high: 6}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "6 - 8", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "6 - 8", request.params.except(:authenticity_token).merge(rating: {low: 6, high: 8}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "8 - 10", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "8 - 10", request.params.except(:authenticity_token).merge(rating: {low: 8, high: 10}), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                             </div>
                         </div>
@@ -206,77 +206,29 @@
                             <% end %>
                             <div class="filter_collection_panel">
                                 <li>
-                                    <%= button_to "18 - 25", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "18 - 25", request.params.except(:authenticity_token).merge(age: "18-25"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "26 - 35", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "26 - 35", request.params.except(:authenticity_token).merge(age: "26-35"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "36 - 45", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "36 - 45", request.params.except(:authenticity_token).merge(age: "36-45"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "46 - 55", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "46 - 55", request.params.except(:authenticity_token).merge(age: "46-55"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "56 - 65", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "56 - 65", request.params.except(:authenticity_token).merge(age: "56-65"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                 <li>
-                                    <%= button_to "66 - 90", request.params.except(:authenticity_token).merge(gender: "Male"), {form_class: 'data_fil_button', class: 'input_data'} %>
+                                    <%= button_to "66 - 90", request.params.except(:authenticity_token).merge(age: "66-90"), {form_class: 'data_fil_button', class: 'input_data'} %>
                                 </li>
                                
                             </div>
                         </div>
                    
                     </br>
-                    ----------------------------------------
-                    
-                    <%# <div id="slider"></div> %>
-                    <%= form_for :filter, :html => { id: "filter"}, url: main_path, method: :get do |thing_form| %>
-                        <%= thing_form.label "Interests"%>
-                        <%= thing_form.collection_check_boxes :interest_tags, Interest.all, :name, :name do |b| %>
-                            <li>
-                                <%= b.check_box(class: "box") %>
-                                <%= b.label(class: "text") %>
-                            </li>
-                        <% end %>
-
-
-                        <%= thing_form.label "Distance:" %>
-                        <div id="distance_slider"></div>
-                        <%= thing_form.label "0", class: "left_inf" %>
-                        <%# <%= thing_form.hidden_field :near %> 
-                        <%= thing_form.text_field :farthest, class: "right_inf" %>
-                        <%= thing_form.hidden_field :far %>
-                        <br>
-
-
-                        <%= thing_form.label "Age:" %>
-                        <div id="age_slider"></div>
-                        <%= thing_form.text_field :youngest, class: "left_inf" %>
-                        <%= thing_form.hidden_field :young %>
-                        <%= thing_form.text_field :oldest, class: "right_inf" %>
-                        <%= thing_form.hidden_field :old %>
-                        <br>
-
-
-                        <%= thing_form.label "Rating:" %>
-
-                        <div id="rating_slider"></div>
-                        
-                        <%= thing_form.text_field :lowest, class: "left_inf" %>
-                        <%= thing_form.hidden_field :low %>
-                        <%= thing_form.text_field :highest, class: "right_inf"%>
-                        <%= thing_form.hidden_field :high %>
-                        <br>
-
-                        <%= thing_form.submit "Apply", class: "sub_fil_button" %>
-
-                    <% end %>
-
-                    
-
-                
-                    
+            
                     </div>
                     <div id="filter_clear_row">
                         <%= link_to "Reset options", main_path, {id: "reset_filter"} %>
@@ -300,33 +252,30 @@
                     <br>
                     <br>
                     <div class ="testing">
-                        <%= button_to request.params.except(:authenticity_token).merge(gender: "Male"), method: :get do %>
-                                <p>"Male"</p>
-                                <%= hidden_field_tag :per_page, "Yay" %>
+                        <%# <%= button_to request.params.except(:authenticity_token).merge(gender: "Male"), method: :get do %>
+                                <%# <p>"Male"</p> %>
+                                <%# <%= hidden_field_tag :per_page, "Yay" %> 
 
-                        <% end %>
-                        <%= link_to "Female", request.params.merge(gender: "Female") %>
-                        <%= link_to "Other", request.params %>
-                        <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %>
-                        <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %>
+                        <%# <% end %> 
+                        <%# <%= link_to "Female", request.params.merge(gender: "Female") %>
+                        <%# <%= link_to "Other", request.params %> 
+                        <%# <%= link_to "Test", request.params.except(:authenticity_token).merge(test: "test") %> 
+                        <%# <%= link_to "Test1", request.params.except(:authenticity_token).merge(test: "test1") %> 
                         <!-- This works but errors when there is no params in uri -->
-                        <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
-                        <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %>
+                        <%# <%= link_to "Testing Code", request.params.except(:authenticity_token).merge({test: ("Testing Code" || params[:test])}) %>
+                        <%# <%= link_to "Testing Code2", request.params.except(:authenticity_token).merge({test: (params[:test] ? (params[:test] + ",test2") : "test2" )}) %> 
 
-                        <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %> %>
+                        <%# <%= link_to "Testing Code3", request.params.except(:authenticity_token).merge({test: (params[:test] ? params[test] : "Testing Code" )}) %>
 
                         <%# { :genre_ids => (params[:genre_ids] | [genre[0].id]) } %>
 
-                        <% if @interests %>
-                            <%= params[:interest]%>
-                            <% @interests.each do |i|%>
-                                <%= link_to i %>
-                            <% end %>
+                        <%# <% if @interests %>
+                            <%# <%= params[:interest]%>
+                            <%# <% @interests.each do |i|%>
+                                <%# <%= link_to i %>
+                            <%# <% end %>
                             <%#= button_to "Clear all", main_path(params.delete{}) %>
-                        <% end %>
-                    
-                        <%= link_to "Remove", request.params.except(:gender, :interests) %>
-
+                        <%# <% end %> 
                     </div>
 
                 </div>

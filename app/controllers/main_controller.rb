@@ -71,11 +71,14 @@ class MainController < ApplicationController
 
         # This checks to see if there is any query parameters
         if request.query_parameters.any?
-          @choices = request.query_parameters
+          # @params = params.slice(:sort, :per_page)
+          @choices = request.query_parameters.slice(:sort_by, :gender, :age, :distance, :rating, :interests)
+          puts @choices.delete(:sort_by)
           if params[:interests]
             # p params[:interests]
             @interests = params[:interests].split("/")
-            @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
+            # Testing
+            # @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
           end
           @all = Profile.filter_profiles(current_user, request.query_parameters)
 

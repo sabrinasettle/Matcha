@@ -111,7 +111,7 @@ body {
       align-items: center;
       // position: fixed;
       .nav_bar_name {
-        text-transform: uppercase;
+        // text-transform: uppercase;
         margin-left: 1rem;
         text-decoration: none;
         color: black;
@@ -134,7 +134,7 @@ body {
               display: flex;
               height: 40px;
               i {
-                margin: 8px 5px 5px 8px;
+                margin: 5px;
               }
               
               .search_input {
@@ -160,7 +160,6 @@ body {
       .nav-links-container {
         display: flex;
         justify-content: space-between;
-        text-transform: uppercase;
         .nav-links {
           text-decoration: none;
           color:black;
@@ -232,7 +231,7 @@ body {
     margin: 0 10px 10px 20px;
     .main_info_bar {
       padding: 10px;
-      background-color: blue;
+      // background-color: blue;
       width: 100%;
       display: inline-block;
       .title_section {
@@ -253,7 +252,7 @@ body {
         }
       }
       .choices_con {
-        background-color: purple;
+        // background-color: purple;
         // display: inline-block;
       }
     }
@@ -425,5 +424,4 @@ h4,
 h5,
 h6 {
   margin: 0;
-  text-transform: uppercase;
 }

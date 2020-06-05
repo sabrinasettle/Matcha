@@ -14,9 +14,7 @@ class SessionsController < ApplicationController
         @user.update_attribute(:online, true)
         puts "is online"
         flash[:notice]="Login successful"
-        puts @user.id # TESTING
         session[:user_id] = @user.id
-        puts session.id
         cookies.signed[:user_id] = current_user.id
         # https://stackoverflow.com/questions/17480487/rails-4-session-expiry
         # session[:expires_at] = Time.current + 24.hours

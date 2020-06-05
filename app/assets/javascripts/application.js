@@ -16,7 +16,7 @@
 ///= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require_tree ./channels
 //= require cable.js 
+//= require_tree ./channels
 //= require_tree .
 

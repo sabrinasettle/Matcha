@@ -15,7 +15,9 @@ class MessagesController < ApplicationController
         #     # user: @message.user.user_name
         #     # head :ok
 
-            redirect_to room_path(@convo.id)
+
+            # Dont need but for testing messages before the websocket stuff
+            # redirect_to room_path(@convo.id)
         end
         respond_to do |format|
             format.js

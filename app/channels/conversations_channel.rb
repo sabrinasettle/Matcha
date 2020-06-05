@@ -5,6 +5,8 @@ class ConversationsChannel < ApplicationCable::Channel
       current_user.conversations.each do |chat|
         stream_from "conversation: #{chat.id}"
       end
+    else
+      puts "CHANTING FUCK LOUDLY"
     end
   end
 
@@ -19,9 +21,9 @@ class ConversationsChannel < ApplicationCable::Channel
     # message = @convo.messages.create(body: data["body"], user: current_user)
     # MessageRelayJob.perform_later(message)
 
-    @chat = Conversation.find(data["conversation_id"])
-    message = @chat.messages.create(body: data["body"], user: current_user)
-    MessageRelayJob.perform_later(message)
+    # @chat = Conversation.find(data["conversation_id"])
+    # message = @chat.messages.create(body: data["body"], user: current_user)
+    # MessageRelayJob.perform_later(message)
 
     # @message = Message.new(body: data['message'])
     # if @message.save

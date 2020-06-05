@@ -18,6 +18,18 @@ class ConversationsController < ApplicationController
         @chat = Conversation.find(params[:id])
         @reciever = User.find(@sender.matches.where(conversation_id: @chat.id).pluck(:inverse_user).first.to_i)
         @messages = @chat.messages.order(created_at: :desc).limit(100).reverse
+        p ActionCable.server.connections.length
+
+        # aa = User.find_by_id(cookies.signed[:user_id])
+        # puts aa.user_name
+
+        # cookies.each do |cookie|
+            # puts cookie
+        # end
+        # from the session contoller ==
+        # cookies.signed[:user_id]
+
+
         # @id = @sender.matches.where(conversation_id: @chat.id).pluck(:inverse_user)
         # @reciever = User.find(id)
 

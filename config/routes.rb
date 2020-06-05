@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 
 
 
-  # mount ActionCable.server => '/cable'
+  mount ActionCable.server => '/cable'
   # Work on -- searches not done
   #searching
   get '/search/' => 'search#new', as: 'search'

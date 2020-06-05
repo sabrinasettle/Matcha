@@ -254,10 +254,13 @@ body {
       .choices_con {
         // background-color: purple;
         // display: inline-block;
+        padding-bottom: 5px;
       }
     }
     .profile_res_con {
-      background-color: green;
+      padding-bottom: 5px;
+
+      // background-color: green;
     }
     .p_card {
       background-color: rgba(255, 255, 255, 0.849);
@@ -331,14 +334,14 @@ body {
         padding-top: 10px;
         padding-bottom: 10px;
         // border-top: 1px dotted black;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.616);
+        border-bottom: 0.1px solid rgb(80, 80, 80);
         .choice_collection {
           width: 100%;
           text-align: left;
           padding: 10px;
           background-color: transparent;
           border: none;
-          letter-spacing: 0.2px;
+          letter-spacing: 0.5px;
 
           p {
             color: #333;
@@ -376,15 +379,19 @@ body {
               padding: 10px;
               width: 100%;
               background-color: transparent;
-              border: 1px gray solid;
+              // border: 1px rgb(80, 80, 80) solid;
+              border: none;
               border-radius: 5px ;
               // make this large in mobile
               font-size: 13px;
+              letter-spacing: 0.5px;
+
               span {
                 p {
                   margin: 5px 0 0 0;
                   display: inline-block;
-              
+                  letter-spacing: 0.5px;
+
                 }
                 i {
                   display: block;
@@ -406,12 +413,13 @@ body {
       // padding: 20px 0 10px 0;
       margin-top: 20px;
       #reset_filter {
-        color: gray;
+        color: rgb(80, 80, 80);
         padding: 10px;
         border-radius: 10px;
       }
       #reset_filter:hover {
-        background-color: rgba(255, 255, 255, 0.849);
+        color: black;
+        // background-color: rgba(255, 255, 255, 0.849);
       }
     }
   }

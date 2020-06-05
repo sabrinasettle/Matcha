@@ -249,9 +249,8 @@
                         <%#= f.select "Age", options_for_select("Desc", 'Rating') %>
                     <%# <% end %> 
 
-                    <br>
-                    <br>
-                    <div class ="testing">
+                    
+                    <%# <div class ="testing"> %>
                         <%# <%= button_to request.params.except(:authenticity_token).merge(gender: "Male"), method: :get do %>
                                 <%# <p>"Male"</p> %>
                                 <%# <%= hidden_field_tag :per_page, "Yay" %> 
@@ -276,7 +275,7 @@
                             <%# <% end %>
                             <%#= button_to "Clear all", main_path(params.delete{}) %>
                         <%# <% end %> 
-                    </div>
+                    <%# </div> %>
 
                 </div>
 
@@ -298,14 +297,14 @@
                         <% end %>
                     </div>
                     <div class="profile_res_con">
-                        <% @all.each do |person| %>
-                            <ul>
-                                <li>
-                                    <%= link_to person.user_name %>
-                                </li>
-                            </ul>
-                        <% end%>
-                        <%#= render "main/partials/profile_card", locals: {person: @p} %>
+                        <%# <% @all.each do |person| %>
+                            <%# <ul> %>
+                                <%# <li> %>
+                                    <%# <%= link_to person.user_name %> 
+                                <%# </li> %>
+                            <%# </ul> %>
+                        <%# <% end%> 
+                       <%= render "main/partials/profile_card", locals: {all: @all} %>
                     </div>
                 </div>
                 

@@ -9,14 +9,6 @@ class MainController < ApplicationController
 
 
   def index
-    # Logic for getting the ip address of a user 
-    # only works if not on localhost using Geocoder
-    # @location = request.location.city
-    # @city = request.location.city
-
-    #test locations
-    # ip = request_ip
-    # response = Geocoder.search(ip)
     
     puts current_user.id
 
@@ -40,25 +32,7 @@ class MainController < ApplicationController
       # @results = Geocoder.search(@location)
       @feed = suggestions(@all, @profile)
       
-      # @data = params[:reorder_by] if params[:reorder_by]
-      # puts @data
-      # if params[:reorder_by]
-      #   option = "rating ASC" if params[:reorder_by] == 'rating'
-      #   option = "age ASC" if params[:reorder_by] == 'age'
-      #   # @all = @all_unordered(:order => option)
-      #   if params[:reorder_by] == 'age'
-      #     @all = @all_unordered.order_by_age
-      #   end
-      # end
-      # @people = Person.all(:order => option)
-      # users_with_common_interests(@profile, @feed)
       
-      # @activites = Profile.joins(:interests)
-      # .group("interest.id")
-      # .having("count(votes.id) > ?", params[:vote_count])
-      # .order("created_at desc")
-
-      # request.params.merge()
         
         
 
@@ -73,17 +47,12 @@ class MainController < ApplicationController
         if request.query_parameters.any?
           # @params = params.slice(:sort, :per_page)
           @choices = request.query_parameters.slice(:sort_by, :gender, :age, :distance, :rating, :interests)
-          puts @choices.delete(:sort_by)
           if params[:interests]
             # p params[:interests]
             @interests = params[:interests].split("/")
-            # Testing
-            # @all = Profile.all_except(current_user).tagged_with(@interests, :any => true)
           end
+          # @choices helps to avoids XXS attacks
           @all = Profile.filter_profiles(current_user, request.query_parameters)
-
-
-          # @all = Profile.all_except(current_user).filter_profiles(@choices)
         else
 
             
@@ -101,11 +70,7 @@ class MainController < ApplicationController
           # Then in here we apply logic and queries to the Profiles, based on the params 
          
 
-        # params[:one].present?
-        if params.empty?
-            puts "YYYYYAAAAAAAAYYYYY"
-        end
-
+        
     else
       # redirect_to profile_path(@user.user_name)
     end
@@ -115,122 +80,6 @@ class MainController < ApplicationController
     
   end
 
-
-
-  def update
-    
-    # case @data
-    # when 'rating'
-    #   @all = Profile.all_except(User.second).order_by_rating
-    # when 'age'
-    #   @all = Profile.all_except(User.second).order_by_age
-    # when 'most'
-    
-    # when 'least'
-    # end
-    
-    # if params[:by]
-    #   if params[:filter]
-    #     puts "I was filtered but then I ingnored it"
-    #   end
-    #   puts @data = params[:by]
-    #   if params[:by] == 'rating'
-    #     @all = @all.order_by_rating
-    #   elsif params[:sort][:by] == 'age'
-    #     #test
-    #     @all = Profile.all_except(current_user).order_by_age
-    #   elsif params[:by] == 'most'
-    #     #test
-    #     @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
-    #   elsif params[:by] == 'least'
-    #     # test the reverse bit for sure
-    #     @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
-    #   elsif params[:by] == 'closest'
-    #     #test
-    #     @all = Profile.all_except(current_user).order_by_distance(@user.profile)
-    #   elsif params[:by] == 'further'
-    #     #test
-    #     @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
-    #   end
-    # end
-
-    # closest
-    # further
-    # most
-    # least
-    
-    # @data = params[:reorder_by]
-    # # @data = params[:reorder_by] if params[:reorder_by]
-    #   puts @data
-    # if params[:reorder_by]
-    # #     # option = "user_rating DESC" if params[:reorder_by] == 'rating'
-    # #     # option = "age ASC" if params[:reorder_by] == 'age'
-
-    #     if params[:reorder_by] == 'age'
-    #       @all_unordered.order(age: :asc)
-    #     # end
-    # #     if @data == 'rating'
-    # #       @all_unordered.order(user_rating: :desc)
-    #     else 
-    #       @all_unordered.order(:id)
-    #     end
-    # #     # @all = @all_unordered.order(option)
-    # end
-
-    # puts @data
-
-
-
-    if params[:filter]
-      list = params[:filter][:interest_tags]
-      list.reject!(&:blank?)
-      @all = Profile.all_except(current_user).by_age_range(params[:filter][:young], 
-        params[:filter][:old]).by_rating_range(params[:filter][:low],
-          params[:filter][:high]).by_distance_range(params[:filter][:far], current_user.profile)
-      if list.length > 0 
-        @all = @all.tagged_with(list, :any => true)
-      end
-      if params[:sort]
-        puts "I am filtered and I tried sorting"
-        puts "MAYBE THIS WILL WORK"
-        puts params[:by]
-      end
-    end
-
-    if params[:filter] and params[:sort]
-
-      puts params[:filter]
-      puts params[:sort]
-      puts "heeeeeeeeeeeeeyyyyyyyyyyyyyy"
-    end
-
-    if params[:by]
-      if params[:filter]
-        puts "I was filtered but then I ingnored it"
-      end
-      # puts @data = params[:sort][:by]
-      if params[:by] == 'rating'
-        @all = @all.order_by_rating
-      elsif params[:by] == 'age'
-        @all = Profile.all_except(current_user).order_by_age
-      elsif params[:by] == 'most'
-        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile)
-      elsif params[:by] == 'least'
-        # test the reverse bit for sure
-        @all = Profile.all_except(current_user).order_by_interests_in_common(@user.profile).reverse
-      elsif params[:by] == 'closest'
-        #test
-        @all = Profile.all_except(current_user).order_by_distance(@user.profile)
-      elsif params[:by] == 'further'
-        #test
-        @all = Profile.all_except(current_user).order_by_distance(@user.profile).reverse_order
-      end
-    end
-
-    respond_to do |format|
-      format.js {}
-    end
-  end
 
   # the hope would be to dymnaically update the results while choosing the options
 

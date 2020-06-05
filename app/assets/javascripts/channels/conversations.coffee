@@ -6,7 +6,7 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
     # Called when the subscription has been terminated by the server
 
   received: (data) ->
-    # console.log(data)
+    console.log(data)
     # active_room = $("[data-behavior='messages'][data-behavior='#{data.conversation_id}']").append(data.message)
     # if active_room.length > 0
     #   active_room.append(data.message)

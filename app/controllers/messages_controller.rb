@@ -5,9 +5,9 @@ class MessagesController < ApplicationController
     end
 
     def create
-        puts @message = @convo.messages.new(message_params)
-        # @message.user = current_user
-        # if @message.save
+        @message = @convo.messages.new(message_params)
+        @message.user = current_user
+        if @message.save
         #     # ConversationsChannel.broadcast_to @chat, @message
         #     # MessageRelayJob.perform_later(@message)
         #     # ActionCable.server.broadcast 'conversations',
@@ -15,8 +15,8 @@ class MessagesController < ApplicationController
         #     # user: @message.user.user_name
         #     # head :ok
 
-        #     redirect_to room_path(@convo.id)
-        # end
+            redirect_to room_path(@convo.id)
+        end
         respond_to do |format|
             format.js
         end

@@ -20,3 +20,5 @@
 //= require_tree ./channels
 //= require_tree .
 
+
+// leave the cable.js above the .channels tree

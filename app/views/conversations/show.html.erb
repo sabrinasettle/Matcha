@@ -5,9 +5,12 @@
         <%= @sender.user_name%>
         <%= @p %>
         <%= @reciever.user_name %>
-        <ul>
-            <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
-        </ul>
+        <!-- <ul> -->
+            <div data-behavior='messages' data-conversation-id='<%= @chat.id %>'>
+                <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
+            </div>
+        <!-- </ul> -->
+
 
         <div class='form_panel'>
             <!-- form may need to change -->

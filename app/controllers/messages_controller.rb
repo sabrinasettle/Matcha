@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
         @message.user = current_user
         if @message.save
         #     # ConversationsChannel.broadcast_to @chat, @message
-        #     # MessageRelayJob.perform_later(@message)
+            MessageRelayJob.perform_later(@message)
         #     # ActionCable.server.broadcast 'conversations',
         #     # message: @message.body,
         #     # user: @message.user.user_name
@@ -19,9 +19,9 @@ class MessagesController < ApplicationController
             # Dont need but for testing messages before the websocket stuff
             # redirect_to room_path(@convo.id)
         end
-        respond_to do |format|
-            format.js
-        end
+        # respond_to do |format|
+            # format.js
+        # end
     end
 
     private

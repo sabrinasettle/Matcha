@@ -7,9 +7,10 @@ class MessagesController < ApplicationController
     def create
         @message = @convo.messages.new(message_params)
         @message.user = current_user
+        
         if @message.save
         #     # ConversationsChannel.broadcast_to @chat, @message
-            MessageRelayJob.perform_later(@message)
+            MessageRelayJob.perform_later(@message, current_user.id)
         #     # ActionCable.server.broadcast 'conversations',
         #     # message: @message.body,
         #     # user: @message.user.user_name

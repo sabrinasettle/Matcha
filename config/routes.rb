@@ -38,9 +38,9 @@ Rails.application.routes.draw do
   get '/search/' => 'search#new', as: 'search'
   
   # Conversations Paths
-  get ':user_name/messages' => 'conversations#index', as: 'messages'
-  get ':user_name/messages' => 'conversations#create', as: 'create_room'
-
+  # get ':user_name/messages' => 'conversations#index', as: 'messages'
+  # get ':user_name/messages' => 'conversations#create', as: 'create_room'
+  get '/messages' => 'conversations#index', as: 'messages'
   get '/messages/r/:id' => 'conversations#show', as: 'room'
 
   # Messages Paths

@@ -5,8 +5,6 @@ class ConversationsChannel < ApplicationCable::Channel
       current_user.conversations.each do |chat|
         stream_from "conversation: #{chat.id}"
       end
-    else
-      puts "CHANTING FUCK LOUDLY"
     end
   end
 
@@ -15,9 +13,10 @@ class ConversationsChannel < ApplicationCable::Channel
     stop_all_streams
   end
 
-  def send_message(data)
+  # def send_message(data)
     # doesnt work for some reason
     # @convo = Conversation.find(data["conversation_id"])
+    # puts convo_users = @convo.users.pluck(:id)
     # message = @convo.messages.create(body: data["body"], user: current_user)
     # MessageRelayJob.perform_later(message)
 
@@ -29,6 +28,6 @@ class ConversationsChannel < ApplicationCable::Channel
     # if @message.save
     #   ActionCable.server.broadcast "conversation_channel", message: @message.body
     # end
-  end
+  # end
    
 end

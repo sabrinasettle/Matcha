@@ -1,1 +1,5 @@
-<%= message.body %>
+<li>
+    
+    <%= image_tag message.user.profile.avatar.url(:thumb)%><%= message.user.user_name%> <%= message.body %>
+    
+</li>

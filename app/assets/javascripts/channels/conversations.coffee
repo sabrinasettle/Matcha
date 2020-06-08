@@ -7,7 +7,18 @@ App.conversations = App.cable.subscriptions.create "ConversationsChannel",
 
   received: (data) ->
     console.log(data)
-    active_room = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']").append(data.message)
+
+    # works
+    # active_room = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']").append(data.message)
+        
+    # Also works
+    active_room = $("[data-behavior='messages'][data-conversation-id='#{data.conversation_id}']")
+    if active_room.length > 0
+      # if current user send it with a certain class to show on the left 
+      # active_room.append("<li><div class=#{data.class}>#{data.user}<strong>#{data.body}</strong></div></li>")
+        active_room.append(data.body)
+
+
     # if active_room.length > 0
     #   active_room.append(data.message)
     

@@ -20,7 +20,7 @@
             <%# end %>
     
                 <%= link_to '<i class="material-icons">notifications_none</i>'.html_safe,  :class => 'nav-links', title: "Messaging" %>
-                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path(current_user.user_name), :class => 'nav-links', title: "Messaging" %>
+                <%= link_to '<i class="material-icons">chat</i>'.html_safe, messages_path, :class => 'nav-links', title: "Messaging" %>
                 <%= link_to '<i class="material-icons">settings_applications</i>'.html_safe, settings_path(current_user.user_name), :class => 'nav-links', title: "Settings" %>
                 <%= link_to profile_path(current_user.user_name), :class => 'p-b', title: "Profile" do %>
                     <p><%= current_user.first_name %></p>

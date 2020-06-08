@@ -1,7 +1,7 @@
 class ConversationsController < ApplicationController
     # Work on -- Clean up this code to be DRY
     before_action :get_user
-    before_action :get_convos, only: [:index]
+    before_action :get_convos
 
     def index 
     end
@@ -13,12 +13,13 @@ class ConversationsController < ApplicationController
     # end
   
     def show
+        puts @user.user_name
         @sender = current_user
         @p = params[:id]
         @chat = Conversation.find(params[:id])
         @reciever = User.find(@sender.matches.where(conversation_id: @chat.id).pluck(:inverse_user).first.to_i)
         @messages = @chat.messages.order(created_at: :desc).limit(100).reverse
-        p ActionCable.server.connections.length
+        # p ActionCable.server.connections.length
 
         # aa = User.find_by_id(cookies.signed[:user_id])
         # puts aa.user_name
@@ -62,7 +63,7 @@ class ConversationsController < ApplicationController
 
     def get_convos
         if @user.matches.any?
-            @convos = @user.conversations.order(created_at: :asc)
+            @convos = @user.conversations.order(created_at: :desc)
             @inverse_users = User.where(user_name: @convos.includes(:users).where.not(users: { id: [@user.id]}).pluck(:user_name).uniq)
             has_chats = 1
         else
@@ -73,9 +74,11 @@ class ConversationsController < ApplicationController
     
     private
         def get_user
-            @user = User.find_by(user_name: params[:user_name])
+            # @user = User.find_by(user_name: params[:user_name])
+            @user = current_user
         end
         def set_convo
             @convo = Conversation.find(params[:id])
         end
 end
+``

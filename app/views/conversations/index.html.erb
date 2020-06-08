@@ -2,49 +2,31 @@
     <div class="con_page">
     <%= render "layouts/header" %>
         <div class="message_nav">
-            <h1> Chats </h1>
+            <div id="mess_ban">
+                <h1> Chats </h1>
+            </div>
             <%#= link_to "Test", test_path, remote: true %>
             
             <%# if @has_chats == 1 %>
-                <ul class ="user_mess_list">
+                <ul class="user_mess_list">
                     <% @convos.each_with_index do |chat, i| %>
                         <li> 
-
                             <%= link_to room_path(chat.id), data: {conversation_id: chat.id} do %>
-                                <h3><%= @inverse_users[i].user_name %></h3>
-                                <%= image_tag @inverse_users[i].profile.avatar.url(:thumb) %>
-
+                                <div class="img_av">
+                                    <%= image_tag @inverse_users[i].profile.avatar.url(:thumb) %>
+                                </div>
+                                <div class="conv_ino_con">
+                                    <p><%= @inverse_users[i].first_name %></p>
+                                </div>
                             <% end %>
-                                <%# @id = Match.shared_with([current_user, user]) %>
-
-                                <%#= link_to direct_message_path(user.id), data: {conversation_id: Conversation.direct_message_for_users([current_user, user]).id } do %>
-                                <%#= link_to direct_message_path(@id), data: {conversation_id: @id, remote: true} do %>
-                                
-                                <%#=link_to direct_message_path(@id), data: {method: :get, :remote => true } do %>
-                                    
-                                    
-                                    
-                                    
-                                <%#= link_to create_room_path(user.id) do %>
-                                    <%#= image_tag user.profile.avatar.url(:thumb) %>
-                                    <h3><%#= user.profile.first_name %></h3>
-                                    <h3><%#= user.first_name %></h3>
-
-                                <%# end %>
-                        
-                            </li>
-                        <%# <% end %>
+                        </li>
                     <% end %>
                 </ul>
-            <%# else %>
                 <%= render "conversations/empty_list" %>
-            <%# end %>
         </div>
-        <!-- mess_con is the html I need to replace on coming back from messages/show -->
         <div class="mess_con">
 
-            <h1> I want to change this bad boy </h1>
-            <%#= render "conversations/empty_convo"%>
+            
         </div>
     </div>
 

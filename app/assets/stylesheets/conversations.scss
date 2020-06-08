@@ -133,41 +133,63 @@ html, body {margin: 0; height: 100%; overflow: hidden}
   }
 
   .con_page .message_nav {
-    width: 30%;
+    background-color: rgba(255, 255, 255, 0.295);
+    width: 25%;
+    // min-width: 5px;
     height: 100vh;
-    border-right: #333 0.5px solid;
+    // border-right: #333 0.5px solid;
     overflow-x: hidden;
     overflow-y: auto;
     // padding: 20px 0 0 20px;
     float: left;
     // background-color:  rgb(166, 209, 145);
     min-width: 200px;
+    #mess_ban{
+      margin: 10px;
+    }
     .user_mess_list {
       padding: 0;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.815);
       li {
         list-style: none;
         // change this
         height: 50px;
-        padding: 20px;
-        background-color: lightblue;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        // background-color: lightblue;
         a {
           text-decoration: none;
-          color: royalblue;
-          h3 {
-            color: green;
-            // float: right;
-          }
-          img {
-            // get rid of these after resetting the database
-            width: 50px;
-            height: 50px;
-            border-radius: 60%;
-            border: #333 0.5px solid;
+          // color: royalblue;
+  
+          .img_av {
             float: left;
+            img {
+              // get rid of these after resetting the database
+              width: 50px;
+              height: 50px;
+              border-radius: 60%;
+              // border: #333 0.5px solid;
+              // float: left;
+            }
+          }
+          .conv_ino_con {
+            display: inline-block;
+            padding-left: 10px;
+            height: 100%;
+            p {
+              margin: 0;
+              // padding-left: 70px;
+              color: black;
+              font-weight: 500;
+              // color: green;
+              // float: right;
+            }
           }
         }
+      }
+      li:hover {
+        background-color: rgba(255, 255, 255, 0.411);
       }
     }
     .message {
@@ -208,7 +230,7 @@ html, body {margin: 0; height: 100%; overflow: hidden}
       .m_a {
         // overflow-x: hidden;
         // overflow-y: auto;
-        padding-top: 10px;
+        padding-top: 10px;`
         li {
           list-style: none;
           flex: 1 1 auto;

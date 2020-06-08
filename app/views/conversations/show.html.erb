@@ -1,26 +1,55 @@
 <body>
     <div class="con_page">
         <%= render "layouts/header" %>
-        <%= @chat.id %>
-        <%= @sender.user_name%>
-        <%= @p %>
-        <%= @reciever.user_name %>
-        <!-- <ul> -->
-            <div data-behavior='messages' data-conversation-id='<%= @chat.id %>'>
-                <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
+        <div class="message_nav">
+            <div id="mess_ban">
+                <h1> Chats </h1>
             </div>
-        <!-- </ul> -->
-
-
-        <div class='form_panel'>
-            <!-- form may need to change -->
-            <%= form_for [@chat, Message.new], :url => direct_message_path(@chat.id), class: "new_message", remote: true do |f| %>
-                <%#= f.hidden_field :user_id, value: current_user.id %>
-                <%#= f.hidden_field :conversation_id, value: @chat.id %>
-                <%= f.text_area :body,  rows: 1,placeholder: "Your message", required: true, data: { message: true }  %>
-                <%= f.submit "Send", class: 'btn btn-primary chat-input' %>
-            <% end %>
+            <%#= link_to "Test", test_path, remote: true %>
+            
+            <%# if @has_chats == 1 %>
+                <ul class="user_mess_list">
+                    <% @convos.each_with_index do |chat, i| %>
+                        <li> 
+                            <%= link_to room_path(chat.id), data: {conversation_id: chat.id} do %>
+                                <div class="img_av">
+                                    <%= image_tag @inverse_users[i].profile.avatar.url(:thumb) %>
+                                </div>
+                                <div class="conv_ino_con">
+                                    <p><%= @inverse_users[i].first_name %></p>
+                                </div>
+                            <% end %>
+                        </li>
+                    <% end %>
+                </ul>
+                <%= render "conversations/empty_list" %>
         </div>
+        <div class="mess_con">
+
+            <%= @chat.id %>
+            <%= @sender.user_name%>
+            <%= @p %>
+            <%= @reciever.user_name %>
+            <!-- <ul> -->
+                <div class='chat_area' data-behavior='messages' data-conversation-id='<%= @chat.id %>'>
+                    <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
+                </div>
+            <!-- </ul> -->
+
+
+            <div class='form_panel'>
+                <!-- form may need to change -->
+                <%= form_for [@chat, Message.new], :url => direct_message_path(@chat.id), class: "new_message", remote: true do |f| %>
+                    <%#= f.hidden_field :user_id, value: current_user.id %>
+                    <%#= f.hidden_field :conversation_id, value: @chat.id %>
+                    <%= f.text_area :body, rows: 1, placeholder: "Your message", required: true, data: { message: true }  %>
+                    <%= f.submit "Send", class: 'btn btn-primary chat-input' %>
+                <% end %>
+            </div>
+            
+        </div>
+
+
     </div>
 
 </body>

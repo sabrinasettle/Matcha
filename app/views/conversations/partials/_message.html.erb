@@ -1,5 +1,6 @@
 <li>
+      <div class="<%= current_user.id == message.user_id ? 'message_sent' : 'message_received' %>">
+            <%= image_tag message.user.profile.avatar.url(:thumb)%><%= message.user.user_name%> <%= message.body %>
 
-      <%= message.user.user_name%> <%= message.body %>
-    
+      </div>
 </li>

@@ -1,6 +1,11 @@
 <li>
-      <div class="<%= current_user.id == message.user_id ? 'message_sent' : 'message_received' %>">
-            <%= image_tag message.user.profile.avatar.url(:thumb)%><%= message.user.user_name%> <%= message.body %>
-
+      <div class='message_con'>
+            <%= image_tag message.user.profile.avatar.url(:thumb) %>
+            <div class='sen_user'>
+                  <p><%= message.user.first_name%></p>
+            </div>
+            <div class='mess_body'>
+                  <p><%= message.body %></p>
+            </div>
       </div>
 </li>

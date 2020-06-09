@@ -6,8 +6,11 @@
 html, body {margin: 0; height: 100%; overflow: hidden}
 
 .con_page {
+    height: 100vh;
     width: 100vw;
     min-height: 100%;
+    overflow: hidden;
+
     background-color:  rgb(166, 209, 145);
     .nav_bar_main {
       width: 100%;
@@ -133,44 +136,33 @@ html, body {margin: 0; height: 100%; overflow: hidden}
   }
 
   .con_page .message_nav {
-    background-color: rgba(255, 255, 255, 0.295);
+    background-color: rgb(195, 228, 161);
     width: 25%;
-    // min-width: 5px;
-    height: 100vh;
-    // border-right: #333 0.5px solid;
+    height: 100%;
+    border-right: rgb(78, 78, 78) 0.5px solid;
     overflow-x: hidden;
     overflow-y: auto;
-    // padding: 20px 0 0 20px;
     float: left;
-    // background-color:  rgb(166, 209, 145);
-    min-width: 200px;
     #mess_ban{
       margin: 10px;
     }
     .user_mess_list {
       padding: 0;
-      height: 100%;
+      // height: 100%;
       li {
         list-style: none;
-        // change this
         height: 50px;
         padding: 10px;
         margin: 10px;
         border-radius: 5px;
-        // background-color: lightblue;
         a {
-          text-decoration: none;
-          // color: royalblue;
-  
+          text-decoration: none;  
           .img_av {
             float: left;
             img {
-              // get rid of these after resetting the database
               width: 50px;
               height: 50px;
               border-radius: 60%;
-              // border: #333 0.5px solid;
-              // float: left;
             }
           }
           .conv_ino_con {
@@ -179,11 +171,8 @@ html, body {margin: 0; height: 100%; overflow: hidden}
             height: 100%;
             p {
               margin: 0;
-              // padding-left: 70px;
               color: black;
               font-weight: 500;
-              // color: green;
-              // float: right;
             }
           }
         }
@@ -202,113 +191,151 @@ html, body {margin: 0; height: 100%; overflow: hidden}
       border-radius: 10px 10px;
     }
   }
+
   .con_page .mess_con {
-    height: 100vh;
-    margin-left: 30%;
-    // background-color: red;
-    // overflow-x: hidden;
-    // overflow-y: auto;
-    // overflow-x: hidden;
-    overflow-y: auto;
-    .u_ban_er {
-      background-color: pink;
-      // width: 100%;
-      border-bottom: purple 1px solid;
-      padding: 20px 0 20px 25px;
-      
-      .us_img {
-        height: 50px;
-        width: 50px;
-        border-radius: 60%;
+    height: 100%;
+    margin-left: 25%;
+    overflow-y: hidden;
+    position: relative;
+    // overflow: hidden;
+
+    #ban_mess_info {
+      z-index: 1;
+      top: 0;
+      background-color: rgb(195, 228, 161);
+      position: absolute;
+      width: 98%;
+      padding: 10px 0 10px 20px;
+      border-bottom: rgb(78, 78, 78) 0.5px solid;
+
+      .img_av {
+        float: left;
+        padding-right: 10px;
+        img{
+          width: 50px;
+          height: 50px;
+          border-radius: 60%;
+        }
+      }
+      #convo_rec_info {
+        p {
+          font-weight: bold;
+          font-size: 16px;
+        }
       }
     }
+    
     .chat_area {
-      // height: 100%;
-      width: 100%;
+      // background-color: rgb(124, 148, 114);
+
+      height: 50%;
+      width: 90%;
+      padding-left: 25px;
       overflow-x: hidden;
       overflow-y: auto;
-      .m_a {
-        // overflow-x: hidden;
-        // overflow-y: auto;
-        padding-top: 10px;`
+      top: 50px;
+      position: absolute;
+      padding-top: 20px;
         li {
           list-style: none;
           flex: 1 1 auto;
           min-height: 0;
           min-width: 0;
-          .row {
+          .message_con {
             padding: 10px;
-            .message_sent {
-              // background-color: rgba(0, 0, 255, 0.479);
-              .m_c {
+            .sen_user {
+              padding: 5px;
+              display: inline-block;
+              p {
                 display: inline-block;
-                .name{
-                  // display: inline;
-                  float: right;
-                  padding: 10px
-                }
-                .m_b{
-                  // display: inline-block;
-                  background-color: rgb(123, 156, 107);
-                  border-radius: 10px;
-                  padding: 10px;
-                  float: right;
-                }
+                margin: 0;
+                font-weight: bold;
               }
             }
-            .message_received {
-             
-              .m_c {
-                display: inline-block;
-                .name{
-                  // display: inline-block;
-                  // float:left;
-                  float: left;
-                  padding: 10px;
-                }
-                .m_b{
-                  // display: inline-block;
-                  border-radius: 10px;
-                  border: seashell 1px solid;
-                  padding: 10px;
-                  float: left;
-                }
+            .mess_body {
+              margin-left: 38px;
+              padding: 10px 5px 5px 0px;
+              p {
+                margin: 0;
+                letter-spacing: 0.2px;
               }
+            }
+            img {
+              width: 30px;
+              height: 30px;
+              border-radius: 60%;
+              float: left;
             }
           }
         }
       }
-      .form {
+      .form_panel {
+        z-index: 1;
+        display: block;
         position: absolute;
-        // padding-top: 10px;
-        padding: 10px;
-        background-color: silver;
-        // width: 100%;
-        // width: 100vw;
-        bottom: 0px;
+        bottom: 60px;
+        width: 100%;
+        height: 50px;
+        background-color:  rgb(166, 209, 145);
+        overflow: hidden;
 
+        // padding: 10px;
+        // border-top: rgb(78, 78, 78) 0.5px solid;
+        overflow-x: hidden;
         .new_message {
-          -webkit-box-align: center;
-          align-items: center;
-          min-height: 44px;
-          border: 1px black solid;
-          display: inline-flex;
-          padding: 10px;
-          border-radius: 50px;
-          textarea{
-            background-color: pink;
-            //From Instagram
-            // background-color: transparent;
-            border: 0;
-            overflow: auto;
-            padding: 8px 9px;
-            resize: none;
-            font-size: 14px;
-            line-height: 18px;
-            height: 18px;
+          margin-top: 5px;
 
+          width: 50%;
+          height: 15px;
+          display: block;
+          width: 50%;
+          display: block;
+          background-color: white;
+          // padding: 15px 15px 10px 15px;
+          border-radius: 20px;
+          text-align: center;
+          // position: absolute;
+          // padding: 10px;
+          // bottom: 0px;
+          // .new_message {
+          //   -webkit-box-align: center;
+          //   align-items: center;
+          //   min-height: 44px;
+          //   border: 1px black solid;
+          //   display: inline-flex;
+          //   padding: 10px;
+          //   border-radius: 50px;
+          //   textarea {
+          //     background-color: pink;
+          //     //From Instagram
+          //     // background-color: transparent;
+          //     border: 0;
+          //     overflow: auto;
+          //     padding: 8px 9px;
+          //     resize: none;
+          //     font-size: 14px;
+          //     line-height: 18px;
+          //     height: 18px;
+          //   }
+          // }
+          background-color: white;
+          .mess_input {
+            margin-bottom: 5px;
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            display: inline-block;
+            width: 400px;
+          }
+          .mess_input:focus {
+            outline:0 !important;
+          }
+          .btn {
+            display: inline-block;
+            background-color: greenyellow;
+            border: none;
           }
         }
+        
       }
     }
-  }

@@ -27,6 +27,6 @@
 /config/master.key
 # Ignore for ENV KEYS for gmail and s3
 /config/local_env.yml
-notes.text
+notes.txt
 
 

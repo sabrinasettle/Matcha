@@ -151,3 +151,10 @@ Some links I found helpful with design
 * https://www.crazyegg.com/blog/guides/great-form-ui-and-ux/
 
 * https://uxdesign.cc/make-sense-of-rounded-corners-on-buttons-dfc8e13ea7f7
+
+
+
+
+#### Notes 
+
+https://dev.to/risafj/cron-jobs-in-rails-a-simple-guide-to-actually-using-the-whenever-gem-now-with-tasks-2omi

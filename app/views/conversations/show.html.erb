@@ -35,6 +35,7 @@
                 </div>
             </div>
             <div class='chat_area' data-behavior='messages' data-conversation-id='<%= @chat.id %>'>
+                <!-- If user is current_user then the message is displayed a certain way -->
                 <%= render 'conversations/partials/chat_content', messages: @messages, user: current_user %>
             </div>
             <div class='form_panel'>
